@@ -22,6 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Siswa
 Route::get('/siswa/add', 'SiswaController@add')->name('siswa/add');
 Route::get('/siswa/list', 'SiswaController@list')->name('siswa/list');
+Route::post('/siswa/add', 'SiswaController@add');
 
 // Jadwal
 Route::get('/jadwal', 'JadwalController@index')->name('jadwal');

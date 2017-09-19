@@ -11,11 +11,17 @@ class SiswaController extends Controller
         $this->middleware('auth');
     }
 
-    public function add(){
+    public function add(Request $request)
+    {
+        if ($request->isMethod('post')){
+
+            return var_dump($request->file('foto')->store('uploads'));
+        }
         return view('siswa/add');
     }
 
-    public function list(){
+    public function daftar()
+    {
         return view('siswa/list');
     }
 }

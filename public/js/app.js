@@ -803,6 +803,12 @@ var app = new Vue({
   el: '#app'
 });
 
+/**
+ * Custom JS
+ **/
+
+__webpack_require__(53)("." + window.location.pathname);
+
 /***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -41905,7 +41911,7 @@ var Component = __webpack_require__(37)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/agungrizkyana/Public/myproject/edu/resources/assets/js/components/Example.vue"
+Component.options.__file = "F:\\xampp\\htdocs\\edu\\resources\\assets\\js\\components\\Example.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Example.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -42088,6 +42094,86 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Created by Lenovo on 9/19/2017.
+ */
+__webpack_require__(51);
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports) {
+
+/**
+ * Created by Lenovo on 9/19/2017.
+ */
+var fotoSiswaPreview = void 0;
+$(document).ready(function () {
+    fotoSiswaPreview = $("#foto");
+
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#foto-siswa').attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    fotoSiswaPreview.change(function () {
+        readURL(this);
+    });
+});
+
+/***/ }),
+/* 52 */,
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./app": 9,
+	"./app.js": 9,
+	"./bootstrap": 10,
+	"./bootstrap.js": 10,
+	"./components/Example": 36,
+	"./components/Example.vue": 36,
+	"./siswa/add": 51,
+	"./siswa/add.js": 51,
+	"./siswa/siswa": 50,
+	"./siswa/siswa.js": 50
+};
+function webpackContext(req) {
+	return __webpack_require__(webpackContextResolve(req));
+};
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) // check for number or string
+		throw new Error("Cannot find module '" + req + "'.");
+	return id;
+};
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = 53;
 
 /***/ })
 /******/ ]);
