@@ -98,6 +98,15 @@
                             </li>
                         </ul>
                     </li>
+                    <li data-toggle="collapse" data-target="#sekolah" aria-expanded="false" aria-controls="siswa">
+                        <a href="#">Sekolah</a>
+                        <ul  id="sekolah" class="sidebar-nav-sub collapse">
+                            <li>
+                                <a href={{ route('sekolah/add') }}>Tambah Sekolah</a>
+                            </li>
+
+                        </ul>
+                    </li>
                     <li>
                         <a href={{ route('jadwal') }}>Jadwal</a>
                     </li>

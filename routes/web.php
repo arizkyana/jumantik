@@ -24,6 +24,10 @@ Route::get('/siswa/add', 'SiswaController@add')->name('siswa/add');
 Route::get('/siswa/list', 'SiswaController@list')->name('siswa/list');
 Route::post('/siswa/add', 'SiswaController@add');
 
+// Sekolah
+Route::get('/sekolah/add', 'SekolahController@add')->name('sekolah/add');
+Route::post('/sekolah/add', 'SekolahController@add');
+
 // Jadwal
 Route::get('/jadwal', 'JadwalController@index')->name('jadwal');
 
