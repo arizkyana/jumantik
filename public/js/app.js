@@ -42138,6 +42138,8 @@ var map = {
 	"./bootstrap.js": 2,
 	"./components/Example": 4,
 	"./components/Example.vue": 4,
+	"./sekolah/add": 53,
+	"./sekolah/add.js": 53,
 	"./siswa/add": 5,
 	"./siswa/add.js": 5,
 	"./siswa/siswa": 12,
@@ -42164,6 +42166,47 @@ webpackContext.id = 42;
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */
+/***/ (function(module, exports) {
+
+/**
+ * Created by Lenovo on 9/20/2017.
+ */
+/**
+ * Created by Lenovo on 9/19/2017.
+ */
+var fotoSiswaPreview = void 0;
+$(document).ready(function () {
+    fotoSiswaPreview = $("#foto");
+
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#foto-sekolah').attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    fotoSiswaPreview.change(function () {
+        readURL(this);
+    });
+});
 
 /***/ })
 /******/ ]);

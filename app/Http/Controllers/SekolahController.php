@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Sekolah;
 use Validator;
 use Illuminate\Http\Request;
 
@@ -26,6 +27,21 @@ class SekolahController extends Controller
                     ->withErrors($validator)
                     ->withInput();
             }
+
+            // save new 'Sekolah'
+            $sekolah = new Sekolah;
+            $sekolah->nama = $request->input('nama');
+            $sekolah->alamat = $request->input('alamat');
+
+            if ($request->hasFile('foto')) {
+                $path = strtolower(trim(str_replace(" ", "_", $request->input('nama'))));
+                $foto = $request->file('foto')->store('uploads/' . $path );
+                $sekolah->foto = $foto;
+            }
+
+            $sekolah->save();
+            return redirect('sekolah/add')
+                ->with('success', 'Sukses Tambah Sekolah Baru');
         }
 
         return view('sekolah/add');

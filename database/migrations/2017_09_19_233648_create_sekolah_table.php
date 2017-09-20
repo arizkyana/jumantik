@@ -18,7 +18,7 @@ class CreateSekolahTable extends Migration
             $table->string('nama');
             $table->mediumText('alamat');
             $table->longText('foto');
-            $table->longText('gps');
+            $table->longText('gps')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateSekolahTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sekolah');
+        Schema::drop('sekolah');
     }
 }

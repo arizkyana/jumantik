@@ -9,13 +9,12 @@
                     <h3 class="panel-title">Buat Sekolah Baru</h3>
                 </div>
                 <div class="panel-body">
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
+                    @if (session('success'))
+                        <div class="alert alert-success" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            {{ session('success') }}
                         </div>
                     @endif
                     <div class="form-group">
@@ -30,7 +29,7 @@
                                 <input type="file" id="foto" name="foto" class="hide"/>
 
                                 <img class="img-rounded img-responsive" style="margin-top: 15px;" id="foto-sekolah"
-                                     alt="foto-siswa"/>
+                                     alt="foto-sekolah"/>
                             </div>
                         </div>
                     </div>
@@ -38,7 +37,10 @@
                         <div class="row">
                             <label for="nama" class="col-md-3">Nama Sekolah</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" name="nama" id="nama"/>
+                                <input type="text" class="form-control " name="nama" id="nama"/>
+                                @if ($errors->has('nama'))
+                                    <i class="text-danger">{{ $errors->first('nama')  }}</i>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -47,6 +49,9 @@
                             <label for="alamat" class="col-md-3">Alamat</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" name="alamat" id="alamat"/>
+                                @if ($errors->has('alamat'))
+                                    <i class="text-danger">{{ $errors->first('alamat')  }}</i>
+                                @endif
                             </div>
                         </div>
                     </div>
