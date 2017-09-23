@@ -34,3 +34,19 @@ Route::get('/jadwal', 'JadwalController@index')->name('jadwal');
 
 // Perwalian
 Route::get('/perwalian', 'PerwalianController@index')->name('perwalian');
+
+
+/**
+ * Configuration
+ */
+// Menu
+Route::resource('menu', 'MenuController');
+Route::get('/menu', 'MenuController@index')->name('menu');
+Route::get('/menu/create', 'MenuController@create')->name('menu/create');
+Route::get('/menu/{menu}/edit', 'MenuController@edit')->name('menu/edit');
+
+// Role
+Route::resource('role', 'RoleController');
+Route::get('/role', 'RoleController@index')->name('role');
+Route::get('/role/create', 'RoleController@create')->name('role/create');
+Route::get('/role/{role}/edit', 'RoleController@edit')->name('role/edit');

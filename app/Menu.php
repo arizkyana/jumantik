@@ -4,11 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Sekolah extends Model
+class Menu extends Model
 {
-    protected $table = 'sekolah';
-
-
-
-
+    protected $table = 'menu';
 }

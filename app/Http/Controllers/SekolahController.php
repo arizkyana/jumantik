@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Menu;
+use App\RoleMenu;
 use App\Sekolah;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use Illuminate\Http\Request;
 
@@ -15,6 +18,7 @@ class SekolahController extends Controller
     }
 
     public function add(Request $request){
+
 
         if ($request->isMethod('post')){
             $validator = Validator::make($request->all(), [

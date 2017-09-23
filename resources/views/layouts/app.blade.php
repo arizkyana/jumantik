@@ -113,6 +113,30 @@
                     <li>
                         <a href={{ route('perwalian') }}>Perwalian</a>
                     </li>
+                    <li data-toggle="collapse" data-target="#menu" aria-expanded="false" aria-controls="menu">
+                        <a href="#">Menu</a>
+                        <ul  id="menu" class="sidebar-nav-sub collapse">
+                            <li>
+                                <a href={{ route('menu') }}>Daftar Menu</a>
+                            </li>
+                            <li>
+                                <a href={{ route('menu/create') }}>Tambah Menu</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li data-toggle="collapse" data-target="#role" aria-expanded="false" aria-controls="role">
+                        <a href="#">Role</a>
+                        <ul  id="role" class="sidebar-nav-sub collapse">
+                            <li>
+                                <a href={{ route('role') }}>Daftar Role</a>
+                            </li>
+                            <li>
+                                <a href={{ route('role/create') }}>Tambah Role</a>
+                            </li>
+
+                        </ul>
+                    </li>
                     <li>
                         <a href="#">About</a>
                     </li>

@@ -581,7 +581,7 @@ var Component = __webpack_require__(40)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "F:\\xampp\\htdocs\\edu\\resources\\assets\\js\\components\\Example.vue"
+Component.options.__file = "/Users/agungrizkyana/Public/myproject/edu/resources/assets/js/components/Example.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Example.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -42170,6 +42170,8 @@ var map = {
 	"./bootstrap.js": 2,
 	"./components/Example": 4,
 	"./components/Example.vue": 4,
+	"./menu": 54,
+	"./menu.js": 54,
 	"./sekolah/add": 12,
 	"./sekolah/add.js": 12,
 	"./siswa/add": 5,
@@ -42198,6 +42200,24 @@ webpackContext.id = 43;
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */
+/***/ (function(module, exports) {
+
+/**
+ * Created by agungrizkyana on 9/23/17.
+ */
+$(document).ready(function () {});
 
 /***/ })
 /******/ ]);
