@@ -34,7 +34,7 @@ class MenuController extends Controller
     public function create()
     {
 
-        $parents = Menu::where('parent', 0)->get();
+        $parents = Menu::all();
         return view('menu/create')->with('parents', $parents);
     }
 

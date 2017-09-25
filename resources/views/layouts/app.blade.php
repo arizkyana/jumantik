@@ -14,74 +14,78 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body style="padding-top:45px">
-    <div id="app">
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
+<div id="app">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
 
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+                <!-- Collapsed Hamburger -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#app-navbar-collapse">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
 
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
+                <!-- Branding Image -->
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
             </div>
-        </nav>
 
-        @guest
-            @yield('content')
+            <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                <!-- Left Side Of Navbar -->
+                <ul class="nav navbar-nav">
+                    &nbsp;
+                </ul>
 
-        @else
-            <div id="wrapper">
+                <!-- Right Side Of Navbar -->
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- Authentication Links -->
+                    @guest
+                    <li><a href="{{ route('login') }}">Login</a></li>
+                    <li><a href="{{ route('register') }}">Register</a></li>
+                    @else
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false">
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        Logout
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                          style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                        @endguest
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    @guest
+    @yield('content')
+
+    @else
+        <div id="wrapper">
             <!-- Sidebar -->
             <div id="sidebar-wrapper">
                 <ul class="sidebar-nav">
+
                     <li class="sidebar-brand">
                         {{--<a href="#">--}}
-                            {{--Start Bootstrap--}}
+                        {{--Start Bootstrap--}}
                         {{--</a>--}}
                     </li>
                     <li>
@@ -89,7 +93,7 @@
                     </li>
                     <li data-toggle="collapse" data-target="#siswa" aria-expanded="false" aria-controls="siswa">
                         <a href="#">Siswa</a>
-                        <ul  id="siswa" class="sidebar-nav-sub collapse">
+                        <ul id="siswa" class="sidebar-nav-sub collapse">
                             <li>
                                 <a href={{ route('siswa/add') }}>Tambah Siswa</a>
                             </li>
@@ -100,30 +104,31 @@
                     </li>
                     <li data-toggle="collapse" data-target="#sekolah" aria-expanded="false" aria-controls="siswa">
                         <a href="#">Sekolah</a>
-                        <ul  id="sekolah" class="sidebar-nav-sub collapse">
+                        <ul id="sekolah" class="sidebar-nav-sub collapse">
                             <li>
                                 <a href={{ route('sekolah/add') }}>Tambah Sekolah</a>
                             </li>
 
                         </ul>
                     </li>
-                    <li data-toggle="collapse" data-target="#perpustakaan" aria-expanded="false" aria-controls="perpustakaan">
+                    <li data-toggle="collapse" data-target="#perpustakaan" aria-expanded="false"
+                        aria-controls="perpustakaan">
                         <a href="#">Perpustakaan</a>
-                        <ul  id="perpustakaan" class="sidebar-nav-sub collapse">
+                        <ul id="perpustakaan" class="sidebar-nav-sub collapse">
                             <li>
                                 <a href={{ route('peminjaman') }}>Peminjaman</a>
                             </li>
                             {{--<li>--}}
-                                {{--<a href={{ route('perpustakaan/pengembalian') }}>Pengembalian</a>--}}
+                            {{--<a href={{ route('perpustakaan/pengembalian') }}>Pengembalian</a>--}}
                             {{--</li>--}}
                             {{--<li>--}}
-                                {{--<a href={{ route('perpustakaan/buku') }}>Master Buku</a>--}}
+                            {{--<a href={{ route('perpustakaan/buku') }}>Master Buku</a>--}}
                             {{--</li>--}}
                             {{--<li>--}}
-                                {{--<a href={{ route('perpustakaan/denda') }}>Denda</a>--}}
+                            {{--<a href={{ route('perpustakaan/denda') }}>Denda</a>--}}
                             {{--</li>--}}
                             {{--<li>--}}
-                                {{--<a href={{ route('perpustakaan/anggota') }}>Anggota</a>--}}
+                            {{--<a href={{ route('perpustakaan/anggota') }}>Anggota</a>--}}
                             {{--</li>--}}
 
                         </ul>
@@ -136,7 +141,7 @@
                     </li>
                     <li data-toggle="collapse" data-target="#menu" aria-expanded="false" aria-controls="menu">
                         <a href="#">Menu</a>
-                        <ul  id="menu" class="sidebar-nav-sub collapse">
+                        <ul id="menu" class="sidebar-nav-sub collapse">
                             <li>
                                 <a href={{ route('menu') }}>Daftar Menu</a>
                             </li>
@@ -148,7 +153,7 @@
                     </li>
                     <li data-toggle="collapse" data-target="#role" aria-expanded="false" aria-controls="role">
                         <a href="#">Role</a>
-                        <ul  id="role" class="sidebar-nav-sub collapse">
+                        <ul id="role" class="sidebar-nav-sub collapse">
                             <li>
                                 <a href={{ route('role') }}>Daftar Role</a>
                             </li>
@@ -183,9 +188,9 @@
         </div>
         @endguest
 
-    </div>
+</div>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+<!-- Scripts -->
+<script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

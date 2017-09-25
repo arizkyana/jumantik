@@ -6,13 +6,17 @@ use App\Menu;
 use App\Role;
 use App\RoleMenu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 
-class RoleController extends Controller
+class RoleController extends MyController
 {
+
+
     public function __construct()
     {
-        $this->middleware('auth');
+        parent::__construct();
+
     }
 
     /**
@@ -24,7 +28,10 @@ class RoleController extends Controller
     {
         $roles = Role::all();
 
-        return view('role/index')->with('roles', $roles);
+        return view('role/index')->with([
+            'roles' => $roles,
+            'menus' => $this->menus(Auth::user()['role_id'])
+        ]);
     }
 
     /**
@@ -110,6 +117,8 @@ class RoleController extends Controller
             }
             $menu->selected = $selected;
         }
+
+
 
 
         return view('role/edit')->with([

@@ -37,10 +37,11 @@
                         <legend>
                             Akses Menu
                         </legend>
+
                         @foreach($menus as $menu)
 
                             @if ($menu->parent == 0)
-                                <div class="checkbox">
+                                <div class="checkbox" data-content="parent">
                                     <label>
                                         <input type="checkbox" name="menus[]" value="{{$menu->id}}"/> {{ $menu->name }}
                                     </label>
