@@ -107,6 +107,27 @@
 
                         </ul>
                     </li>
+                    <li data-toggle="collapse" data-target="#perpustakaan" aria-expanded="false" aria-controls="perpustakaan">
+                        <a href="#">Perpustakaan</a>
+                        <ul  id="perpustakaan" class="sidebar-nav-sub collapse">
+                            <li>
+                                <a href={{ route('peminjaman') }}>Peminjaman</a>
+                            </li>
+                            {{--<li>--}}
+                                {{--<a href={{ route('perpustakaan/pengembalian') }}>Pengembalian</a>--}}
+                            {{--</li>--}}
+                            {{--<li>--}}
+                                {{--<a href={{ route('perpustakaan/buku') }}>Master Buku</a>--}}
+                            {{--</li>--}}
+                            {{--<li>--}}
+                                {{--<a href={{ route('perpustakaan/denda') }}>Denda</a>--}}
+                            {{--</li>--}}
+                            {{--<li>--}}
+                                {{--<a href={{ route('perpustakaan/anggota') }}>Anggota</a>--}}
+                            {{--</li>--}}
+
+                        </ul>
+                    </li>
                     <li>
                         <a href={{ route('jadwal') }}>Jadwal</a>
                     </li>

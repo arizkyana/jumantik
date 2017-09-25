@@ -27,5 +27,3 @@ const app = new Vue({
 /**
  * Custom JS
  **/
-
-require("." + window.location.pathname);

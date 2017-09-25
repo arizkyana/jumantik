@@ -35,6 +35,15 @@ Route::get('/jadwal', 'JadwalController@index')->name('jadwal');
 // Perwalian
 Route::get('/perwalian', 'PerwalianController@index')->name('perwalian');
 
+// Perpustakaan
+Route::namespace('Perpustakaan')->group(function(){
+    Route::prefix('perpustakaan')->group(function(){
+        Route::resource('peminjaman', 'PeminjamanController');
+        Route::get('/peminjaman', 'PeminjamanController@index')->name('peminjaman');
+        Route::get('/peminjaman/create', 'PeminjamanController@create')->name('peminjaman/create');
+        Route::get('/peminjaman/{peminjaman}/edit', 'PeminjamanController@edit')->name('peminjaman/edit');
+    });
+});
 
 /**
  * Configuration
