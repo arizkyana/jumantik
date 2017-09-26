@@ -29,8 +29,7 @@ class RoleController extends MyController
         $roles = Role::all();
 
         return view('role/index')->with([
-            'roles' => $roles,
-            'menus' => $this->menus(Auth::user()['role_id'])
+            'roles' => $roles
         ]);
     }
 

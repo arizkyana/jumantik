@@ -34,7 +34,6 @@ class MyController extends Controller
 
         return $this->build_tree($new_menus);
     }
-
     private function build_tree($elements, $parentId = 0){
         $branch = array();
 

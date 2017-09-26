@@ -82,96 +82,88 @@
             <!-- Sidebar -->
             <div id="sidebar-wrapper">
                 <ul class="sidebar-nav">
+                    <li class="sidebar-brand">Main Menu</li>
+                    @php
+                        function menus($role_id){
+                            $menus = App\Menu::all();
+                            $selected_menus = App\RoleMenu::where('role_id', $role_id)->get();
 
-                    <li class="sidebar-brand">
-                        {{--<a href="#">--}}
-                        {{--Start Bootstrap--}}
-                        {{--</a>--}}
-                    </li>
-                    <li>
-                        <a href="#">Dashboard</a>
-                    </li>
-                    <li data-toggle="collapse" data-target="#siswa" aria-expanded="false" aria-controls="siswa">
-                        <a href="#">Siswa</a>
-                        <ul id="siswa" class="sidebar-nav-sub collapse">
-                            <li>
-                                <a href={{ route('siswa/add') }}>Tambah Siswa</a>
-                            </li>
-                            <li>
-                                <a href={{ route('siswa/list') }}>List Siswa</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li data-toggle="collapse" data-target="#sekolah" aria-expanded="false" aria-controls="siswa">
-                        <a href="#">Sekolah</a>
-                        <ul id="sekolah" class="sidebar-nav-sub collapse">
-                            <li>
-                                <a href={{ route('sekolah/add') }}>Tambah Sekolah</a>
-                            </li>
+                            $new_menus = [];
+                            $test = [];
+                            foreach ($menus as $menu){
+                                $isShow = false;
+                                foreach ($selected_menus as $selected_menu){
+                                    if ($menu->id == $selected_menu->menu_id) $isShow = true;
+                                }
 
-                        </ul>
-                    </li>
-                    <li data-toggle="collapse" data-target="#perpustakaan" aria-expanded="false"
-                        aria-controls="perpustakaan">
-                        <a href="#">Perpustakaan</a>
-                        <ul id="perpustakaan" class="sidebar-nav-sub collapse">
-                            <li>
-                                <a href={{ route('peminjaman') }}>Peminjaman</a>
-                            </li>
-                            {{--<li>--}}
-                            {{--<a href={{ route('perpustakaan/pengembalian') }}>Pengembalian</a>--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                            {{--<a href={{ route('perpustakaan/buku') }}>Master Buku</a>--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                            {{--<a href={{ route('perpustakaan/denda') }}>Denda</a>--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                            {{--<a href={{ route('perpustakaan/anggota') }}>Anggota</a>--}}
-                            {{--</li>--}}
+                                $menu->isShow = $isShow;
+                                if ($menu->isShow) {
+                                    array_push($new_menus, $menu);
+                                }
+                            }
 
-                        </ul>
-                    </li>
-                    <li>
-                        <a href={{ route('jadwal') }}>Jadwal</a>
-                    </li>
-                    <li>
-                        <a href={{ route('perwalian') }}>Perwalian</a>
-                    </li>
-                    <li data-toggle="collapse" data-target="#menu" aria-expanded="false" aria-controls="menu">
-                        <a href="#">Menu</a>
-                        <ul id="menu" class="sidebar-nav-sub collapse">
-                            <li>
-                                <a href={{ route('menu') }}>Daftar Menu</a>
-                            </li>
-                            <li>
-                                <a href={{ route('menu/create') }}>Tambah Menu</a>
-                            </li>
+                            return build_tree($new_menus);
+                        }
 
-                        </ul>
-                    </li>
-                    <li data-toggle="collapse" data-target="#role" aria-expanded="false" aria-controls="role">
-                        <a href="#">Role</a>
-                        <ul id="role" class="sidebar-nav-sub collapse">
-                            <li>
-                                <a href={{ route('role') }}>Daftar Role</a>
-                            </li>
-                            <li>
-                                <a href={{ route('role/create') }}>Tambah Role</a>
-                            </li>
+                        function build_tree($elements, $parentId = 0){
+                            $branch = array();
 
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
+                            foreach ($elements as $element) {
+
+                                if ($element['parent'] == $parentId) {
+                                    $children = build_tree($elements, $element['id']);
+                                    if ($children) {
+                                        $element['children'] = $children;
+                                    }
+                                    $branch[] = $element;
+                                }
+                            }
+
+                            return $branch;
+                        }
+
+
+
+                        function print_tree($key, $tree, $first = FALSE){
+                            if (!is_null($tree) && count($tree) > 0) {
+                                if ($first) {
+                                    echo '';
+                                } else {
+                                    $request = new \Illuminate\Http\Request();
+                                    var_dump($request->is('menu'));
+                                    echo "<ul id='".$key."' class='sidebar-nav-sub collapse'>";
+                                }
+                                foreach($tree as $key => $node) {
+                                    $url = $node['url'];
+                                    if (isset($node['children'])) {
+                                        if ($first) {
+                                            echo '<li >';
+                                            echo '<a href="#" data-toggle="collapse" data-target="#'.$node['id'].'" aria-expanded="false" aria-controls="'.$node['id'].'">'.$node['name'].'</a>';
+                                        } else {
+                                            echo '<li>';
+                                            echo '<a href="#" data-toggle="collapse" data-target="#'.$node['id'].'" aria-expanded="false" aria-controls="'.$node['id'].'">'.$node['name'].'</a>';
+                                        }
+                                        print_tree($node['id'], $node['children'], FALSE);
+                                    } else {
+                                        if ($first){
+                                            echo '<li>';
+                                            echo '<a href='.route($node['url']).'>'.$node['name'].'</a>';
+                                        } else {
+                                            echo '<li>';
+                                            echo '<a href='.route($node['url']).'>'.$node['name'].'</a>';
+                                        }
+                                    }
+                                    echo '</li>';
+                                }
+                                echo '</ul>';
+                            }
+                        }
+
+                        $menus = menus(\Illuminate\Support\Facades\Auth::user()->role_id);
+                        print_tree(1, $menus, TRUE);
+
+                    @endphp
+
                 </ul>
             </div>
             <!-- /#sidebar-wrapper -->
