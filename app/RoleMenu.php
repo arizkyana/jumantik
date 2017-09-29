@@ -9,10 +9,14 @@ class RoleMenu extends Model
     protected $table = 'role_menu';
 
     public function menus(){
-        return $this->hasMany('App\Menu');
+        return $this->belongsTo('App\Menu');
     }
 
-    public function roles(){
-        return $this->hasMany('App\Role');
+    /**
+     * The roles that belong to the user.
+     */
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role');
     }
 }

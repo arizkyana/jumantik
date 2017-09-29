@@ -135,19 +135,35 @@
                                     $url = $node['url'];
                                     if (isset($node['children'])) {
                                         if ($first) {
-                                            echo '<li >';
-                                            echo '<a href="#" data-toggle="collapse" data-target="#'.$node['id'].'" aria-expanded="false" aria-controls="'.$node['id'].'">'.$node['name'].'</a>';
+                                            if ($node['show']) {
+                                                echo '<li>';
+                                            } else {
+                                                echo '<li class="hide">';
+                                            }
+                                            echo '<a  href="#" data-toggle="collapse" data-target="#'.$node['id'].'" aria-expanded="false" aria-controls="'.$node['id'].'">'.$node['name'].'</a>';
                                         } else {
-                                            echo '<li>';
+                                             if ($node['show']) {
+                                                echo '<li>';
+                                            } else {
+                                                echo '<li class="hide">';
+                                            }
                                             echo '<a href="#" data-toggle="collapse" data-target="#'.$node['id'].'" aria-expanded="false" aria-controls="'.$node['id'].'">'.$node['name'].'</a>';
                                         }
                                         print_tree($node['id'], $node['children'], FALSE);
                                     } else {
                                         if ($first){
-                                            echo '<li>';
+                                             if ($node['show']) {
+                                                echo '<li>';
+                                            } else {
+                                                echo '<li class="hide">';
+                                            }
                                             echo '<a href='.route($node['url']).'>'.$node['name'].'</a>';
                                         } else {
-                                            echo '<li>';
+                                            if ($node['show']) {
+                                                echo '<li>';
+                                            } else {
+                                                echo '<li class="hide">';
+                                            }
                                             echo '<a href='.route($node['url']).'>'.$node['name'].'</a>';
                                         }
                                     }

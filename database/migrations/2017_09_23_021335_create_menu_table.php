@@ -18,6 +18,7 @@ class CreateMenuTable extends Migration
             $table->string('name');
             $table->string('url');
             $table->string('icon');
+            $table->boolean('show');
             $table->longText('authorize_url')->nullable();
             $table->integer('parent')->nullable();
             $table->timestamps();
