@@ -129,8 +129,6 @@
                                 if ($first) {
                                     echo '';
                                 } else {
-                                    $request = new \Illuminate\Http\Request();
-                                    var_dump($request->is('menu'));
                                     echo "<ul id='".$key."' class='sidebar-nav-sub collapse'>";
                                 }
                                 foreach($tree as $key => $node) {

@@ -10,6 +10,11 @@ class MenuPolicy
 {
     use HandlesAuthorization;
 
+
+    public function index(Menu $menu){
+        return true;
+    }
+
     /**
      * Determine whether the user can view the menu.
      *

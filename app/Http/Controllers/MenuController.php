@@ -21,6 +21,7 @@ class MenuController extends Controller
      */
     public function index()
     {
+//        $this->authorize('menu.index', Menu::class);
         $menus = Menu::all();
 
         return view('menu/index')->with('menus', $menus);
@@ -34,6 +35,7 @@ class MenuController extends Controller
     public function create()
     {
 
+        $this->authorize('menu-create');
         $parents = Menu::all();
         return view('menu/create')->with('parents', $parents);
     }
@@ -64,6 +66,7 @@ class MenuController extends Controller
         $menu->url = $request->input('url');
         $menu->icon = $request->input('icon');
         $menu->parent = $request->input('parent');
+        $menu->authorize_url = str_replace("/", "-", $request->input('url'));
 
         $menu->save();
 
@@ -91,6 +94,9 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
+
+        $this->authorize('menu-update');
+
         $menu = Menu::find($id);
         $parents = Menu::where('parent', 0)->get();
 
@@ -143,6 +149,7 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('menu-delete');
         $menu = Menu::find($id);
         $menu->delete();
 

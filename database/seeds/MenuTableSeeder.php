@@ -17,26 +17,30 @@ class MenuTableSeeder extends Seeder
                 'name' => 'Dashboard',
                 'url' => 'dashboard',
                 'icon' => 'fa fa-dashboard',
-                'parent' => 0
+                'parent' => 0,
+                'authorize_url' => null,
             ],
             // menu
             [
                 'name' => 'Menu',
                 'url' => '#',
                 'icon' => 'fa fa-building',
-                'parent' => 0
+                'parent' => 0,
+                'authorize_url' => null,
             ],
             [
                 'name' => 'Daftar Menu',
                 'url' => 'menu',
                 'icon' => 'fa fa-plus',
-                'parent' => 2
+                'parent' => 2,
+                'authorize_url' => 'menu'
             ],
             [
                 'name' => 'Tambah Menu',
                 'url' => 'menu/create',
                 'icon' => 'fa fa-plus',
-                'parent' => 2
+                'parent' => 2,
+                'authorize_url' => 'menu-create'
             ],
 
             // role
@@ -44,19 +48,22 @@ class MenuTableSeeder extends Seeder
                 'name' => 'Role',
                 'url' => '#',
                 'icon' => 'fa fa-user',
-                'parent' => 0
+                'parent' => 0,
+                'authorize_url' => null
             ],
             [
                 'name' => 'Daftar Role',
                 'url' => 'role',
                 'icon' => 'fa fa-circle',
-                'parent' => 5
+                'parent' => 5,
+                'authorize_url' => 'role'
             ],
             [
                 'name' => 'Tambah Role',
                 'url' => 'role/create',
                 'icon' => 'fa fa-plus',
-                'parent' => 5
+                'parent' => 5,
+                'authorize_url' => 'role-create'
             ]
         ]);
     }

@@ -7,6 +7,7 @@ use App\Role;
 use App\RoleMenu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Validator;
 
 class RoleController extends MyController
@@ -40,6 +41,7 @@ class RoleController extends MyController
      */
     public function create()
     {
+
 
         $menus = Menu::all();
         return view('role/create')->with('menus', $menus);
@@ -105,6 +107,9 @@ class RoleController extends MyController
      */
     public function edit($id)
     {
+
+//        $this->authorize('update-role');
+
         $role = Role::find($id);
         $menus = Menu::all();
         $selected_menus = RoleMenu::where('role_id', $id)->get();
@@ -116,9 +121,6 @@ class RoleController extends MyController
             }
             $menu->selected = $selected;
         }
-
-
-
 
         return view('role/edit')->with([
             'role' => $role,
