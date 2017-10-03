@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="col-md-12">
-        <form action="{{ action('PeminjamanController@update', ['id' => $menu->id]) }}" method="post">
+        <form action="{{ action('BukuController@update', ['id' => $menu->id]) }}" method="post">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Edit Peminjaman</h3>

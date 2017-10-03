@@ -12,4 +12,9 @@ let mix = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
+    .js([
+        'resources/assets/js/perpustakaan/buku/create.js',
+        'resources/assets/js/perpustakaan/buku/edit.js',
+        'resources/assets/js/perpustakaan/buku/index.js',
+    ], 'public/js/buku.js')
    .sass('resources/assets/sass/app.scss', 'public/css');

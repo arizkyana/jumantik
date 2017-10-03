@@ -42,7 +42,14 @@ Route::namespace('Perpustakaan')->group(function(){
         Route::get('/peminjaman', 'PeminjamanController@index')->name('peminjaman');
         Route::get('/peminjaman/create', 'PeminjamanController@create')->name('peminjaman/create');
         Route::get('/peminjaman/{peminjaman}/edit', 'PeminjamanController@edit')->name('peminjaman/edit');
+
+        Route::resource('buku', 'BukuController');
+        Route::get('/buku', 'BukuController@index')->name('buku');
+        Route::get('/buku/create', 'BukuController@create')->name('buku/create');
+        Route::get('/buku/{buku}/edit', 'BukuController@edit')->name('buku/edit');
+
     });
+
 });
 
 /**

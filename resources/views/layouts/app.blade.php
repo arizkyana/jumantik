@@ -83,6 +83,7 @@
                 <div id="sidebar-wrapper">
                     <ul class="sidebar-nav">
                         <li class="sidebar-brand">Main Menu</li>
+
                         @php
                             function menus($role_id){
                                 $menus = App\Menu::all();
@@ -181,6 +182,8 @@
 </div>
 
 <!-- Scripts -->
-<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ mix('js/app.js') }}"></script>
+<script src="{{ mix('js/buku.js') }}"></script>
+
 </body>
 </html>
