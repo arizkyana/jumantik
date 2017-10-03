@@ -32,11 +32,18 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('dashboard', function ($user) {
-            return $this->authorize_menu($user->role_id, 'dashboard');
+
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'dashboard');
         });
 
         Gate::define('role', function ($user) {
-            return $this->authorize_menu($user->role_id, 'role');
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'role');
+        });
+        Gate::define('role-create', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'role-create');
+        });
+        Gate::define('role-edit', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'role-edit');
         });
 
 

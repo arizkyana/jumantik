@@ -72,6 +72,18 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label for="show" class="col-md-3"></label>
+                            <div class="col-md-9">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="show" {{ $menu->show === 1 ? 'checked' : '' }}/> Show at Sidebar?
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="panel-footer text-right">
                     <button type="submit" class="btn btn-primary">Simpan</button>

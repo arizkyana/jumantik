@@ -27,6 +27,7 @@ class RoleController extends MyController
      */
     public function index()
     {
+
         $roles = Role::all();
 
         return view('role/index')->with([

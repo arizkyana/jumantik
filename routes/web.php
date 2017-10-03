@@ -56,6 +56,6 @@ Route::get('/menu/{menu}/edit', 'MenuController@edit')->name('menu/edit');
 
 // Role
 Route::resource('role', 'RoleController');
-Route::get('/role', 'RoleController@index')->name('role');
-Route::get('/role/create', 'RoleController@create')->name('role/create');
-Route::get('/role/{role}/edit', 'RoleController@edit')->name('role/edit');
+Route::get('/role', 'RoleController@index')->name('role')->middleware('can:role');
+Route::get('/role/create', 'RoleController@create')->name('role/create')->middleware('can:role-create');
+Route::get('/role/{role}/edit', 'RoleController@edit')->name('role/edit')->middleware('can:role-edit');

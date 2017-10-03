@@ -34,8 +34,6 @@ class MenuController extends Controller
      */
     public function create()
     {
-
-        $this->authorize('menu-create');
         $parents = Menu::all();
         return view('menu/create')->with('parents', $parents);
     }
@@ -66,6 +64,7 @@ class MenuController extends Controller
         $menu->url = $request->input('url');
         $menu->icon = $request->input('icon');
         $menu->parent = $request->input('parent');
+        $menu->show = $request->input('show') ? TRUE : FALSE;
         $menu->authorize_url = str_replace("/", "-", $request->input('url'));
 
         $menu->save();
@@ -94,8 +93,6 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
-
-        $this->authorize('menu-update');
 
         $menu = Menu::find($id);
         $parents = Menu::where('parent', 0)->get();
@@ -129,14 +126,19 @@ class MenuController extends Controller
                 ->withInput();
         }
 
+
+
         $_menu = $menu->find($request->input('id'));
 
         $_menu->name = $request->input('name');
         $_menu->url = $request->input('url');
         $_menu->icon = $request->input('icon');
         $_menu->parent = $request->input('parent');
+        $_menu->show = $request->input('show') ? TRUE : FALSE;
+        $_menu->authorize_url = str_replace("/", "-", $request->input('url'));
 
         $_menu->save();
+
 
         return redirect('menu/' . $request->input('id') . '/edit')->with('success', 'Berhasil Update Menu ' . $request->input('name'));
     }
@@ -149,7 +151,7 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('menu-delete');
+
         $menu = Menu::find($id);
         $menu->delete();
 

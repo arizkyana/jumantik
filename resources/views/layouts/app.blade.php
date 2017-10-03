@@ -44,155 +44,139 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @guest
-                    <li><a href="{{ route('login') }}">Login</a></li>
-                    <li><a href="{{ route('register') }}">Register</a></li>
-                    @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
+                        <li><a href="{{ route('login') }}">Login</a></li>
+                        <li><a href="{{ route('register') }}">Register</a></li>
+                        @else
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-expanded="false">
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
 
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="{{ route('logout') }}"
+                                           onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
+                                            Logout
+                                        </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                          style="display: none;">
-                                        {{ csrf_field() }}
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                        @endguest
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                              style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                            @endguest
                 </ul>
             </div>
         </div>
     </nav>
 
     @guest
-    @yield('content')
+        @yield('content')
 
-    @else
-        <div id="wrapper">
-            <!-- Sidebar -->
-            <div id="sidebar-wrapper">
-                <ul class="sidebar-nav">
-                    <li class="sidebar-brand">Main Menu</li>
-                    @php
-                        function menus($role_id){
-                            $menus = App\Menu::all();
-                            $selected_menus = App\RoleMenu::where('role_id', $role_id)->get();
+        @else
+            <div id="wrapper">
+                <!-- Sidebar -->
+                <div id="sidebar-wrapper">
+                    <ul class="sidebar-nav">
+                        <li class="sidebar-brand">Main Menu</li>
+                        @php
+                            function menus($role_id){
+                                $menus = App\Menu::all();
+                                $selected_menus = App\RoleMenu::where('role_id', $role_id)->get();
 
-                            $new_menus = [];
-                            $test = [];
-                            foreach ($menus as $menu){
-                                $isShow = false;
-                                foreach ($selected_menus as $selected_menu){
-                                    if ($menu->id == $selected_menu->menu_id) $isShow = true;
-                                }
-
-                                $menu->isShow = $isShow;
-                                if ($menu->isShow) {
-                                    array_push($new_menus, $menu);
-                                }
-                            }
-
-                            return build_tree($new_menus);
-                        }
-
-                        function build_tree($elements, $parentId = 0){
-                            $branch = array();
-
-                            foreach ($elements as $element) {
-
-                                if ($element['parent'] == $parentId) {
-                                    $children = build_tree($elements, $element['id']);
-                                    if ($children) {
-                                        $element['children'] = $children;
+                                $new_menus = [];
+                                $test = [];
+                                foreach ($menus as $menu){
+                                    $isShow = false;
+                                    foreach ($selected_menus as $selected_menu){
+                                        if ($menu->id == $selected_menu->menu_id) $isShow = true;
                                     }
-                                    $branch[] = $element;
+
+                                    $menu->isShow = $isShow;
+                                    if ($menu->isShow) {
+                                        array_push($new_menus, $menu);
+                                    }
                                 }
+
+                                return build_tree($new_menus);
                             }
 
-                            return $branch;
-                        }
+                            function build_tree($elements, $parentId = 0){
+                                $branch = array();
 
+                                foreach ($elements as $element) {
 
-
-                        function print_tree($key, $tree, $first = FALSE){
-                            if (!is_null($tree) && count($tree) > 0) {
-                                if ($first) {
-                                    echo '';
-                                } else {
-                                    echo "<ul id='".$key."' class='sidebar-nav-sub collapse'>";
-                                }
-                                foreach($tree as $key => $node) {
-                                    $url = $node['url'];
-                                    if (isset($node['children'])) {
-                                        if ($first) {
-                                            if ($node['show']) {
-                                                echo '<li>';
-                                            } else {
-                                                echo '<li class="hide">';
-                                            }
-                                            echo '<a  href="#" data-toggle="collapse" data-target="#'.$node['id'].'" aria-expanded="false" aria-controls="'.$node['id'].'">'.$node['name'].'</a>';
-                                        } else {
-                                             if ($node['show']) {
-                                                echo '<li>';
-                                            } else {
-                                                echo '<li class="hide">';
-                                            }
-                                            echo '<a href="#" data-toggle="collapse" data-target="#'.$node['id'].'" aria-expanded="false" aria-controls="'.$node['id'].'">'.$node['name'].'</a>';
+                                    if ($element['parent'] == $parentId) {
+                                        $children = build_tree($elements, $element['id']);
+                                        if ($children) {
+                                            $element['children'] = $children;
                                         }
-                                        print_tree($node['id'], $node['children'], FALSE);
+                                        $branch[] = $element;
+                                    }
+                                }
+
+                                return $branch;
+                            }
+
+
+
+                            function print_tree($key, $tree, $first = FALSE){
+                                if (!is_null($tree) && count($tree) > 0) {
+                                    if ($first) {
+                                        echo '';
                                     } else {
-                                        if ($first){
-                                             if ($node['show']) {
-                                                echo '<li>';
-                                            } else {
-                                                echo '<li class="hide">';
-                                            }
-                                            echo '<a href='.route($node['url']).'>'.$node['name'].'</a>';
-                                        } else {
-                                            if ($node['show']) {
-                                                echo '<li>';
-                                            } else {
-                                                echo '<li class="hide">';
-                                            }
-                                            echo '<a href='.route($node['url']).'>'.$node['name'].'</a>';
-                                        }
+                                        echo "<ul id='".$key."' class='sidebar-nav-sub collapse'>";
                                     }
-                                    echo '</li>';
+                                    foreach($tree as $key => $node) {
+                                        $url = $node['url'];
+                                        if (isset($node['children'])) {
+                                            if ($first) {
+                                                echo '<li>';
+                                                echo '<a  href="#" data-toggle="collapse" data-target="#'.$node['id'].'" aria-expanded="false" aria-controls="'.$node['id'].'">'.$node['name'].'</a>';
+                                            } else {
+                                                echo '<li>';
+                                                echo '<a href="#" data-toggle="collapse" data-target="#'.$node['id'].'" aria-expanded="false" aria-controls="'.$node['id'].'">'.$node['name'].'</a>';
+                                            }
+                                            print_tree($node['id'], $node['children'], FALSE);
+                                        } else {
+                                            if ($first){
+                                                echo '<li>';
+                                                echo '<a href='.route($node['url']).'>'.$node['name'].'</a>';
+                                            } else {
+                                               echo '<li>';
+                                               echo '<a href='.route($node['url']).'>'.$node['name'].'</a>';
+                                            }
+                                        }
+                                        echo '</li>';
+                                    }
+                                    echo '</ul>';
                                 }
-                                echo '</ul>';
                             }
-                        }
 
-                        $menus = menus(\Illuminate\Support\Facades\Auth::user()->role_id);
-                        print_tree(1, $menus, TRUE);
+                            $menus = menus(\Illuminate\Support\Facades\Auth::user()->role_id);
+                            print_tree(1, $menus, TRUE);
 
-                    @endphp
+                        @endphp
 
-                </ul>
-            </div>
-            <!-- /#sidebar-wrapper -->
-
-            <!-- Page Content -->
-            <div id="page-content-wrapper">
-                <div class="container-fluid">
-
-                    @yield('content')
-
+                    </ul>
                 </div>
+                <!-- /#sidebar-wrapper -->
+
+                <!-- Page Content -->
+                <div id="page-content-wrapper">
+                    <div class="container-fluid">
+
+                        @yield('content')
+
+                    </div>
+                </div>
+                <!-- /#page-content-wrapper -->
             </div>
-            <!-- /#page-content-wrapper -->
-        </div>
-        @endguest
+            @endguest
 
 </div>
 
