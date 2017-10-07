@@ -31,11 +31,13 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        // dashboard
         Gate::define('dashboard', function ($user) {
 
             return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'dashboard');
         });
 
+        // role
         Gate::define('role', function ($user) {
             return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'role');
         });
@@ -45,6 +47,40 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('role-edit', function ($user) {
             return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'role-edit');
         });
+
+        // menu
+        Gate::define('menu', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'menu');
+        });
+        Gate::define('menu-create', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'menu-create');
+        });
+        Gate::define('menu-edit', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'menu-edit');
+        });
+
+        // users
+        Gate::define('users', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'users');
+        });
+        Gate::define('users-create', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'users-create');
+        });
+        Gate::define('users-edit', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'users-edit');
+        });
+
+        // perpustakaan -> peminjaman
+        Gate::define('peminjaman', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'peminjaman');
+        });
+        Gate::define('peminjaman-create', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'peminjaman-create');
+        });
+        Gate::define('peminjaman-edit', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'peminjaman-edit');
+        });
+
 
 
     }

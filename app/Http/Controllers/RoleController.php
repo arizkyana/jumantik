@@ -25,13 +25,15 @@ class RoleController extends MyController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
         $roles = Role::all();
 
+
         return view('role/index')->with([
-            'roles' => $roles
+            'roles' => $roles,
+
         ]);
     }
 

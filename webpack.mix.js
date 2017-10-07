@@ -17,4 +17,9 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'resources/assets/js/perpustakaan/buku/edit.js',
         'resources/assets/js/perpustakaan/buku/index.js',
     ], 'public/js/buku.js')
+    .js([
+        'resources/assets/js/users/create.js',
+        'resources/assets/js/users/edit.js',
+        'resources/assets/js/users/index.js',
+    ], 'public/js/users.js')
    .sass('resources/assets/sass/app.scss', 'public/css');

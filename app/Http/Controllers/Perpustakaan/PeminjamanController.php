@@ -17,9 +17,8 @@ class PeminjamanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-
 
         return view('perpustakaan/peminjaman/index');
     }

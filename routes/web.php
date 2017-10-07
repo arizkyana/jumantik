@@ -39,9 +39,9 @@ Route::get('/perwalian', 'PerwalianController@index')->name('perwalian');
 Route::namespace('Perpustakaan')->group(function(){
     Route::prefix('perpustakaan')->group(function(){
         Route::resource('peminjaman', 'PeminjamanController');
-        Route::get('/peminjaman', 'PeminjamanController@index')->name('peminjaman');
-        Route::get('/peminjaman/create', 'PeminjamanController@create')->name('peminjaman/create');
-        Route::get('/peminjaman/{peminjaman}/edit', 'PeminjamanController@edit')->name('peminjaman/edit');
+        Route::get('/peminjaman', 'PeminjamanController@index')->name('peminjaman')->middleware('can:peminjaman');
+        Route::get('/peminjaman/create', 'PeminjamanController@create')->name('peminjaman/create')->middleware('can:peminjaman-create');
+        Route::get('/peminjaman/{peminjaman}/edit', 'PeminjamanController@edit')->name('peminjaman/edit')->middleware('can:peminjaman-edit');
 
         Route::resource('buku', 'BukuController');
         Route::get('/buku', 'BukuController@index')->name('buku');
@@ -57,12 +57,18 @@ Route::namespace('Perpustakaan')->group(function(){
  */
 // Menu
 Route::resource('menu', 'MenuController');
-Route::get('/menu', 'MenuController@index')->name('menu');
-Route::get('/menu/create', 'MenuController@create')->name('menu/create');
-Route::get('/menu/{menu}/edit', 'MenuController@edit')->name('menu/edit');
+Route::get('/menu', 'MenuController@index')->name('menu')->middleware('can:menu');
+Route::get('/menu/create', 'MenuController@create')->name('menu/create')->middleware('can:menu-create');
+Route::get('/menu/{menu}/edit', 'MenuController@edit')->name('menu/edit')->middleware('can:menu-edit');
 
 // Role
 Route::resource('role', 'RoleController');
 Route::get('/role', 'RoleController@index')->name('role')->middleware('can:role');
 Route::get('/role/create', 'RoleController@create')->name('role/create')->middleware('can:role-create');
 Route::get('/role/{role}/edit', 'RoleController@edit')->name('role/edit')->middleware('can:role-edit');
+
+// User
+Route::resource('users', 'UsersController');
+Route::get('/users', 'UsersController@index')->name('users')->middleware('can:users');
+Route::get('/users/create', 'UsersController@create')->name('users/create')->middleware('can:users-create');
+Route::get('/users/{users}/edit', 'UsersController@edit')->name('users/edit')->middleware('can:users-edit');

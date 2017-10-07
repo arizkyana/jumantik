@@ -82,9 +82,11 @@
                 <!-- Sidebar -->
                 <div id="sidebar-wrapper">
                     <ul class="sidebar-nav">
-                        <li class="sidebar-brand">Main Menu</li>
+                        <li class="sidebar-brand"></li>
 
                         @php
+
+
                             function menus($role_id){
                                 $menus = App\Menu::all();
                                 $selected_menus = App\RoleMenu::where('role_id', $role_id)->get();
@@ -122,7 +124,6 @@
 
                                 return $branch;
                             }
-
 
 
                             function print_tree($key, $tree, $first = FALSE){
@@ -183,7 +184,7 @@
 
 <!-- Scripts -->
 <script src="{{ mix('js/app.js') }}"></script>
-<script src="{{ mix('js/buku.js') }}"></script>
+<script src="{{ mix('js/users.js') }}"></script>
 
 </body>
 </html>

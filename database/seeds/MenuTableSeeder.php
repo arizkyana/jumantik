@@ -71,6 +71,32 @@ class MenuTableSeeder extends Seeder
                 'parent' => 5,
                 'authorize_url' => 'role-create',
                 'show' => TRUE
+            ],
+
+            // users
+            [
+                'name' => 'Users',
+                'url' => '#',
+                'icon' => 'fa fa-user',
+                'parent' => 0,
+                'authorize_url' => '#',
+                'show' => TRUE
+            ],
+            [
+                'name' => 'Daftar Users',
+                'url' => 'users',
+                'icon' => 'fa fa-circle',
+                'parent' => 5,
+                'authorize_url' => 'users',
+                'show' => TRUE
+            ],
+            [
+                'name' => 'Tambah Users',
+                'url' => 'users/create',
+                'icon' => 'fa fa-plus',
+                'parent' => 5,
+                'authorize_url' => 'users-create',
+                'show' => TRUE
             ]
         ]);
     }

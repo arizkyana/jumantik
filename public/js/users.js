@@ -60,82 +60,41 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 41);
+/******/ 	return __webpack_require__(__webpack_require__.s = 46);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 41:
+/***/ 46:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(42);
-__webpack_require__(44);
-module.exports = __webpack_require__(45);
+__webpack_require__(47);
+__webpack_require__(48);
+module.exports = __webpack_require__(49);
 
 
 /***/ }),
 
-/***/ 42:
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var modal = {
-    kategori: __webpack_require__(43)
-};
-
-$(document).ready(function () {
-    console.log('create buku');
-});
-
-/***/ }),
-
-/***/ 43:
+/***/ 47:
 /***/ (function(module, exports) {
 
-var modalKategori = {
-    el: $("#modal-kategori"),
-    evt: {
-        onShow: function onShow(e) {
-            // alert('modal kategori on show');
-        },
-        onHide: function onHide(e) {
-            // alert('modal kategori on hide');
-        }
-    }
-};
 
-var formKategori = {
-    el: $("form[name=form-kategori]"),
-    evt: {
-        submit: function submit(e) {
-            e.preventDefault();
-            var data = $(this).serialize();
 
-            return;
-        }
-    }
-};
-
-modalKategori.el.on('show.bs.modal', modalKategori.evt.onShow);
-modalKategori.el.on('hide.bs.modal', modalKategori.evt.onHide);
-
-formKategori.el.submit(formKategori.evt.submit);
-
-module.exports = modalKategori;
+$(document).ready(function () {});
 
 /***/ }),
 
-/***/ 44:
+/***/ 48:
 /***/ (function(module, exports) {
 
-console.log("buku edit");
+console.log("buku users");
 
 /***/ }),
 
-/***/ 45:
+/***/ 49:
 /***/ (function(module, exports) {
 
-console.log("buku index");
+console.log("users");
 
 /***/ })
 

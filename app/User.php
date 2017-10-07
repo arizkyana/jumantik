@@ -30,4 +30,8 @@ class User extends Authenticatable
     public function isSuperAdmin(){
         return $this->attributes['role_id'] == $this->SUPER_ADMIN_ROLE_ID;
     }
+
+    public function role(){
+        return $this->belongsTo('App\Role');
+    }
 }
