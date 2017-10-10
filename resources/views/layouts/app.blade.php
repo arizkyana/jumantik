@@ -86,7 +86,6 @@
 
                     @php
 
-
                         function menus($role_id){
                             $menus = App\Menu::all();
                             $selected_menus = App\RoleMenu::where('role_id', $role_id)->get();
@@ -96,10 +95,9 @@
                             foreach ($menus as $menu){
                                 $isShow = false;
 
-                                $menu->active = url()->current() === url('/').'/'.$menu->url;
-
                                 foreach ($selected_menus as $selected_menu){
                                     if ($menu->id == $selected_menu->menu_id) $isShow = true;
+                                    $menu->active = strpos(url()->current(), url('/').'/'.$menu['url']) == 0;
                                 }
 
                                 $menu->isShow = $isShow;
@@ -110,7 +108,6 @@
 
                             return build_tree($new_menus);
                         }
-
 
 
                         function build_tree($elements, $parentId = 0){
@@ -130,6 +127,12 @@
                             return $branch;
                         }
 
+                        function set_active($menus, $url){
+                            foreach($menus as $index => $menu) {
+                                $is_active = false;
+
+                            }
+                        }
 
                         function print_tree($key, $tree, $active, $first = FALSE){
                             if (!is_null($tree) && count($tree) > 0) {
@@ -169,7 +172,6 @@
                         }
 
                         $menus = menus(\Illuminate\Support\Facades\Auth::user()->role_id);
-
 
                         print_tree(1, $menus, TRUE, TRUE);
 
