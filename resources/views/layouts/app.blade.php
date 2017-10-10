@@ -96,7 +96,7 @@
                             foreach ($menus as $menu){
                                 $isShow = false;
 
-                                $menu->active = url()->current() === url('/').'/'.$menu->url;
+
 
                                 foreach ($selected_menus as $selected_menu){
                                     if ($menu->id == $selected_menu->menu_id) $isShow = true;
@@ -131,16 +131,38 @@
                         }
 
 
+                        function set_active($menus, $curr_uri){
+                            foreach ($menus as $index => $menu) {
+                                $is_active = false;
+                                $has_children = isset($menu['children']) and is_array($menu['children']);
+
+                                if ($has_children) {
+                                    $menus[$index]['children'] = set_active($menus[$index]['children'], $curr_uri);
+                                    foreach ($menus[$index]['children'] as $menu_item) {
+
+                                        if ($menu_item['active']) {
+                                            $is_active = $is_active || true;
+                                        }
+
+                                    }
+                                } else {
+                                    $is_active = strpos($curr_uri, url('/').'/'.$menu['uri']) === 0;
+
+                                }
+                                $menus[$index]['active'] = $is_active;
+
+                            }
+                            return $menus;
+                        }
+
+
                         function print_tree($key, $tree, $active, $first = FALSE){
                             if (!is_null($tree) && count($tree) > 0) {
                                 if ($first) {
                                     echo '';
                                 } else {
-                                    if ($active) {
-                                        echo "<ul id='".$key."' class='sidebar-nav-sub collapse in'>";
-                                    } else {
-                                        echo "<ul id='".$key."' class='sidebar-nav-sub collapse'>";
-                                    }
+
+                                    echo "<ul data-active='".$active."' id='".$key."' class='sidebar-nav-sub collapse'>";
                                 }
                                 foreach($tree as $key => $node) {
                                     $url = $node['url'];
@@ -152,7 +174,7 @@
                                             echo '<li>';
                                             echo '<a href="#" data-toggle="collapse" data-target="#'.$node['id'].'" aria-expanded="false" aria-controls="'.$node['id'].'">'.$node['name'] . $node['active'].'</a>';
                                         }
-                                        print_tree($node['id'], $node['children'], FALSE);
+                                        print_tree($node['id'], $node['children'], $node['active'], FALSE);
                                     } else {
                                         if ($first){
                                             echo '<li>';
@@ -170,8 +192,9 @@
 
                         $menus = menus(\Illuminate\Support\Facades\Auth::user()->role_id);
 
+                        $active_menus = set_active($menus, url()->current());
 
-                        print_tree(1, $menus, TRUE, TRUE);
+                        echo '<pre>'.print_r($active_menus).'</pre>';
 
                     @endphp
 
