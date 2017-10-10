@@ -103,6 +103,12 @@
   cursor: pointer;
 }
 
+.sub-menu > a > i {
+  line-height: 2.5;
+  margin-right: 20px;
+  float: right;
+}
+
 @media (min-width: 768px) {
   #wrapper {
     padding-left: 250px;
