@@ -99,6 +99,10 @@
   list-style-type: none;
 }
 
+.sidebar-nav > li {
+  cursor: pointer;
+}
+
 @media (min-width: 768px) {
   #wrapper {
     padding-left: 250px;
