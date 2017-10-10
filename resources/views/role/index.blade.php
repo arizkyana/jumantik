@@ -23,7 +23,7 @@
             </div>
             <div class="panel-body no-padding">
 
-                <table id="table-menu" class="table table-condensed table-striped table-hover">
+                <table id="table-role" class="table table-condensed table-striped table-hover">
                     <thead>
                     <tr>
                         <th>ID</th>

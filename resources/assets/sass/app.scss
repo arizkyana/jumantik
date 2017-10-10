@@ -8,8 +8,9 @@
 // Layout
 @import "sidebar";
 
-// Utils
-@import "utils";
-
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+// Utils
+@import "utils";
+@import "~datatables.net-bs/css/dataTables.bootstrap.css";

@@ -22,4 +22,10 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'resources/assets/js/users/edit.js',
         'resources/assets/js/users/index.js',
     ], 'public/js/users.js')
+    .js([
+        'resources/assets/js/menu/index.js'
+    ], 'public/js/menu.js')
+    .js([
+        'resources/assets/js/role/index.js'
+    ], 'public/js/role.js')
    .sass('resources/assets/sass/app.scss', 'public/css');

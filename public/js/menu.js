@@ -60,41 +60,37 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 48);
+/******/ 	return __webpack_require__(__webpack_require__.s = 52);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 48:
+/***/ 52:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(49);
-__webpack_require__(50);
-module.exports = __webpack_require__(51);
+module.exports = __webpack_require__(53);
 
 
 /***/ }),
 
-/***/ 49:
+/***/ 53:
 /***/ (function(module, exports) {
 
 
 
-$(document).ready(function () {});
+var table = {};
+$(document).ready(function () {
+    table = {
+        el: $("#table-menu"),
+        evt: {},
+        init: function init() {
+            var self = this;
+            self.el.dataTable();
+        }
+    };
 
-/***/ }),
-
-/***/ 50:
-/***/ (function(module, exports) {
-
-console.log("buku users");
-
-/***/ }),
-
-/***/ 51:
-/***/ (function(module, exports) {
-
-console.log("users");
+    table.init();
+});
 
 /***/ })
 
