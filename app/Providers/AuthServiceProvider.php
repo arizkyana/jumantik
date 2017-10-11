@@ -82,6 +82,22 @@ class AuthServiceProvider extends ServiceProvider
         });
 
 
+        // survey
+        Gate::define('survey', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'survey');
+        });
+        Gate::define('survey-create', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'survey-create');
+        });
+        Gate::define('survey-edit', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'survey-edit');
+        });
+        Gate::define('survey-laporan', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'survey-laporan');
+        });
+
+
+
     }
 
     private function authorize_menu($role_id, $resource)

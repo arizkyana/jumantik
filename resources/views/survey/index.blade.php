@@ -11,15 +11,10 @@
             </div>
         @endif
 
-        <div class="padding-bottom-md text-right">
-            <a href="{{ route('laporan/create') }}" class="btn btn-primary">
-                <i class="glyphicon glyphicon-plus-sign"></i> Buat Laporan
-            </a>
-        </div>
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Daftar Laporan</h3>
+                <h3 class="panel-title">Daftar Survey</h3>
             </div>
             <div class="panel-body no-padding">
 
@@ -27,8 +22,8 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Pelapor</th>
-                        <th>Penyakit</th>
+                        <th>Laporan</th>
+                        <th>Petugas (PJ)</th>
                         <th>Lokasi</th>
                         <th>Action</th>
                     </tr>
@@ -37,14 +32,14 @@
                         <tr>
                             <td>1</td>
                             <td>Joni</td>
-                            <td>Demam Berdarah</td>
+                            <td>Bp. Marjono</td>
                             <td>
                                 {{--lokasi langsung open gmaps--}}
                                 <a href="{{ route('maps') }}" class="text-danger">Jl. Antapani</a>
                             </td>
                             <td>
-                                <a href="{{ route('survey/laporan', 1) }}" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-alert"></i> Survey</a>
-                                <a class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                                <a  class="btn btn-success btn-sm" ><i class="glyphicon glyphicon-alert"></i> Survey Selesai</a>
+                                <a class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i></a>
                             </td>
                         </tr>
                     </tbody>

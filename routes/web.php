@@ -31,7 +31,8 @@ Route::resource('survey', 'SurveyController');
 Route::get('/survey', 'SurveyController@index')->name('survey')->middleware('can:survey');
 Route::get('/survey/create', 'SurveyController@create')->name('survey/create')->middleware('can:survey-create');
 Route::get('/survey/{survey}/edit', 'SurveyController@edit')->name('survey/edit')->middleware('can:survey-edit');
-Route::get('/survey/laporan', 'SurveyController@laporan')->name('survey/laporan')->middleware('can:survey-laporan');
+Route::get('/survey/{laporan}/laporan', 'SurveyController@laporan')->name('survey/laporan')->middleware('can:survey-laporan');
+
 
 // maps
 Route::get('/maps', 'MapsController@index')->name('maps');

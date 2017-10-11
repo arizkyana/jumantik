@@ -159,7 +159,7 @@ class SurveyController extends Controller
      * @param \App\Laporan $id
      * @return \Illuminate\Http\Response
      */
-    public function laporan($id){
+    public function laporan(){
         return view('survey/laporan');
     }
 }

@@ -23,6 +23,7 @@
     "datatables": "^1.10.13",
     "datatables.net": "^1.10.16",
     "datatables.net-bs": "^1.10.16",
+    "font-awesome": "^4.7.0",
     "gulp": "^3.9.1",
     "laravel-elixir": "^6.0.0-15",
     "node-sass": "^4.5.3",
