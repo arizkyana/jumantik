@@ -20,37 +20,21 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
-// Siswa
-Route::get('/siswa/add', 'SiswaController@add')->name('siswa/add');
-Route::get('/siswa/list', 'SiswaController@list')->name('siswa/list');
-Route::post('/siswa/add', 'SiswaController@add');
+// laporan
+Route::resource('laporan', 'LaporanController');
+Route::get('/laporan', 'LaporanController@index')->name('laporan')->middleware('can:laporan');
+Route::get('/laporan/create', 'LaporanController@create')->name('laporan/create')->middleware('can:laporan-create');
+Route::get('/laporan/{laporan}/edit', 'LaporanController@edit')->name('laporan/edit')->middleware('can:laporan-edit');
 
-// Sekolah
-Route::get('/sekolah/add', 'SekolahController@add')->name('sekolah/add');
-Route::post('/sekolah/add', 'SekolahController@add');
+// survey
+Route::resource('survey', 'SurveyController');
+Route::get('/survey', 'SurveyController@index')->name('survey')->middleware('can:survey');
+Route::get('/survey/create', 'SurveyController@create')->name('survey/create')->middleware('can:survey-create');
+Route::get('/survey/{survey}/edit', 'SurveyController@edit')->name('survey/edit')->middleware('can:survey-edit');
+Route::get('/survey/laporan', 'SurveyController@laporan')->name('survey/laporan')->middleware('can:survey-laporan');
 
-// Jadwal
-Route::get('/jadwal', 'JadwalController@index')->name('jadwal');
-
-// Perwalian
-Route::get('/perwalian', 'PerwalianController@index')->name('perwalian');
-
-// Perpustakaan
-Route::namespace('Perpustakaan')->group(function(){
-    Route::prefix('perpustakaan')->group(function(){
-        Route::resource('peminjaman', 'PeminjamanController');
-        Route::get('/peminjaman', 'PeminjamanController@index')->name('peminjaman')->middleware('can:peminjaman');
-        Route::get('/peminjaman/create', 'PeminjamanController@create')->name('peminjaman/create')->middleware('can:peminjaman-create');
-        Route::get('/peminjaman/{peminjaman}/edit', 'PeminjamanController@edit')->name('peminjaman/edit')->middleware('can:peminjaman-edit');
-
-        Route::resource('buku', 'BukuController');
-        Route::get('/buku', 'BukuController@index')->name('buku');
-        Route::get('/buku/create', 'BukuController@create')->name('buku/create');
-        Route::get('/buku/{buku}/edit', 'BukuController@edit')->name('buku/edit');
-
-    });
-
-});
+// maps
+Route::get('/maps', 'MapsController@index')->name('maps');
 
 /**
  * Configuration

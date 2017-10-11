@@ -8695,6 +8695,10 @@ button.close {
   padding: 10px 10px;
 }
 
+.font-40 {
+  font-size: 40px;
+}
+
 .ct-label {
   fill: rgba(0, 0, 0, 0.4);
   color: rgba(0, 0, 0, 0.4);

@@ -76,7 +76,7 @@ module.exports = __webpack_require__(52);
 /***/ 52:
 /***/ (function(module, exports, __webpack_require__) {
 
-var Chartist = __webpack_require__(63);
+var Chartist = __webpack_require__(53);
 $(document).ready(function () {
 
     var data = {
@@ -111,7 +111,7 @@ $(document).ready(function () {
 
 /***/ }),
 
-/***/ 63:
+/***/ 53:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root, factory) {

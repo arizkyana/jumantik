@@ -26332,8 +26332,8 @@ window._ = __webpack_require__(13);
 try {
   window.$ = window.jQuery = __webpack_require__(1);
   $.DataTable = __webpack_require__(4);
-  __webpack_require__(15);
 
+  __webpack_require__(15);
   __webpack_require__(16);
 } catch (e) {}
 
