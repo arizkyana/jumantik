@@ -24,7 +24,10 @@ class MenuController extends Controller
 //        $this->authorize('menu.index', Menu::class);
         $menus = Menu::all();
 
-        return view('menu/index')->with('menus', $menus);
+        return view('menu/index')->with([
+            'menus' => $menus,
+            'js' => 'menu.js'
+        ]);
     }
 
     /**

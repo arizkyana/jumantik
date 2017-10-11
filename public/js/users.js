@@ -94,7 +94,19 @@ console.log("buku users");
 /***/ 46:
 /***/ (function(module, exports) {
 
-console.log("users");
+var table = {};
+$(document).ready(function () {
+    table = {
+        el: $("#table-users"),
+        evt: {},
+        init: function init() {
+            var self = this;
+            self.el.dataTable();
+        }
+    };
+
+    table.init();
+});
 
 /***/ })
 

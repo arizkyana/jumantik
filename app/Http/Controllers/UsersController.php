@@ -36,7 +36,8 @@ class UsersController extends MyController
         endforeach;
 
         return view('users/index')->with([
-            'users' => $users
+            'users' => $users,
+            'js' => 'users.js'
         ]);
     }
 

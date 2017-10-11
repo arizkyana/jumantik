@@ -82,7 +82,7 @@
                 <!-- Sidebar -->
                 <div id="sidebar-wrapper">
                     <ul class="sidebar-nav">
-                        <li class="sidebar-brand"></li>
+                        <li class="sidebar-brand"> Main Menu</li>
 
                         @php
 
@@ -130,36 +130,11 @@
                                 return $branch;
                             }
 
-
-                            function set_active($menus, $curr_uri){
-                                foreach ($menus as $index => $menu) {
-                                    $is_active = false;
-                                    $has_children = isset($menu['children']) and is_array($menu['children']);
-
-                                    if ($has_children) {
-                                        $menus[$index]['children'] = set_active($menus[$index]['children'], $curr_uri);
-                                        foreach ($menus[$index]['children'] as $menu_item) {
-
-                                            if ($menu_item['active']) {
-                                                $is_active = $is_active || true;
-                                            }
-
-                                        }
-                                    } else {
-                                        $is_active = strpos($curr_uri, url('/').'/'.$menu['uri']) === 0;
-
-                                    }
-                                    $menus[$index]['active'] = $is_active;
-
-                                }
-                                return $menus;
-                            }
-
                             function print_menu($menu, $url){
 
                                 $has_children = is_array($menu['children']) and isset($menu['children']);
                                 if ($has_children) {
-                                    echo '<li data-toggle="collapse" data-target="#'.$menu['name'].'" aria-expanded="false" aria-controls="menu"><a>'.$menu['name'].'</a></li>';
+                                    echo '<li class="sub-menu" data-toggle="collapse" data-target="#'.$menu['name'].'" aria-expanded="false" aria-controls="menu"><a>'.$menu['name'].' <i class="glyphicon glyphicon-menu-down"></i> </a>  </li>';
 
                                     if ((strpos(url('/').'/'.$menu['url'], $url) === 0) || (Request::segment(1) == $menu['url'])) {
                                         echo '<ul id="'.$menu['name'].'" data-current-url="'.$url.'" data-menu-url="'.$menu['url'].'" class="sidebar-nav-sub collapse in">';
@@ -206,7 +181,9 @@
 
 <!-- Scripts -->
 <script src="{{ mix('js/app.js') }}"></script>
-<script src="{{ mix('js/users.js') }}"></script>
 
+@if (isset($js))
+    <script src="{{ mix('js/' . $js) }}"></script>
+@endif
 </body>
 </html>

@@ -33,7 +33,7 @@ class RoleController extends MyController
 
         return view('role/index')->with([
             'roles' => $roles,
-
+            'js' => 'role.js'
         ]);
     }
 

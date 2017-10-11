@@ -76,7 +76,21 @@ module.exports = __webpack_require__(48);
 /***/ 48:
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open 'D:\\xampp\\htdocs\\edu\\resources\\assets\\js\\menu\\index.js'\n    at Error (native)");
+
+
+var table = {};
+$(document).ready(function () {
+    table = {
+        el: $("#table-menu"),
+        evt: {},
+        init: function init() {
+            var self = this;
+            self.el.dataTable();
+        }
+    };
+
+    table.init();
+});
 
 /***/ })
 

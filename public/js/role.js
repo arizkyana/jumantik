@@ -76,7 +76,19 @@ module.exports = __webpack_require__(50);
 /***/ 50:
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open 'D:\\xampp\\htdocs\\edu\\resources\\assets\\js\\role\\index.js'\n    at Error (native)");
+var table = {};
+$(document).ready(function () {
+    table = {
+        el: $("#table-role"),
+        evt: {},
+        init: function init() {
+            var self = this;
+            self.el.dataTable();
+        }
+    };
+
+    table.init();
+});
 
 /***/ })
 

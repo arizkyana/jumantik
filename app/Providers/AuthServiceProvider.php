@@ -70,15 +70,30 @@ class AuthServiceProvider extends ServiceProvider
             return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'users-edit');
         });
 
-        // perpustakaan -> peminjaman
-        Gate::define('peminjaman', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'peminjaman');
+        // laporan
+        Gate::define('laporan', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'laporan');
         });
-        Gate::define('peminjaman-create', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'peminjaman-create');
+        Gate::define('laporan-create', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'laporan-create');
         });
-        Gate::define('peminjaman-edit', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'peminjaman-edit');
+        Gate::define('laporan-edit', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'laporan-edit');
+        });
+
+
+        // survey
+        Gate::define('survey', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'survey');
+        });
+        Gate::define('survey-create', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'survey-create');
+        });
+        Gate::define('survey-edit', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'survey-edit');
+        });
+        Gate::define('survey-laporan', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'survey-laporan');
         });
 
 

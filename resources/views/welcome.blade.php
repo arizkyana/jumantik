@@ -49,6 +49,10 @@
                 font-size: 84px;
             }
 
+            .sub-title {
+                font-size: 60px;
+            }
+
             .links > a {
                 color: #636b6f;
                 padding: 0 25px;
@@ -69,7 +73,7 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/dashboard') }}">Dashboard</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
                         <a href="{{ route('register') }}">Register</a>
@@ -79,13 +83,12 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    EdMS
+                    {{ config('app.name', 'Laravel') }}
+                </div>
+                <div class="sub-title m-b-md">
+                    Sistem Pencegahan
                 </div>
 
-                <div class="links">
-                    <a href="https://edms.com/docs">Documentation</a>
-                    <a href="https://github.com/arizkyana/edu">GitHub</a>
-                </div>
             </div>
         </div>
     </body>
