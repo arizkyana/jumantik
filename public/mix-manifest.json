@@ -1,6 +1,8 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
-    "/js/buku.js": "/js/buku.js",
-    "/js/users.js": "/js/users.js"
+    "/js/users.js": "/js/users.js",
+    "/js/dashboard.js": "/js/dashboard.js",
+    "/js/role.js": "/js/role.js",
+    "/js/menu.js": "/js/menu.js"
 }
