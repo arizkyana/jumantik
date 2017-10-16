@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -70,6 +71,17 @@ class AuthServiceProvider extends ServiceProvider
             return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'users-edit');
         });
 
+        // apiClient
+        Gate::define('apiClient', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'apiClient');
+        });
+        Gate::define('apiClient-create', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'apiClient-create');
+        });
+        Gate::define('apiClient-edit', function ($user) {
+            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'apiClient-edit');
+        });
+
         // laporan
         Gate::define('laporan', function ($user) {
             return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'laporan');
@@ -96,6 +108,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'survey-laporan');
         });
 
+        Passport::routes();
 
 
     }

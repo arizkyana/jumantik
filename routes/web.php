@@ -57,3 +57,9 @@ Route::resource('users', 'UsersController');
 Route::get('/users', 'UsersController@index')->name('users')->middleware('can:users');
 Route::get('/users/create', 'UsersController@create')->name('users/create')->middleware('can:users-create');
 Route::get('/users/{users}/edit', 'UsersController@edit')->name('users/edit')->middleware('can:users-edit');
+
+// API
+Route::resource('apiClient', 'ApiClientController');
+Route::get('/apiClient', 'ApiClientController@index')->name('apiClient')->middleware('can:apiClient');
+Route::get('/apiClient/create', 'ApiClientController@create')->name('apiClient/create')->middleware('can:apiClient-create');
+Route::get('/apiClient/{apiClient}/edit', 'ApiClientController@edit')->name('apiClient/edit')->middleware('can:apiClient-edit');

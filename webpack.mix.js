@@ -18,6 +18,11 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'resources/assets/js/users/index.js',
     ], 'public/js/users.js')
     .js([
+        'resources/assets/js/apiClient/create.js',
+        'resources/assets/js/apiClient/edit.js',
+        'resources/assets/js/apiClient/index.js',
+    ], 'public/js/apiClient.js')
+    .js([
         'resources/assets/js/menu/index.js'
     ], 'public/js/menu.js')
     .js([
