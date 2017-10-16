@@ -26,23 +26,19 @@
                 <table id="table-role" class="table table-condensed table-striped table-hover">
                     <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Nama</th>
                         <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($roles as $role)
+                    @foreach($roles as $index => $role)
                         <tr>
-                            <td>{{ $role->id }}</td>
+                            <td>{{ $index + 1 }}</td>
                             <td>
-                                <a href="{{ route('role/edit', $role)  }}" class="text-primary">
-                                    {{ $role->name }}
-                                </a>
+                                <a href="{{ route('role/edit', $role) }}" class="text-primary">{{ $role->name }}</a>
                             </td>
-
                             <td>
-
                                 <a class="btn btn-sm btn-danger"
                                    onclick="event.preventDefault();
                                            document.getElementById('delete-{{$role->id}}').submit();">

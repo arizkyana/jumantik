@@ -103,6 +103,28 @@
                             </div>
                         </div>
                     </fieldset>
+                    <fieldset>
+                        <legend>Client API</legend>
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="client_name" class="col-md-3">Client Name</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="client_name" id="client_scope" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="client_scope" class="col-md-3">Scope</label>
+                                <div class="col-md-9">
+                                    <select multiple name="client_scope" id="client_scope" class="form-control">
+                                        <option value=""></option>
+                                        <option value="*">All</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
 
                 </div>
                 <div class="panel-footer text-right">

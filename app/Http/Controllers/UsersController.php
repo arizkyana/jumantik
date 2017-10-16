@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\ApiClient;
 use App\Menu;
 use App\Role;
 use App\RoleMenu;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -14,6 +16,7 @@ use Validator;
 class UsersController extends MyController
 {
 
+    private $js = 'users.js';
 
     public function __construct()
     {
@@ -37,7 +40,7 @@ class UsersController extends MyController
 
         return view('users/index')->with([
             'users' => $users,
-            'js' => 'users.js'
+            'js' => $this->js
         ]);
     }
 
@@ -119,7 +122,8 @@ class UsersController extends MyController
 
         return view('users/edit')->with([
             'users' => $users,
-            'roles' => $roles
+            'roles' => $roles,
+            'js' => $this->js
         ]);
     }
 
@@ -156,6 +160,33 @@ class UsersController extends MyController
         $_user->role_id = $request->input('role');
 
         $_user->save();
+
+        // Store Client API
+        if ($request->input('client_name')){
+            $apiClient = ApiClient::where('user_id', $request->input('id'));
+            $apiClient = $apiClient->get();
+            if ($apiClient) {
+                if (is_array($apiClient)){
+                    foreach ($apiClient as $api) {
+                        $_api = ApiClient::find($api->id);
+                        $_api->delete();
+                    }
+                }
+            }
+
+            $_api = new ApiClient();
+            $_api->user_id = $request->input('id');
+            $_api->name = $request->input('client_name');
+            $_api->secret = bcrypt(Carbon::now() . "-" . $request->input('client_name'));
+            $_api->redirect = 'http://localhost:8000/callback'; // sementara statik dulu
+            $_api->personal_access_client = 0;
+            $_api->password_client = 1;
+            $_api->revoked = 0;
+
+            $_api->save();
+
+            return $_api;
+        }
 
         return redirect('users/' . $request->input('id') . '/edit')->with('success', 'Berhasil Update User ' . $_user->email);
     }
