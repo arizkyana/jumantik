@@ -9,10 +9,29 @@ window._ = require('lodash');
 
 try {
     window.$ = window.jQuery = require('jquery');
-    $.DataTable = require('datatables.net');
+    require('datatables.net-buttons');
+    $.DataTable = require('../themes/js/plugins/dataTables/datatables.min');
 
-    require('datatables.net-bs');
-    require('bootstrap-sass');
+    require('../themes/js/bootstrap.min');
+    require('../themes/js/plugins/metisMenu/jquery.metisMenu');
+    require('../themes/js/plugins/slimscroll/jquery.slimscroll.min');
+
+// Flot
+    require('../themes/js/plugins/flot/jquery.flot');
+    require('../themes/js/plugins/flot/jquery.flot.tooltip.min');
+    require('../themes/js/plugins/flot/jquery.flot.spline');
+    require('../themes/js/plugins/flot/jquery.flot.resize');
+    require('../themes/js/plugins/flot/jquery.flot.pie');
+
+// Peity
+    require('../themes/js/plugins/peity/jquery.peity.min');
+
+// Inspinia
+    require('../themes/js/inspinia');
+
+// Toastr
+    require('../themes/js/plugins/toastr/toastr.min');
+
 } catch (e) {}
 
 /**
