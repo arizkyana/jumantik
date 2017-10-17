@@ -60,23 +60,23 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 40);
+/******/ 	return __webpack_require__(__webpack_require__.s = 67);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 40:
+/***/ 67:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(41);
+module.exports = __webpack_require__(68);
 
 
 /***/ }),
 
-/***/ 41:
+/***/ 68:
 /***/ (function(module, exports, __webpack_require__) {
 
-var Chartist = __webpack_require__(42);
+var Chartist = __webpack_require__(69);
 $(document).ready(function () {
 
     var data = {
@@ -111,7 +111,7 @@ $(document).ready(function () {
 
 /***/ }),
 
-/***/ 42:
+/***/ 69:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root, factory) {

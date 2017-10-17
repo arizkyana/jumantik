@@ -60,22 +60,22 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 32);
+/******/ 	return __webpack_require__(__webpack_require__.s = 59);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 32:
+/***/ 59:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(33);
-__webpack_require__(34);
-module.exports = __webpack_require__(35);
+__webpack_require__(60);
+__webpack_require__(61);
+module.exports = __webpack_require__(62);
 
 
 /***/ }),
 
-/***/ 33:
+/***/ 60:
 /***/ (function(module, exports) {
 
 
@@ -84,14 +84,14 @@ $(document).ready(function () {});
 
 /***/ }),
 
-/***/ 34:
+/***/ 61:
 /***/ (function(module, exports) {
 
 console.log("buku users");
 
 /***/ }),
 
-/***/ 35:
+/***/ 62:
 /***/ (function(module, exports) {
 
 var table = {};

@@ -48,12 +48,17 @@
 
         $has_children = is_array($menu['children']) and isset($menu['children']);
         if ($has_children) {
-            echo '<li class="sub-menu" data-toggle="collapse" data-target="#'.$menu['name'].'" aria-expanded="false" aria-controls="menu"><a>'.$menu['name'].' <i class="glyphicon glyphicon-menu-down"></i> </a>  </li>';
+            if ((strpos(url('/').'/'.$menu['url'], $url) === 0) || (Request::segment(1) == $menu['url'])) {
+                echo '<li class="active">';
+            } else {
+                echo '<li>';
+            }
+            echo '<a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">'.$menu['name'].'</span> <span class="fa arrow"></span></a>';
 
             if ((strpos(url('/').'/'.$menu['url'], $url) === 0) || (Request::segment(1) == $menu['url'])) {
-                echo '<ul id="'.$menu['name'].'" data-current-url="'.$url.'" data-menu-url="'.$menu['url'].'" class="sidebar-nav-sub collapse in">';
+                echo '<ul id="'.$menu['name'].'" data-current-url="'.$url.'" data-menu-url="'.$menu['url'].'" class="nav nav-second-level collapse in">';
             } else {
-                echo '<ul id="'.$menu['name'].'" data-current-url="'.$url.'" data-menu-url="'.$menu['url'].'" class="sidebar-nav-sub collapse">';
+                echo '<ul id="'.$menu['name'].'" data-current-url="'.$url.'" data-menu-url="'.$menu['url'].'" class="nav nav-second-level collapse">';
             }
 
             foreach ($menu['children'] as $child){
@@ -62,8 +67,9 @@
 
             }
             echo '</ul>';
+            echo '</li>';
         } else { // doesn't have children
-            echo '<li><a href='.route($menu['url']).'>'.$menu['name'].'</a></li>';
+            echo '<li><a href='.route($menu['url']).'><i class="fa fa-pie-chart"></i> <span class="nav-label">'.$menu['name'].'</span></a></li>';
         }
     }
 
