@@ -44,7 +44,7 @@
         return $branch;
     }
 
-    function print_menu($menu, $url){
+    function print_menu($menu, $url, $is_child = FALSE){
 
         $has_children = is_array($menu['children']) and isset($menu['children']);
         if ($has_children) {
@@ -63,13 +63,18 @@
 
             foreach ($menu['children'] as $child){
 
-                print_menu($child, url()->current());
+                print_menu($child, url()->current(), TRUE);
 
             }
             echo '</ul>';
             echo '</li>';
         } else { // doesn't have children
-            echo '<li><a href='.route($menu['url']).'><i class="fa fa-pie-chart"></i> <span class="nav-label">'.$menu['name'].'</span></a></li>';
+
+            if ($is_child) {
+                echo '<li><a href='.route($menu['url']).'>'.$menu['name'].'</a></li>';
+            } else {
+                echo "<li><a data-child='".$is_child."' href='".route($menu['url'])."'><i class='fa fa-dashboard'></i><span class='nav-label'>".$menu['name']."</span></a></li>";
+            }
         }
     }
 

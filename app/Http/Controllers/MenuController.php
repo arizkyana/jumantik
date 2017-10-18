@@ -26,7 +26,8 @@ class MenuController extends Controller
 
         return view('menu/index')->with([
             'menus' => $menus,
-            'js' => 'menu.js'
+            'js' => 'menu.js',
+            'title' => 'Menu'
         ]);
     }
 

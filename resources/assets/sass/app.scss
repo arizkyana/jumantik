@@ -4,5 +4,14 @@
 
 @import "../themes/css/bootstrap.min.css";
 @import "../themes/font-awesome/css/font-awesome.min.css";
+@import "../themes/css/plugins/toastr/toastr.min.css";
+@import "../themes/js/plugins/gritter/jquery.gritter.css";
 @import "../themes/css/animate.css";
 @import "../themes/css/style.css";
+
+/**
+  Utils
+ */
+
+// Datatables
+@import "datatables";

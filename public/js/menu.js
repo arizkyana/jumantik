@@ -60,20 +60,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 63);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 63:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(64);
-
-
-/***/ }),
-
-/***/ 64:
+/***/ 10:
 /***/ (function(module, exports) {
 
 
@@ -85,12 +77,21 @@ $(document).ready(function () {
         evt: {},
         init: function init() {
             var self = this;
-            self.el.dataTable();
+            // console.log(self);
+            self.el.DataTable();
         }
     };
 
     table.init();
 });
+
+/***/ }),
+
+/***/ 9:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(10);
+
 
 /***/ })
 

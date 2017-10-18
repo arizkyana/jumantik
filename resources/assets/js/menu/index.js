@@ -7,7 +7,8 @@ $(document).ready(function(){
         evt: {},
         init: function(){
             let self = this;
-            self.el.dataTable();
+            // console.log(self);
+            self.el.DataTable();
         }
     };
 

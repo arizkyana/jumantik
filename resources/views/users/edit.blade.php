@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="col-md-12">
+
         <form action="{{ action('UsersController@update', ['id' => $users->id]) }}" method="post">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Edit User</h3>
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Edit User</h5>
                 </div>
-                <div class="panel-body">
+                <div class="ibox-content">
                     {{ csrf_field() }}
                     {{ method_field('PUT') }}
                     @if (session('success'))
@@ -127,13 +127,13 @@
                     </fieldset>
 
                 </div>
-                <div class="panel-footer text-right">
+                <div class="ibox-footer text-right">
                     <button type="submit" class="btn btn-primary">Simpan</button>
                     <a href="{{ route('users') }}" class="btn btn-default">Batal</a>
                 </div>
             </div>
         </form>
-    </div>
+
 
 
 @endsection

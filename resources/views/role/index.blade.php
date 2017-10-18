@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="col-md-12">
+
+
+
+
         @if (session('success'))
             <div class="alert alert-success" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -11,18 +14,19 @@
             </div>
         @endif
 
-        <div class="padding-bottom-md text-right">
-            <a href="{{ route('role/create') }}" class="btn btn-primary">
-                <i class="glyphicon glyphicon-plus-sign"></i> Tambah Role
-            </a>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Daftar Role</h3>
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>Daftar Role</h5>
+                <div class="ibox-tools">
+                    <a href="{{ route('role/create') }}" class="btn btn-primary btn-label">
+                        <b>
+                            <i class="fa fa-plus"></i>
+                        </b>
+                        Tambah Role
+                    </a>
+                </div>
             </div>
-            <div class="panel-body no-padding">
-
+            <div class="ibox-content no-padding">
                 <table id="table-role" class="table table-condensed table-striped table-hover">
                     <thead>
                     <tr>
@@ -57,8 +61,11 @@
                     </tbody>
                 </table>
             </div>
+
         </div>
-    </div>
+
+       
+
 
 
 @endsection

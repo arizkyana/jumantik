@@ -204,4 +204,24 @@ class UsersController extends MyController
 
         return redirect('users')->with('success', 'Berhasil Hapus User ' . $id);
     }
+
+
+    /**
+     * Show user profile
+     *
+     * @param  \App\Menu $menu
+     * @return \Illuminate\Http\Response
+     */
+    public function profile()
+    {
+        $users = Auth::user();
+        $roles = Role::all();
+
+
+        return view('users/profile')->with([
+            'users' => $users,
+            'roles' => $roles,
+            'js' => $this->js
+        ]);
+    }
 }

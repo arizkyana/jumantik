@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
 
 Auth::routes();
@@ -53,6 +53,7 @@ Route::get('/role/create', 'RoleController@create')->name('role/create')->middle
 Route::get('/role/{role}/edit', 'RoleController@edit')->name('role/edit')->middleware('can:role-edit');
 
 // User
+Route::get('/users/profile', 'UsersController@profile')->name('users/profile');
 Route::resource('users', 'UsersController');
 Route::get('/users', 'UsersController@index')->name('users')->middleware('can:users');
 Route::get('/users/create', 'UsersController@create')->name('users/create')->middleware('can:users-create');
