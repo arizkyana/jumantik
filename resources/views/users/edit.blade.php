@@ -109,21 +109,27 @@
                             <div class="row">
                                 <label for="client_name" class="col-md-3">Client Name</label>
                                 <div class="col-md-9">
-                                    <input type="text" name="client_name" id="client_scope" class="form-control" />
+                                    <input type="text" name="client_name" id="client_scope" class="form-control" value="{{ $apiClient->name }}" />
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <div class="row">
-                                <label for="client_scope" class="col-md-3">Scope</label>
+                                <label for="client_secret" class="col-md-3">Client Secret</label>
                                 <div class="col-md-9">
-                                    <select multiple name="client_scope" id="client_scope" class="form-control">
-                                        <option value=""></option>
-                                        <option value="*">All</option>
-                                    </select>
+                                    <div class="input-group">
+                                        <input type="text" readonly name="client_secret" id="client-secret" class="form-control" value="{{ $apiClient->secret }}">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" data-clipboard-target="client_secret">
+                                                <i class="fa fa-copy"></i> Copy
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
                     </fieldset>
 
                 </div>

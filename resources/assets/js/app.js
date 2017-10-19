@@ -1,1 +1,3 @@
-require('./bootstrap');
+try {
+    require('clipboard');
+}catch(e){}

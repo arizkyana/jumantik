@@ -119,11 +119,25 @@ class UsersController extends MyController
 
         $roles = Role::all();
 
+        $apiClient = ApiClient::where('user_id', $id)->get();
+
+        if (count($apiClient) <= 0) {
+            $apiClient = new \stdClass();
+
+            $apiClient->name = '';
+            $apiClient->secret = '';
+        } else {
+            $apiClient = $apiClient[0];
+//            return 'ada api';
+        }
+
+
 
         return view('users/edit')->with([
             'users' => $users,
             'roles' => $roles,
-            'js' => $this->js
+            'js' => $this->js,
+            'apiClient' => $apiClient
         ]);
     }
 
@@ -156,7 +170,7 @@ class UsersController extends MyController
 
         $_user->name = $request->input('name');
         $_user->email = $request->input('email') ? $request->input('email') : $_user->email;
-        $_user->password = $request->input('password');
+        $_user->password = bcrypt($request->input('password'));
         $_user->role_id = $request->input('role');
 
         $_user->save();
@@ -175,17 +189,18 @@ class UsersController extends MyController
             }
 
             $_api = new ApiClient();
+
             $_api->user_id = $request->input('id');
             $_api->name = $request->input('client_name');
-            $_api->secret = bcrypt(Carbon::now() . "-" . $request->input('client_name'));
+            $_api->secret = str_random(40);
             $_api->redirect = 'http://localhost:8000/callback'; // sementara statik dulu
-            $_api->personal_access_client = 0;
-            $_api->password_client = 1;
-            $_api->revoked = 0;
+            $_api->personal_access_client = false;
+            $_api->password_client = true;
+            $_api->revoked = false;
 
             $_api->save();
 
-//            return $_api;
+            return $_api;
         }
 
         return redirect('users/' . $request->input('id') . '/edit')->with('success', 'Berhasil Update User ' . $_user->email);

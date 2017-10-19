@@ -11,8 +11,8 @@ let mix = require('laravel-mix');
  |
  */
 
-// mix.js('resources/assets/js/app.js', 'public/js')
-    mix.js([
+mix.js('resources/assets/js/app.js', 'public/js')
+    .js([
         'resources/assets/js/users/create.js',
         'resources/assets/js/users/edit.js',
         'resources/assets/js/users/index.js',
