@@ -200,7 +200,7 @@ class UsersController extends MyController
 
             $_api->save();
 
-            return $_api;
+
         }
 
         return redirect('users/' . $request->input('id') . '/edit')->with('success', 'Berhasil Update User ' . $_user->email);
