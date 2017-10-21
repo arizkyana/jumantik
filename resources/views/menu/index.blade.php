@@ -28,7 +28,7 @@
 
                 <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>No</th>
                     <th>Nama</th>
                     <th>URL</th>
                     <th>Icon</th>
@@ -37,9 +37,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($menus as $menu)
+                @foreach($menus as $index => $menu)
                     <tr>
-                        <td>{{ $menu->id }}</td>
+                        <td>{{ $index + 1 }}</td>
                         <td>
                             <a href="{{ route('menu/edit', $menu)  }}" class="text-primary">
                                 {{ $menu->name }}

@@ -31,4 +31,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .js([
         'resources/assets/js/dashboard/index.js'
     ], 'public/js/dashboard.js')
+    .js([
+        'resources/assets/js/laporan/index.js'
+    ], 'public/js/laporan.js')
    .sass('resources/assets/sass/app.scss', 'public/css');

@@ -3,29 +3,12 @@
 @section('content')
 
     <div class="row">
-        <div class="col-lg-3">
-            <div class="ibox">
-                <div class="ibox-content">
-                    <h5>Income</h5>
-                    <h1 class="no-margins">886,200</h1>
-                    <div class="stat-percent font-bold text-navy">98% <i class="fa fa-bolt"></i></div>
-                    <small>Total income</small>
-                </div>
-            </div>
-            <div class="ibox">
-                <div class="ibox-content">
-                    <h5>Sebaran Jumantik</h5>
-                    <h2>42/20</h2>
-                    <div class="text-center">
-                        <div id="sparkline5"><canvas width="140" height="140" style="display: inline-block; width: 140px; height: 140px; vertical-align: top;"></canvas></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-9">
+
+        <div class="col-lg-7">
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5>Lokasi Sebaran Jumantik</h5>
+                    <h5>Peta Sebaran</h5>
+
                 </div>
                 <div class="ibox-content">
                     <div id="map" class="google-map">
@@ -33,10 +16,141 @@
                     </div>
                 </div>
                 <div class="ibox-footer">
-                    Legend Here
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"/> Sebaran Jumantik
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"/> Sebaran Penyakit
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"/> Lokasi RT
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"/> Lokasi Puskesmas
+                                </label>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+        <div class="col-lg-5">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Jadwal Pemantuan</h5>
+                </div>
+                <div class="ibox-content no-padding">
+                    <table class="table table-hover table-responsive table-condensed no-margins">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Jadwal</th>
+                            <th>Lokasi</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="3">Belum ada Jadwal</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="ibox-footer">
+                    <div class="text-right">
+                        <a href="" class="btn btn-sm btn-link">Lihat Jadwal <i class="fa fa-chevron-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-4">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Statistik Jumantik</h5>
+                    <div class="ibox-tools">
+                        <form class="form-inline">
+                            <div class="form-group">
+
+
+                                <select name="bulan" id="bulan" class="form-control">
+                                    <option value="">--Pilih Bulan--</option>
+                                </select>
+
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Statistik Jumantik</h5>
+                    <div class="ibox-tools">
+                        <form class="form-inline">
+                            <div class="form-group">
+
+
+                                <select name="bulan" id="bulan" class="form-control">
+                                    <option value="">--Pilih Bulan--</option>
+                                </select>
+
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Statistik Jumantik</h5>
+                    <div class="ibox-tools">
+                        <form class="form-inline">
+                            <div class="form-group">
+
+
+                                <select name="bulan" id="bulan" class="form-control">
+                                    <option value="">--Pilih Bulan--</option>
+                                </select>
+
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                </div>
+            </div>
+        </div>
+
     </div>
 
 @endsection
