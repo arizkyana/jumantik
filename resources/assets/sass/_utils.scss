@@ -1,24 +1,28 @@
-.no-padding {
-  padding: 0 !important;
-}
+//.no-padding {
+//  padding: 0 !important;
+//}
+//
+//.padding-bottom-md {
+//  padding-bottom: 1em;
+//}
+//
+//.padding-left-md {
+//  padding-left: 0.5em !important;
+//}
+//
+//.dataTables_length,
+//.dataTables_filter,
+//.dataTables_info,
+//.dataTables_paginate,
+//.paging_simple_numbers  {
+//  padding: 10px 10px;
+//}
+//
+//.font-40 {
+//  font-size: 40px;
+//}
+//
 
-.padding-bottom-md {
-  padding-bottom: 1em;
+.sorting, .sorting_asc, .sorting_desc {
+  cursor: pointer !important;
 }
-
-.padding-left-md {
-  padding-left: 0.5em !important;
-}
-
-.dataTables_length,
-.dataTables_filter,
-.dataTables_info,
-.dataTables_paginate,
-.paging_simple_numbers  {
-  padding: 10px 10px;
-}
-
-.font-40 {
-  font-size: 40px;
-}
-

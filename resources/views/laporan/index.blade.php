@@ -24,17 +24,11 @@
             <h5>Daftar Laporan Jumantik</h5>
             <div class="ibox-tools">
                 <form class="form-inline">
+
                     <div class="form-group">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" /> Suspect DBD
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="dinas">Dinas</label>
-                        <select name="dinas" id="dinas" class="form-control">
-                            <option value="">Pilih Dinas</option>
+                        <label for="tingkatan">Tingkatan</label>
+                        <select name="tingkatan" id="tingkatan" class="form-control">
+                            <option value="">Pilih Tingkatan</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -54,23 +48,40 @@
                 <tr>
                     <th>ID</th>
                     <th>Pelapor</th>
+                    <th>Tingkatan</th>
                     <th>Penyakit</th>
                     <th>Lokasi</th>
-                    <th>Action</th>
+                    <th class="text-center">Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <td>1</td>
                     <td>Joni</td>
-                    <td>Demam Berdarah</td>
+                    <td>Kader (Dinkes)</td>
+                    <td>Suspect DBD</td>
                     <td>
                         {{--lokasi langsung open gmaps--}}
                         <a href="{{ route('maps') }}" class="text-danger">Jl. Antapani</a>
                     </td>
-                    <td>
+                    <td class="text-center">
                         <a href="{{ route('survey/laporan', 1) }}" class="btn btn-success btn-sm"><i
-                                    class="glyphicon glyphicon-alert"></i> Survey</a>
+                                    class="glyphicon glyphicon-alert"></i> Tindakan</a>
+                        <a class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Jono</td>
+                    <td>Sekolah</td>
+                    <td>Malaria</td>
+                    <td>
+                        {{--lokasi langsung open gmaps--}}
+                        <a href="{{ route('maps') }}" class="text-danger">Jl. Antapani</a>
+                    </td>
+                    <td class="text-center">
+                        <a href="{{ route('survey/laporan', 1) }}" class="btn btn-success btn-sm"><i
+                                    class="glyphicon glyphicon-alert"></i> Tindakan</a>
                         <a class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>

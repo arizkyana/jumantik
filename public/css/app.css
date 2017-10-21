@@ -14674,6 +14674,12 @@ body.md-skin {
   Utils
  */
 
+.sorting,
+.sorting_asc,
+.sorting_desc {
+  cursor: pointer !important;
+}
+
 .dataTables_length,
 .dataTables_filter,
 .dataTables_info,
