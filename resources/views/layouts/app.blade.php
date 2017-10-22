@@ -15,166 +15,177 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
-<body class="mini-navbar">
+{{--<body class="mini-navbar">--}}
+<body class="">
 
 @guest
-    @yield('content')
-    @else
-        {{--admin--}}
-        <div id="wrapper">
+@yield('content')
+@else
+    {{--admin--}}
+    <div id="wrapper">
 
-            <nav class="navbar-default navbar-static-side" role="navigation">
-                <div class="sidebar-collapse">
-                    <ul class="nav metismenu" id="side-menu">
-                        <li class="nav-header">
-                            <div class="dropdown profile-element"> <span>
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element"> <span>
                             <img alt="image" class="img-circle" src="{{ asset('images/profile_small.jpg') }}"/>
                              </span>
-                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong
                                             class="font-bold">{{ \Illuminate\Support\Facades\Auth::user()->name }}</strong>
                              </span> <span class="text-muted text-xs block">{{ \Illuminate\Support\Facades\Auth::user()->role->name}}
                                     <b
                                             class="caret"></b></span> </span> </a>
-                                <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                    <li><a href="{{ route('users/profile') }}">Profile</a></li>
-                                    <li class="divider"></li>
-                                    <li>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a href="{{ route('users/profile') }}">Profile</a></li>
+                                <li class="divider"></li>
+                                <li>
 
-                                        <a href="{{ route('logout') }}"
-                                           onclick="event.preventDefault();
+                                    <a href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
                                                      document.getElementById('logout-form-nav').submit();">
-                                            Logout
-                                        </a>
-                                        <form id="logout-form-nav" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
+                                        Logout
+                                    </a>
+                                    <form id="logout-form-nav" action="{{ route('logout') }}" method="POST"
+                                          style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="logo-element">
+                            JM
+                        </div>
+                    </li>
+
+                    @include('layouts/sidebar')
+
+                </ul>
+
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i
+                                    class="fa fa-bars"></i>
+                        </a>
+                        <form role="search" class="navbar-form-custom hide" action="search_results.html">
+                            <div class="form-group">
+                                <input type="text" placeholder="Search for something..." class="form-control"
+                                       name="top-search" id="top-search">
                             </div>
-                            <div class="logo-element">
-                                JM
-                            </div>
+                        </form>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+
+                            <a href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                <i class="fa fa-sign-out"></i> Log out
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
                         </li>
-
-                        @include('layouts/sidebar')
-
                     </ul>
 
-                </div>
-            </nav>
-
-            <div id="page-wrapper" class="gray-bg">
-                <div class="row border-bottom">
-                    <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
-                        <div class="navbar-header">
-                            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i
-                                        class="fa fa-bars"></i>
-                            </a>
-                            <form role="search" class="navbar-form-custom hide" action="search_results.html">
-                                <div class="form-group">
-                                    <input type="text" placeholder="Search for something..." class="form-control"
-                                           name="top-search" id="top-search">
-                                </div>
-                            </form>
-                        </div>
-                        <ul class="nav navbar-top-links navbar-right">
-                            <li>
-
-                                <a href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    <i class="fa fa-sign-out"></i> Log out
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    {{ csrf_field() }}
-                                </form>
-                            </li>
-                        </ul>
-
-                    </nav>
-                </div>
-                <div class="row wrapper border-bottom white-bg page-heading">
-                    <div class="col-sm-12">
-                        <h2>{{ isset($title) ? $title : config('app.name', 'Laravel') }}</h2>
+                </nav>
+            </div>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-sm-12">
+                    <h2>{{ isset($title) ? $title : config('app.name', 'Laravel') }}</h2>
 
 
-                        <ol class="breadcrumb">
-                            <li>
-                                <a href="index.html">This is</a>
-                            </li>
-                            <li class="active">
-                                <strong>Breadcrumb</strong>
-                            </li>
-                        </ol>
-                    </div>
-
-                </div>
-
-                <div class="wrapper wrapper-content">
-
-                    @yield('content')
-
-                </div>
-                <div class="footer">
-
-                    <div>
-                        <strong>Copyright</strong> {{ config('app.name', 'Laravel') }} &copy; 2017
-                    </div>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="index.html">This is</a>
+                        </li>
+                        <li class="active">
+                            <strong>Breadcrumb</strong>
+                        </li>
+                    </ol>
                 </div>
 
             </div>
+
+            <div class="wrapper wrapper-content">
+
+                @yield('content')
+
+            </div>
+            <div class="footer">
+
+                <div>
+                    <strong>Copyright</strong> {{ config('app.name', 'Laravel') }} &copy; 2017
+                </div>
+            </div>
+
         </div>
-        {{--/admin--}}
-        @endguest
+    </div>
+    {{--/admin--}}
+    @endguest
 
 
-        <script src="{{ asset('js/themes/jquery-3.1.1.min.js') }}"></script>
-        <script src="{{ asset('js/themes/bootstrap.js') }}"></script>
-        <script src="{{ asset('js/themes/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-        <script src="{{ asset('js/themes/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ asset('js/themes/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ asset('js/themes/bootstrap.js') }}"></script>
+    <script src="{{ asset('js/themes/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+    <script src="{{ asset('js/themes/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-        <!-- Flot -->
-        <script src="{{ asset('js/themes/plugins/flot/jquery.flot.js') }}"></script>
-        <script src="{{ asset('js/themes/plugins/flot/jquery.flot.tooltip.min.js') }}"></script>
-        <script src="{{ asset('js/themes/plugins/flot/jquery.flot.spline.js') }}"></script>
-        <script src="{{ asset('js/themes/plugins/flot/jquery.flot.resize.js') }}"></script>
-        <script src="{{ asset('js/themes/plugins/flot/jquery.flot.pie.js') }}"></script>
+    <!-- Flot -->
+    <script src="{{ asset('js/themes/plugins/flot/jquery.flot.js') }}"></script>
+    <script src="{{ asset('js/themes/plugins/flot/jquery.flot.tooltip.min.js') }}"></script>
+    <script src="{{ asset('js/themes/plugins/flot/jquery.flot.spline.js') }}"></script>
+    <script src="{{ asset('js/themes/plugins/flot/jquery.flot.resize.js') }}"></script>
+    <script src="{{ asset('js/themes/plugins/flot/jquery.flot.pie.js') }}"></script>
 
-        <!-- Peity -->
-        <script src="{{ asset('js/themes/plugins/peity/jquery.peity.min.js') }}"></script>
-        <script src="{{ asset('js/themes/demo/peity-demo.js') }}"></script>
+    <!-- Peity -->
+    <script src="{{ asset('js/themes/plugins/peity/jquery.peity.min.js') }}"></script>
+    <script src="{{ asset('js/themes/demo/peity-demo.js') }}"></script>
 
-        <!-- Custom and plugin javascript -->
-        <script src="{{ asset('js/themes/inspinia.js') }}"></script>
-        <script src="{{ asset('js/themes/plugins/pace/pace.min.js') }}"></script>
+    <!-- Custom and plugin javascript -->
+    <script src="{{ asset('js/themes/inspinia.js') }}"></script>
+    <script src="{{ asset('js/themes/plugins/pace/pace.min.js') }}"></script>
 
-        <!-- jQuery UI -->
-        <script src="{{ asset('js/themes/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    <!-- jQuery UI -->
+    <script src="{{ asset('js/themes/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 
-        <!-- GITTER -->
-        <script src="{{ asset('js/themes/plugins/gritter/jquery.gritter.min.js') }}"></script>
+    <!-- GITTER -->
+    <script src="{{ asset('js/themes/plugins/gritter/jquery.gritter.min.js') }}"></script>
 
-        <!-- Sparkline -->
-        <script src="{{ asset('js/themes/plugins/sparkline/jquery.sparkline.min.js') }}"></script>
+    <!-- Sparkline -->
+    <script src="{{ asset('js/themes/plugins/sparkline/jquery.sparkline.min.js') }}"></script>
 
-        <!-- Sparkline demo data  -->
-        <script src="{{ asset('js/themes/demo/sparkline-demo.js') }}"></script>
+    <!-- Sparkline demo data  -->
+    <script src="{{ asset('js/themes/demo/sparkline-demo.js') }}"></script>
 
-        <!-- ChartJS-->
-        <script src="{{ asset('js/themes/plugins/chartJs/Chart.min.js') }}"></script>
+    <!-- ChartJS-->
+    <script src="{{ asset('js/themes/plugins/chartJs/Chart.min.js') }}"></script>
 
-        <!-- Toastr -->
-        <script src="{{ asset('js/themes/plugins/toastr/toastr.min.js') }}"></script>
+    <!-- Toastr -->
+    <script src="{{ asset('js/themes/plugins/toastr/toastr.min.js') }}"></script>
 
-        {{--Datatable--}}
-        <script src="{{ asset('js/themes/plugins/dataTables/datatables.min.js') }}"></script>
+    {{--Datatable--}}
+    <script src="{{ asset('js/themes/plugins/dataTables/datatables.min.js') }}"></script>
 
-        <!-- Scripts -->
-        {{--<script src="{{ mix('js/app.js') }}"></script>--}}
+    {{--select 2--}}
+    <script src="{{ asset('js/themes/plugins/select2/select2.full.min.js')  }}"></script>
+    <!-- Scripts -->
+    {{--<script src="{{ mix('js/app.js') }}"></script>--}}
 
-        @if (isset($js))
-            <script src="{{ mix('js/' . $js) }}"></script>
-        @endif
+    @if (isset($js))
+        <script src="{{ mix('js/' . $js) }}"></script>
+    @endif
+
+    {{--plugins themes js--}}
+    @if (isset($plugins_js))
+        @foreach ($plugins_js as $js)
+            <script src="{{ asset('js/themes/plugins/' . $js) }}"></script>
+        @endforeach
+    @endif
 </body>
 </html>

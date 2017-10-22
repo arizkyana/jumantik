@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Dinkes;
+namespace App\Http\Controllers\Jumantik;
 
 use App\Http\Controllers\Controller;
+use App\Kecamatan;
+use App\Kelurahan;
 use App\Puskesmas\Laporan;
 use Illuminate\Http\Request;
 
-class JadwalController extends Controller
+class LaporanController extends Controller
 {
 
     public function __construct()
@@ -21,14 +23,8 @@ class JadwalController extends Controller
      */
     public function index()
     {
-        return view('dinkes/jadwal/index')->with([
-
-            'plugins_js' => [
-                'fullcalendar/moment.min.js',
-                'fullcalendar/fullcalendar.min.js',
-                'daterangepicker/daterangepicker.js'
-            ],
-            'js' => 'dinkes/jadwal.js'
+        return view('jumantik/laporan/index')->with([
+            'js' => 'jumantik/laporan.js'
         ]);
     }
 
@@ -39,7 +35,14 @@ class JadwalController extends Controller
      */
     public function create()
     {
-       return view('puskesmas/laporan/create');
+        $kecamatan = Kecamatan::where('is_active', TRUE)->get();
+        $kelurahan = Kelurahan::where('is_active', TRUE)->get();
+
+        return view('jumantik/laporan/create')->with([
+            'kecamatan' => $kecamatan,
+            'kelurahan' => $kelurahan,
+            'js' => 'jumantik/laporan.js'
+        ]);
     }
 
     /**
@@ -129,7 +132,6 @@ class JadwalController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-
 
 
         $_menu = $menu->find($request->input('id'));

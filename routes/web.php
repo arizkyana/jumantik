@@ -33,13 +33,23 @@ Route::get('/survey/create', 'SurveyController@create')->name('survey/create')->
 Route::get('/survey/{survey}/edit', 'SurveyController@edit')->name('survey/edit')->middleware('can:survey-edit');
 Route::get('/survey/{laporan}/laporan', 'SurveyController@laporan')->name('survey/laporan')->middleware('can:survey-laporan');
 
+// Jumantik
+Route::namespace('Jumantik')->group(function(){
+    Route::prefix('jumantik')->group(function(){
+        Route::resource('laporan', 'LaporanController');
+        Route::get('/laporan', 'LaporanController@index')->name('jumantik/laporan');
+        Route::get('/laporan/create', 'LaporanController@create')->name('jumantik/laporan/create');
+        Route::get('/laporan/{laporan}/edit', 'LaporanController@edit')->name('jumantik/laporan/edit');
+    });
+});
+
 // Puskesmas
 Route::namespace('Puskesmas')->group(function(){
     Route::prefix('puskesmas')->group(function(){
         Route::resource('laporan', 'LaporanController');
-        Route::get('/laporan', 'LaporanController@index')->name('laporan');
-        Route::get('/laporan/create', 'LaporanController@create')->name('laporan/create');
-        Route::get('/laporan/{laporan}/edit', 'LaporanController@edit')->name('laporan/edit');
+        Route::get('/laporan', 'LaporanController@index')->name('puskesmas/laporan');
+        Route::get('/laporan/create', 'LaporanController@create')->name('puskesmas/laporan/create');
+        Route::get('/laporan/{laporan}/edit', 'LaporanController@edit')->name('puskesmas/laporan/edit');
     });
 });
 
@@ -47,9 +57,9 @@ Route::namespace('Puskesmas')->group(function(){
 Route::namespace('Rs')->group(function(){
     Route::prefix('rs')->group(function(){
         Route::resource('laporan', 'LaporanController');
-        Route::get('/laporan', 'LaporanController@index')->name('laporan');
-        Route::get('/laporan/create', 'LaporanController@create')->name('laporan/create');
-        Route::get('/laporan/{laporan}/edit', 'LaporanController@edit')->name('laporan/edit');
+        Route::get('/laporan', 'LaporanController@index')->name('rs/laporan');
+        Route::get('/laporan/create', 'LaporanController@create')->name('rs/laporan/create');
+        Route::get('/laporan/{laporan}/edit', 'LaporanController@edit')->name('rs/laporan/edit');
     });
 });
 
@@ -57,14 +67,14 @@ Route::namespace('Rs')->group(function(){
 Route::namespace('Dinkes')->group(function(){
     Route::prefix('dinkes')->group(function(){
         Route::resource('laporan', 'LaporanController');
-        Route::get('/laporan', 'LaporanController@index')->name('laporan');
-        Route::get('/laporan/create', 'LaporanController@create')->name('laporan/create');
-        Route::get('/laporan/{laporan}/edit', 'LaporanController@edit')->name('laporan/edit');
+        Route::get('/laporan', 'LaporanController@index')->name('dinkes/laporan');
+        Route::get('/laporan/create', 'LaporanController@create')->name('dinkes/laporan/create');
+        Route::get('/laporan/{laporan}/edit', 'LaporanController@edit')->name('dinkes/laporan/edit');
 
         Route::resource('jadwal', 'JadwalController');
-        Route::get('/jadwal', 'JadwalController@index')->name('jadwal');
-        Route::get('/jadwal/create', 'JadwalController@create')->name('jadwal/create');
-        Route::get('/jadwal/{jadwal}/edit', 'JadwalController@edit')->name('jadwal/edit');
+        Route::get('/jadwal', 'JadwalController@index')->name('dinkes/jadwal');
+        Route::get('/jadwal/create', 'JadwalController@create')->name('dinkes/jadwal/create');
+        Route::get('/jadwal/{jadwal}/edit', 'JadwalController@edit')->name('dinkes/jadwal/edit');
     });
 
 

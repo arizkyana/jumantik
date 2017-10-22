@@ -26,3 +26,12 @@
 .sorting, .sorting_asc, .sorting_desc {
   cursor: pointer !important;
 }
+
+.no-overflow {
+  overflow: hidden;
+}
+
+// fullcalendar
+.fc-toolbar {
+  padding: 15px !important;
+}

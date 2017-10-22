@@ -1,20 +1,19 @@
 /**
  * Created by agungrizkyana on 10/21/17.
  */
-let jadwal = {};
+let table = {};
 
 $(document).ready(function(){
 
-    jadwal = {
-        el: $("#calendar-jadwal-monitoring"),
+    table = {
+        el: $("#table-laporan-jumantik"),
         evt: {},
         init: function(){
             const self = this;
 
-            self.el.fullCalendar();
+            self.el.dataTable();
         }
     };
 
-    jadwal.init();
-
+    table.init();
 });

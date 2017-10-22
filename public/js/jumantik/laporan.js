@@ -60,40 +60,117 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 33);
+/******/ 	return __webpack_require__(__webpack_require__.s = 35);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 33:
+/***/ 35:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(34);
+__webpack_require__(36);
+module.exports = __webpack_require__(37);
 
 
 /***/ }),
 
-/***/ 34:
+/***/ 36:
 /***/ (function(module, exports) {
 
 /**
  * Created by agungrizkyana on 10/21/17.
  */
-var jadwal = {};
+var table = {};
 
 $(document).ready(function () {
 
-    jadwal = {
-        el: $("#calendar-jadwal-monitoring"),
+    table = {
+        el: $("#table-laporan-jumantik"),
         evt: {},
         init: function init() {
             var self = this;
 
-            self.el.fullCalendar();
+            self.el.dataTable();
         }
     };
 
-    jadwal.init();
+    table.init();
+});
+
+/***/ }),
+
+/***/ 37:
+/***/ (function(module, exports) {
+
+/**
+ * Created by agungrizkyana on 10/21/17.
+ */
+
+var form = {};
+
+$(document).ready(function () {
+
+    form.inputSuspect = {
+        el: $("#input_suspect_dbd"),
+        evt: {},
+        init: function init() {
+            var self = this;
+
+            self.el.hide();
+        }
+
+    };
+
+    form.checkSuspect = {
+        el: $("#is_suspect_dbd"),
+        evt: {
+            onChange: function onChange(e) {
+                e.preventDefault();
+
+                if ($(this).is(":checked")) {
+                    form.inputSuspect.el.show();
+                } else {
+                    form.inputSuspect.el.hide();
+                }
+                return;
+            }
+        },
+        init: function init() {
+            var self = this;
+
+            self.el.change(self.evt.onChange);
+        }
+    };
+
+    form.kelurahan = {
+        el: $("#kelurahan"),
+        evt: {
+            onChange: function onChange() {}
+        },
+        init: function init() {
+            var self = this;
+
+            self.el.select2();
+        }
+    };
+
+    form.kecamatan = {
+        el: $("#kecamatan"),
+        evt: {
+            onChange: function onChange() {}
+        },
+        init: function init() {
+            var self = this;
+
+            self.el.select2();
+        }
+    };
+
+    form.kelurahan.init();
+    form.kecamatan.init();
+
+    form.checkSuspect.init();
+    form.inputSuspect.init();
 });
 
 /***/ })

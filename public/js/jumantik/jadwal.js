@@ -60,41 +60,16 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 33);
+/******/ 	return __webpack_require__(__webpack_require__.s = 35);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 33:
+/***/ 35:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(34);
+(function webpackMissingModule() { throw new Error("Cannot find module \"/Users/agungrizkyana/Public/myproject/edu/resources/assets/js/jumantik/jadwal/index.js\""); }());
 
-
-/***/ }),
-
-/***/ 34:
-/***/ (function(module, exports) {
-
-/**
- * Created by agungrizkyana on 10/21/17.
- */
-var jadwal = {};
-
-$(document).ready(function () {
-
-    jadwal = {
-        el: $("#calendar-jadwal-monitoring"),
-        evt: {},
-        init: function init() {
-            var self = this;
-
-            self.el.fullCalendar();
-        }
-    };
-
-    jadwal.init();
-});
 
 /***/ })
 

@@ -46,4 +46,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .js([
         'resources/assets/js/dinkes/jadwal/index.js',
     ], 'public/js/dinkes/jadwal.js')
+    .js([
+        'resources/assets/js/jumantik/laporan/index.js',
+        'resources/assets/js/jumantik/laporan/create.js',
+    ], 'public/js/jumantik/laporan.js')
    .sass('resources/assets/sass/app.scss', 'public/css');
