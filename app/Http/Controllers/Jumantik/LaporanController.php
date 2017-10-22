@@ -55,26 +55,15 @@ class LaporanController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:100',
-            'url' => 'required',
-            'icon' => 'required'
+            'penyakit' => 'required',
         ]);
 
         if ($validator->fails()) {
-            return redirect('menu/create')
-                ->withErrors($validator)
-                ->withInput();
+            return redirect('jumantik/laporan/create')
+                ->withErrors($validator);
         }
 
-        $menu = new Menu();
-        $menu->name = $request->input('name');
-        $menu->url = $request->input('url');
-        $menu->icon = $request->input('icon');
-        $menu->parent = $request->input('parent');
-        $menu->show = $request->input('show') ? TRUE : FALSE;
-        $menu->authorize_url = str_replace("/", "-", $request->input('url'));
 
-        $menu->save();
 
         return redirect('menu/create')->with('success', 'Berhasil Tambah Menu');
 

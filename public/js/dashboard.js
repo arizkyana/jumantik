@@ -76,7 +76,21 @@ module.exports = __webpack_require__(24);
 /***/ 24:
 /***/ (function(module, exports) {
 
+// load map
 
+function loadmap() {
+    var latitude = Number(-6.2383);
+    var longitude = Number(106.9756);
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: latitude, lng: longitude },
+        zoom: 14
+    });
+}
+
+$(document).ready(function () {
+    loadmap();
+});
 
 /***/ })
 

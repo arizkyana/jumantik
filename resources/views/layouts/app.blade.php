@@ -15,8 +15,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
-{{--<body class="mini-navbar">--}}
-<body class="">
+<body class="mini-navbar">
+{{--<body class="">--}}
 
 @guest
 @yield('content')
@@ -186,6 +186,11 @@
         @foreach ($plugins_js as $js)
             <script src="{{ asset('js/themes/plugins/' . $js) }}"></script>
         @endforeach
+    @endif
+
+    {{--gmaps required--}}
+    @if (isset($gmaps) && $gmaps)
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACK1BU_M2kIo8xohz0dx5RjNOqDwwUKSE" async defer></script>
     @endif
 </body>
 </html>
