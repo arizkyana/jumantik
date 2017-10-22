@@ -33,6 +33,44 @@ Route::get('/survey/create', 'SurveyController@create')->name('survey/create')->
 Route::get('/survey/{survey}/edit', 'SurveyController@edit')->name('survey/edit')->middleware('can:survey-edit');
 Route::get('/survey/{laporan}/laporan', 'SurveyController@laporan')->name('survey/laporan')->middleware('can:survey-laporan');
 
+// Puskesmas
+Route::namespace('Puskesmas')->group(function(){
+    Route::prefix('puskesmas')->group(function(){
+        Route::resource('laporan', 'LaporanController');
+        Route::get('/laporan', 'LaporanController@index')->name('laporan');
+        Route::get('/laporan/create', 'LaporanController@create')->name('laporan/create');
+        Route::get('/laporan/{laporan}/edit', 'LaporanController@edit')->name('laporan/edit');
+    });
+});
+
+// Rumah Sakit
+Route::namespace('Rs')->group(function(){
+    Route::prefix('rs')->group(function(){
+        Route::resource('laporan', 'LaporanController');
+        Route::get('/laporan', 'LaporanController@index')->name('laporan');
+        Route::get('/laporan/create', 'LaporanController@create')->name('laporan/create');
+        Route::get('/laporan/{laporan}/edit', 'LaporanController@edit')->name('laporan/edit');
+    });
+});
+
+// Dinkes
+Route::namespace('Dinkes')->group(function(){
+    Route::prefix('dinkes')->group(function(){
+        Route::resource('laporan', 'LaporanController');
+        Route::get('/laporan', 'LaporanController@index')->name('laporan');
+        Route::get('/laporan/create', 'LaporanController@create')->name('laporan/create');
+        Route::get('/laporan/{laporan}/edit', 'LaporanController@edit')->name('laporan/edit');
+
+        Route::resource('jadwal', 'JadwalController');
+        Route::get('/jadwal', 'JadwalController@index')->name('jadwal');
+        Route::get('/jadwal/create', 'JadwalController@create')->name('jadwal/create');
+        Route::get('/jadwal/{jadwal}/edit', 'JadwalController@edit')->name('jadwal/edit');
+    });
+
+
+
+
+});
 
 // maps
 Route::get('/maps', 'MapsController@index')->name('maps');

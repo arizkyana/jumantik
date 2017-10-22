@@ -3,8 +3,12 @@
     "/css/app.css": "/css/app.css",
     "/js/users.js": "/js/users.js",
     "/js/apiClient.js": "/js/apiClient.js",
+    "/js/rs/laporan.js": "/js/rs/laporan.js",
     "/js/role.js": "/js/role.js",
+    "/js/puskesmas/laporan.js": "/js/puskesmas/laporan.js",
     "/js/menu.js": "/js/menu.js",
     "/js/laporan.js": "/js/laporan.js",
+    "/js/dinkes/laporan.js": "/js/dinkes/laporan.js",
+    "/js/dinkes/jadwal.js": "/js/dinkes/jadwal.js",
     "/js/dashboard.js": "/js/dashboard.js"
 }

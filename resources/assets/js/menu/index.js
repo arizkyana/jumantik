@@ -8,7 +8,9 @@ $(document).ready(function(){
         init: function(){
             let self = this;
             // console.log(self);
-            self.el.DataTable();
+            self.el.DataTable({
+                saveState: true
+            });
         }
     };
 

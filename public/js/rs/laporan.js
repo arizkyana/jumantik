@@ -60,35 +60,36 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 19);
+/******/ 	return __webpack_require__(__webpack_require__.s = 29);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 19:
+/***/ 29:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(20);
+module.exports = __webpack_require__(30);
 
 
 /***/ }),
 
-/***/ 20:
+/***/ 30:
 /***/ (function(module, exports) {
 
-
-
+/**
+ * Created by agungrizkyana on 10/21/17.
+ */
 var table = {};
+
 $(document).ready(function () {
+
     table = {
-        el: $("#table-menu"),
+        el: $("#table-laporan-jumantik"),
         evt: {},
         init: function init() {
             var self = this;
-            // console.log(self);
-            self.el.DataTable({
-                saveState: true
-            });
+
+            self.el.dataTable();
         }
     };
 

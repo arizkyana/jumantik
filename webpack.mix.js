@@ -32,6 +32,18 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'resources/assets/js/dashboard/index.js'
     ], 'public/js/dashboard.js')
     .js([
-        'resources/assets/js/laporan/index.js'
+        'resources/assets/js/laporan/index.js',
     ], 'public/js/laporan.js')
+    .js([
+        'resources/assets/js/puskesmas/laporan/index.js',
+    ], 'public/js/puskesmas/laporan.js')
+    .js([
+        'resources/assets/js/rs/laporan/index.js',
+    ], 'public/js/rs/laporan.js')
+    .js([
+        'resources/assets/js/dinkes/laporan/index.js',
+    ], 'public/js/dinkes/laporan.js')
+    .js([
+        'resources/assets/js/dinkes/jadwal/index.js',
+    ], 'public/js/dinkes/jadwal.js')
    .sass('resources/assets/sass/app.scss', 'public/css');
