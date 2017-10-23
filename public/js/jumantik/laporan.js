@@ -142,6 +142,16 @@ $(document).ready(function () {
         }
     };
 
+    form.penyakit = {
+        el: $("#penyakit"),
+        evt: {},
+        init: function init() {
+            var self = this;
+
+            self.el.select2();
+        }
+    };
+
     form.kelurahan = {
         el: $("#kelurahan"),
         evt: {
@@ -152,20 +162,43 @@ $(document).ready(function () {
 
             self.el.select2();
         }
+
     };
 
     form.kecamatan = {
         el: $("#kecamatan"),
         evt: {
-            onChange: function onChange() {}
+            onChange: function onChange(e) {
+                e.preventDefault();
+                var _kecamatan = $(this).val();
+                $.ajax({
+                    url: '/api/kelurahan/get_by_kecamatan/' + _kecamatan,
+                    method: 'get',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json'
+                    }
+                }).then(function (result) {
+                    form.kelurahan.el.empty();
+                    form.kelurahan.el.select2().val('');
+                    $.each(result, function (i, kelurahan) {
+                        var options = '<option value="' + kelurahan.kelurahan_id + '">' + kelurahan.nama_kelurahan + '</option>';
+                        form.kelurahan.el.append(options);
+                    });
+                });
+
+                return;
+            }
         },
         init: function init() {
             var self = this;
 
             self.el.select2();
+            self.el.change(self.evt.onChange);
         }
     };
 
+    form.penyakit.init();
     form.kelurahan.init();
     form.kecamatan.init();
 

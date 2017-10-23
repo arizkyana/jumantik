@@ -1,14 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Jumantik;
+namespace App\Http\Controllers\Dinkes\Api;
 
 use App\Http\Controllers\Controller;
-use App\Kecamatan;
-use App\Kelurahan;
-use App\Penyakit;
 use App\Puskesmas\Laporan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class LaporanController extends Controller
 {
@@ -25,8 +21,8 @@ class LaporanController extends Controller
      */
     public function index()
     {
-        return view('jumantik/laporan/index')->with([
-            'js' => 'jumantik/laporan.js'
+        return view('dinkes/laporan/index')->with([
+            'js' => 'dinkes/laporan.js'
         ]);
     }
 
@@ -37,16 +33,7 @@ class LaporanController extends Controller
      */
     public function create()
     {
-        $kecamatan = Kecamatan::where('is_active', TRUE)->get();
-        $kelurahan = Kelurahan::where('is_active', TRUE)->get();
-        $penyakit = Penyakit::where('is_active', TRUE)->get();
-
-        return view('jumantik/laporan/create')->with([
-            'kecamatan' => $kecamatan,
-            'kelurahan' => $kelurahan,
-            'penyakit' => $penyakit,
-            'js' => 'jumantik/laporan.js'
-        ]);
+       return view('puskesmas/laporan/create');
     }
 
     /**
@@ -59,18 +46,26 @@ class LaporanController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'penyakit' => 'required',
+            'name' => 'required|max:100',
+            'url' => 'required',
+            'icon' => 'required'
         ]);
 
         if ($validator->fails()) {
-            return redirect('jumantik/laporan/create')
-                ->withErrors($validator);
+            return redirect('menu/create')
+                ->withErrors($validator)
+                ->withInput();
         }
 
-        $laporan = new Laporan();
+        $menu = new Menu();
+        $menu->name = $request->input('name');
+        $menu->url = $request->input('url');
+        $menu->icon = $request->input('icon');
+        $menu->parent = $request->input('parent');
+        $menu->show = $request->input('show') ? TRUE : FALSE;
+        $menu->authorize_url = str_replace("/", "-", $request->input('url'));
 
-        $laporan->pelapor = Auth::user()->id;
-
+        $menu->save();
 
         return redirect('menu/create')->with('success', 'Berhasil Tambah Menu');
 
@@ -128,6 +123,7 @@ class LaporanController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+
 
 
         $_menu = $menu->find($request->input('id'));

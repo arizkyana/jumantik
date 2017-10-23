@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Jumantik;
+namespace App\Http\Controllers\Jumantik\Api;
 
 use App\Http\Controllers\Controller;
 use App\Kecamatan;
@@ -8,7 +8,6 @@ use App\Kelurahan;
 use App\Penyakit;
 use App\Puskesmas\Laporan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class LaporanController extends Controller
 {
@@ -67,9 +66,6 @@ class LaporanController extends Controller
                 ->withErrors($validator);
         }
 
-        $laporan = new Laporan();
-
-        $laporan->pelapor = Auth::user()->id;
 
 
         return redirect('menu/create')->with('success', 'Berhasil Tambah Menu');

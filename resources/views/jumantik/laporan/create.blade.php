@@ -24,8 +24,11 @@
                             <small class="text-danger">*</small>
                         </label>
                         <div class="col-md-9">
-                            <select name="penyakit" id="penyakit" class="form-control" required>
-                                <option value="">Pilih Penyakit</option>
+                            <select name="penyakit" id="penyakit" class="form-control" data-placeholder="Pilih Penyakit" required>
+                                <option value=""></option>
+                                @foreach($penyakit as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                @endforeach
                             </select>
                             @if ($errors->has('penyakit'))
                                 <i class="text-danger">{{ $errors->first('penyakit')  }}</i>
@@ -70,7 +73,8 @@
                         <div class="row">
                             <label for="kecamatan" class="col-md-3">Kecamatan</label>
                             <div class="col-md-9">
-                                <select name="kecamatan" id="kecamatan" class="form-control" data-placeholder="Pilih Kecamatan">
+                                <select name="kecamatan" id="kecamatan" class="form-control"
+                                        data-placeholder="Pilih Kecamatan">
                                     <option value=""></option>
 
                                     @foreach ($kecamatan as $item)
@@ -85,11 +89,10 @@
                         <div class="row">
                             <label for="kelurahan" class="col-md-3">Kelurahan</label>
                             <div class="col-md-9">
-                                <select name="kelurahan" id="kelurahan" class="form-control" data-placeholder="Pilih Kelurahan">
+                                <select name="kelurahan" id="kelurahan" class="form-control"
+                                        data-placeholder="Pilih Kelurahan">
                                     <option value=""></option>
-                                    @foreach ($kelurahan as $item)
-                                        <option value="{{ $item->kelurahan_id }}">{{ $item->nama_kelurahan }}</option>
-                                    @endforeach
+
                                 </select>
                             </div>
                         </div>

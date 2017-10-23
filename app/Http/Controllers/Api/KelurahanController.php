@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Kecamatan;
+use App\Kelurahan;
 use Illuminate\Http\Request;
 
-class KecamatanController extends Controller
+class KelurahanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,21 +43,29 @@ class KecamatanController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Kecamatan  $kecamatan
+     * @param  \App\Kelurahan  $kelurahan
      * @return \Illuminate\Http\Response
      */
-    public function show(Kecamatan $kecamatan)
+    public function show(Kelurahan $kelurahan)
     {
         //
+    }
+
+    public function get_by_kecamatan($kecamatan_id){
+
+        return Kelurahan::where([
+            'kecamatan_id'=> $kecamatan_id,
+            'is_active' => TRUE
+        ])->get();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Kecamatan  $kecamatan
+     * @param  \App\Kelurahan  $kelurahan
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kecamatan $kecamatan)
+    public function edit(Kelurahan $kelurahan)
     {
         //
     }
@@ -64,10 +74,10 @@ class KecamatanController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Kecamatan  $kecamatan
+     * @param  \App\Kelurahan  $kelurahan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kecamatan $kecamatan)
+    public function update(Request $request, Kelurahan $kelurahan)
     {
         //
     }
@@ -75,14 +85,11 @@ class KecamatanController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Kecamatan  $kecamatan
+     * @param  \App\Kelurahan  $kelurahan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kecamatan $kecamatan)
+    public function destroy(Kelurahan $kelurahan)
     {
         //
     }
-
-
-
 }

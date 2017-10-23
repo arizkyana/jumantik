@@ -15,8 +15,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
-<body class="mini-navbar">
-{{--<body class="">--}}
+{{--<body class="mini-navbar">--}}
+<body class="">
 
 @guest
 @yield('content')

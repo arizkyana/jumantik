@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UserTableSeeder::class);
         $this->call(MenuTableSeeder::class);
         $this->call(RoleMenuTableSeeder::class);
+        $this->call(PenyakitTableSeeder::class);
     }
 }
