@@ -145,7 +145,7 @@
 
     <!-- Peity -->
     <script src="{{ asset('js/themes/plugins/peity/jquery.peity.min.js') }}"></script>
-    <script src="{{ asset('js/themes/demo/peity-demo.js') }}"></script>
+
 
     <!-- Custom and plugin javascript -->
     <script src="{{ asset('js/themes/inspinia.js') }}"></script>
@@ -160,8 +160,6 @@
     <!-- Sparkline -->
     <script src="{{ asset('js/themes/plugins/sparkline/jquery.sparkline.min.js') }}"></script>
 
-    <!-- Sparkline demo data  -->
-    <script src="{{ asset('js/themes/demo/sparkline-demo.js') }}"></script>
 
     <!-- ChartJS-->
     <script src="{{ asset('js/themes/plugins/chartJs/Chart.min.js') }}"></script>
@@ -171,15 +169,12 @@
 
     {{--Datatable--}}
     <script src="{{ asset('js/themes/plugins/dataTables/datatables.min.js') }}"></script>
+    <script src="{{ asset('js/themes/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
 
     {{--select 2--}}
     <script src="{{ asset('js/themes/plugins/select2/select2.full.min.js')  }}"></script>
     <!-- Scripts -->
     {{--<script src="{{ mix('js/app.js') }}"></script>--}}
-
-    @if (isset($js))
-        <script src="{{ mix('js/' . $js) }}"></script>
-    @endif
 
     {{--plugins themes js--}}
     @if (isset($plugins_js))
@@ -191,6 +186,10 @@
     {{--gmaps required--}}
     @if (isset($gmaps) && $gmaps)
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACK1BU_M2kIo8xohz0dx5RjNOqDwwUKSE" async defer></script>
+    @endif
+
+    @if (isset($js))
+        <script src="{{ mix('js/' . $js) }}"></script>
     @endif
 </body>
 </html>

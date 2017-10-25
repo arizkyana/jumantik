@@ -1,13 +1,4 @@
-/**
-  Inspina Themes
- */
 
-@import "../themes/css/bootstrap.min.css";
-@import "~font-awesome/scss/font-awesome";
-@import "../themes/css/plugins/toastr/toastr.min.css";
-@import "../themes/js/plugins/gritter/jquery.gritter.css";
-@import "../themes/css/animate.css";
-@import "../themes/css/style.css";
 
 // Plugins
 @import "plugins";
@@ -19,3 +10,14 @@
 
 // Datatables
 @import "datatables";
+
+/**
+  Inspina Themes
+ */
+
+@import "../themes/css/bootstrap.min.css";
+@import "~font-awesome/scss/font-awesome";
+@import "../themes/css/plugins/toastr/toastr.min.css";
+@import "../themes/js/plugins/gritter/jquery.gritter.css";
+@import "../themes/css/animate.css";
+@import "../themes/css/style.css";

@@ -35,77 +35,77 @@ class AuthServiceProvider extends ServiceProvider
         // dashboard
         Gate::define('dashboard', function ($user) {
 
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'dashboard');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'dashboard');
         });
 
         // role
         Gate::define('role', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'role');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'role');
         });
         Gate::define('role-create', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'role-create');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'role-create');
         });
         Gate::define('role-edit', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'role-edit');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'role-edit');
         });
 
         // menu
         Gate::define('menu', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'menu');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'menu');
         });
         Gate::define('menu-create', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'menu-create');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'menu-create');
         });
         Gate::define('menu-edit', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'menu-edit');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'menu-edit');
         });
 
         // users
         Gate::define('users', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'users');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'users');
         });
         Gate::define('users-create', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'users-create');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'users-create');
         });
         Gate::define('users-edit', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'users-edit');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'users-edit');
         });
 
         // apiClient
         Gate::define('apiClient', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'apiClient');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'apiClient');
         });
         Gate::define('apiClient-create', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'apiClient-create');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'apiClient-create');
         });
         Gate::define('apiClient-edit', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'apiClient-edit');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'apiClient-edit');
         });
 
         // laporan
         Gate::define('laporan', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'laporan');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'laporan');
         });
         Gate::define('laporan-create', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'laporan-create');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'laporan-create');
         });
         Gate::define('laporan-edit', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'laporan-edit');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'laporan-edit');
         });
 
 
         // survey
         Gate::define('survey', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'survey');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'survey');
         });
         Gate::define('survey-create', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'survey-create');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'survey-create');
         });
         Gate::define('survey-edit', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'survey-edit');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'survey-edit');
         });
         Gate::define('survey-laporan', function ($user) {
-            return $user->isSuperAdmin() || $this->authorize_menu($user->role_id, 'survey-laporan');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'survey-laporan');
         });
 
         Passport::routes();

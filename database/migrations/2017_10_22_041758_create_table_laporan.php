@@ -17,22 +17,27 @@ class CreateTableLaporan extends Migration
             $table->increments('id');
             $table->dateTime('tgl_close')->nullable();
             $table->integer('pelapor');
-            $table->boolean('is_suspect_dbd');
-            $table->integer('jumlah_suspect_dbd');
-            $table->text('penyakit');
+            $table->integer('jumlah_suspect');
+            $table->integer('penyakit');
             $table->longText('keterangan')->nullable();
-            $table->boolean('is_fogging');
+            $table->integer('tindakan');
             $table->integer('kecamatan');
             $table->integer('kelurahan');
             $table->float('lat');
             $table->float('lon');
             $table->integer('status');
+                // open
+                // close
+                // on going
+                // surveyed
             $table->boolean('is_pekdrs');
             $table->integer('update_by');
 
 
-            $table->foreign('pelapor')->references('id')->on('users')->onDeleted('cascade');
-            $table->foreign('update_by')->references('id')->on('users')->onDeleted('cascade');
+//            $table->foreign('pelapor')->references('id')->on('users')->onDeleted('cascade');
+//            $table->foreign('update_by')->references('id')->on('users')->onDeleted('cascade');
+//            $table->foreign('tindakan')->references('id')->on('tindakan')->onDeleted('cascade');
+//            $table->foreign('penyakit')->references('id')->on('penyakit')->onDeleted('cascade');
 //            $table->foreign('role_id')->references('id')->on('role')->onDelete('cascade');
 //            $table->foreign('menu_id')->references('id')->on('menu')->onDelete('cascade');
 

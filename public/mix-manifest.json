@@ -3,6 +3,8 @@
     "/css/app.css": "/css/app.css",
     "/js/users.js": "/js/users.js",
     "/js/apiClient.js": "/js/apiClient.js",
+    "/js/penyakit/profile.js": "/js/penyakit/profile.js",
+    "/js/penyakit/laporan.js": "/js/penyakit/laporan.js",
     "/js/jumantik/laporan.js": "/js/jumantik/laporan.js",
     "/js/rs/laporan.js": "/js/rs/laporan.js",
     "/js/role.js": "/js/role.js",

@@ -50,4 +50,12 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'resources/assets/js/jumantik/laporan/index.js',
         'resources/assets/js/jumantik/laporan/create.js',
     ], 'public/js/jumantik/laporan.js')
+    .js([
+        'resources/assets/js/penyakit/laporan/index.js',
+        'resources/assets/js/penyakit/laporan/create.js',
+    ], 'public/js/penyakit/laporan.js')
+    .js([
+        'resources/assets/js/penyakit/profile/index.js',
+        'resources/assets/js/penyakit/profile/create.js',
+    ], 'public/js/penyakit/profile.js')
    .sass('resources/assets/sass/app.scss', 'public/css');

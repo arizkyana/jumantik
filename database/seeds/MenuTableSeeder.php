@@ -21,83 +21,99 @@ class MenuTableSeeder extends Seeder
                 'authorize_url' => 'dashboard',
                 'show' => TRUE,
             ],
-            // menu
+
+            // penyakit 2
             [
-                'name' => 'Menu',
-                'url' => 'menu',
-                'icon' => 'fa fa-building',
+                'name' => 'Penyakit',
+                'url' => 'penyakit',
+                'icon' => 'fa fa-file',
                 'parent' => 0,
-                'authorize_url' => 'menu',
-                'show' => TRUE,
-            ],
-            [
-                'name' => 'Daftar Menu',
-                'url' => 'menu',
-                'icon' => 'fa fa-plus',
-                'parent' => 2,
-                'authorize_url' => 'menu',
+                'authorize_url' => 'penyakit',
                 'show' => TRUE
             ],
             [
-                'name' => 'Tambah Menu',
-                'url' => 'menu/create',
-                'icon' => 'fa fa-plus',
+                'name' => 'Laporan',
+                'url' => 'penyakit/laporan',
+                'icon' => 'fa fa-file',
                 'parent' => 2,
-                'authorize_url' => 'menu-create',
+                'authorize_url' => 'penyakit-laporan',
+                'show' => TRUE
+            ],
+            [
+                'name' => 'Profile',
+                'url' => 'penyakit/Profile',
+                'icon' => 'fa fa-file',
+                'parent' => 2,
+                'authorize_url' => 'penyakit-profile',
+                'show' => TRUE
+            ],
+
+            // notification center 5
+            [
+                'name' => 'Notification',
+                'url' => 'notification',
+                'icon' => 'fa fa-notification',
+                'parent' => 0,
+                'authorize_url' => 'notification',
+                'show' => TRUE
+            ],
+            [
+                'name' => 'Setup',
+                'url' => 'notification/setup',
+                'icon' => 'fa fa-file',
+                'parent' => 5,
+                'authorize_url' => 'notification-setup',
+                'show' => TRUE
+            ],
+            [
+                'name' => 'History',
+                'url' => 'notification/history',
+                'icon' => 'fa fa-file',
+                'parent' => 5,
+                'authorize_url' => 'notification-history',
+                'show' => TRUE
+            ],
+
+            // menu 8
+            [
+                'name' => 'Setting',
+                'url' => 'setting',
+                'icon' => 'fa fa-gear',
+                'parent' => 0,
+                'authorize_url' => 'setting',
+                'show' => TRUE,
+            ],
+            [
+                'name' => 'Menu',
+                'url' => 'setting/menu',
+                'icon' => 'fa fa-plus',
+                'parent' => 8,
+                'authorize_url' => 'setting-menu',
                 'show' => TRUE
             ],
 
             // role
+
             [
                 'name' => 'Role',
-                'url' => 'role',
-                'icon' => 'fa fa-user',
-                'parent' => 0,
-                'authorize_url' => 'role',
-                'show' => TRUE
-            ],
-            [
-                'name' => 'Daftar Role',
-                'url' => 'role',
+                'url' => 'setting/role',
                 'icon' => 'fa fa-circle',
-                'parent' => 5,
-                'authorize_url' => 'role',
+                'parent' => 8,
+                'authorize_url' => 'setting/role',
                 'show' => TRUE
             ],
-            [
-                'name' => 'Tambah Role',
-                'url' => 'role/create',
-                'icon' => 'fa fa-plus',
-                'parent' => 5,
-                'authorize_url' => 'role-create',
-                'show' => TRUE
-            ],
+
 
             // users
             [
                 'name' => 'Users',
-                'url' => 'users',
+                'url' => 'setting/users',
                 'icon' => 'fa fa-user',
-                'parent' => 0,
-                'authorize_url' => 'users',
+                'parent' => 8,
+                'authorize_url' => 'setting/users',
                 'show' => TRUE
             ],
-            [
-                'name' => 'Daftar Users',
-                'url' => 'users',
-                'icon' => 'fa fa-circle',
-                'parent' => 8,
-                'authorize_url' => 'users',
-                'show' => TRUE
-            ],
-            [
-                'name' => 'Tambah Users',
-                'url' => 'users/create',
-                'icon' => 'fa fa-plus',
-                'parent' => 8,
-                'authorize_url' => 'users-create',
-                'show' => TRUE
-            ]
+
         ]);
     }
 }
