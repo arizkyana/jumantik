@@ -4,7 +4,7 @@
 
     <div class="row">
 
-        <div class="col-lg-9">
+        <div class="col-lg-12">
             <div class="ibox">
                 <div class="ibox-title">
                     <h5>Peta Sebaran</h5>
@@ -50,11 +50,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
-            <div id="openweathermap-widget-5"></div>
-            <script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 5,cityid: '1649378',appid: 'b2db946ed85cbd7c15006163dd5b890b',units: 'metric',containerid: 'openweathermap-widget-5',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "https://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();</script>
-        </div>
-        <div class="col-lg-5">
+
+        <div class="col-lg-12">
             <div class="ibox">
                 <div class="ibox-title">
                     <h5>Jadwal Monitoring</h5>
@@ -69,9 +66,9 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td colspan="3">Belum ada Jadwal</td>
-                            </tr>
+                        <tr>
+                            <td colspan="3">Belum ada Jadwal</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -86,7 +83,7 @@
 
     <div class="row">
 
-        <div class="col-lg-4">
+        <div class="col-lg-6">
             <div class="ibox">
                 <div class="ibox-title">
                     <h5>Statistik Jumantik</h5>
@@ -109,7 +106,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-6">
             <div class="ibox">
                 <div class="ibox-title">
                     <h5>Statistik Jumantik</h5>
@@ -132,7 +129,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-12">
             <div class="ibox">
                 <div class="ibox-title">
                     <h5>Statistik Jumantik</h5>

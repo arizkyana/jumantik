@@ -17,6 +17,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::prefix('auth')->group(function(){
+   Route::get('/login', 'Api\UsersController@login');
+   Route::get('/forgot', 'Api\UsersController@forgot');
+   Route::get('/reset_password', 'Api\UsersController@reset_password');
+});
+
 
 // Kelurahan
 Route::prefix('kelurahan')->group(function(){
