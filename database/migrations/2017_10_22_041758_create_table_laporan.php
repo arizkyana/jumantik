@@ -19,6 +19,7 @@ class CreateTableLaporan extends Migration
             $table->integer('pelapor');
             $table->integer('jumlah_suspect');
             $table->integer('penyakit');
+            $table->longText('intensitas_jentik');
             $table->longText('keterangan')->nullable();
             $table->integer('tindakan');
             $table->integer('kecamatan');

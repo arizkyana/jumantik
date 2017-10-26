@@ -39,14 +39,14 @@ Route::prefix('kecamatan')->middleware('simple.token')->group(function () {
 
 // Laporan
 Route::prefix('penyakit')->middleware('simple.token')->group(function () {
-    Route::get('/laporan', 'Api\Penyakit\LaporanController@index');
-    Route::post('/laporan/create', 'Api\Penyakit\LaporanController@create');
-    Route::get('/laporan/show/{laporan}', 'Api\Penyakit\LaporanController@show');
+    Route::prefix('laporan')->group(function(){
+        Route::get('/', 'Api\Penyakit\LaporanController@index');
+        Route::post('/store', 'Api\Penyakit\LaporanController@store');
+        Route::post('/store_log_kejadian', 'Api\Penyakit\LaporanController@store_log_kejadian');
+        Route::get('/show/{laporan}', 'Api\Penyakit\LaporanController@show');
+    });
 });
 
-Route::post('/testapi', function (Request $request) {
-    return $request->auth_user;
-})->middleware('simple.token');
 
 // api unauthenticated
 Route::get('/403', function () {
