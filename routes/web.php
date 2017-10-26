@@ -12,7 +12,10 @@
 */
 
 Route::get('/', function () {
-    return redirect('/home');
+    return view('home')->with([
+        'js' => 'dashboard.js',
+        'gmaps' => true
+    ]);
 });
 
 Auth::routes();

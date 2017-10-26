@@ -15,7 +15,7 @@ class KecamatanController extends Controller
      */
     public function index()
     {
-        //
+        return Kecamatan::where('is_active', TRUE)->get();
     }
 
     /**

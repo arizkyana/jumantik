@@ -16,7 +16,7 @@ class KelurahanController extends Controller
      */
     public function index()
     {
-        //
+        return Kelurahan::where('is_active', TRUE)->get();
     }
 
     /**
