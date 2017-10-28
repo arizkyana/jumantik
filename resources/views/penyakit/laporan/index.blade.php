@@ -67,7 +67,6 @@
             <table id="table-laporan-jumantik" class="table table-condensed table-striped table-hover">
                 <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Tanggal Lapor</th>
                     <th>Pelapor</th>
                     <th>Tipe Pelapor</th>
@@ -79,48 +78,48 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>
-                        <a href="{{ route('penyakit/laporan/show', 2) }}" class="text-danger">{{ \Carbon\Carbon::now() }}</a>
-                    </td>
-                    <td>Joni</td>
-                    <td>Kader (Dinkes)</td>
-                    <td>Suspect DBD 100 Jiwa </td>
-                    <td>Fogging</td>
-                    <td>
-                        <label class="label label-primary">Closed</label>
-                    </td>
-                    <td>
+                {{--<tr>--}}
+                    {{--<td>1</td>--}}
+                    {{--<td>--}}
+                        {{--<a href="{{ route('penyakit/laporan/show', 2) }}" class="text-danger">{{ \Carbon\Carbon::now() }}</a>--}}
+                    {{--</td>--}}
+                    {{--<td>Joni</td>--}}
+                    {{--<td>Kader (Dinkes)</td>--}}
+                    {{--<td>Suspect DBD 100 Jiwa </td>--}}
+                    {{--<td>Fogging</td>--}}
+                    {{--<td>--}}
+                        {{--<label class="label label-primary">Closed</label>--}}
+                    {{--</td>--}}
+                    {{--<td>--}}
                         {{--lokasi langsung open gmaps--}}
-                        <a href="{{ route('maps') }}" class="text-danger">Jl. Antapani</a>
-                    </td>
-                    <td class="text-center">
+                        {{--<a href="{{ route('maps') }}" class="text-danger">Jl. Antapani</a>--}}
+                    {{--</td>--}}
+                    {{--<td class="text-center">--}}
 
-                        <a class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>
-                        <a href="{{ route('penyakit/laporan/show', 2) }}" class="text-danger">{{ \Carbon\Carbon::now() }}</a>
-                    </td>
-                    <td>Jono</td>
-                    <td>Sekolah</td>
-                    <td>Malaria 0 Jiwa </td>
-                    <td>Fogging</td>
-                    <td>
-                        <label class="label label-warning">On Going</label>
-                    </td>
-                    <td>
+                        {{--<a class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>--}}
+                    {{--</td>--}}
+                {{--</tr>--}}
+                {{--<tr>--}}
+                    {{--<td>2</td>--}}
+                    {{--<td>--}}
+                        {{--<a href="{{ route('penyakit/laporan/show', 2) }}" class="text-danger">{{ \Carbon\Carbon::now() }}</a>--}}
+                    {{--</td>--}}
+                    {{--<td>Jono</td>--}}
+                    {{--<td>Sekolah</td>--}}
+                    {{--<td>Malaria 0 Jiwa </td>--}}
+                    {{--<td>Fogging</td>--}}
+                    {{--<td>--}}
+                        {{--<label class="label label-warning">On Going</label>--}}
+                    {{--</td>--}}
+                    {{--<td>--}}
                         {{--lokasi langsung open gmaps--}}
-                        <a href="{{ route('maps') }}" class="text-danger">Jl. Antapani</a>
-                    </td>
-                    <td class="text-center">
+                        {{--<a href="{{ route('maps') }}" class="text-danger">Jl. Antapani</a>--}}
+                    {{--</td>--}}
+                    {{--<td class="text-center">--}}
 
-                        <a class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-                    </td>
-                </tr>
+                        {{--<a class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>--}}
+                    {{--</td>--}}
+                {{--</tr>--}}
                 </tbody>
             </table>
         </div>

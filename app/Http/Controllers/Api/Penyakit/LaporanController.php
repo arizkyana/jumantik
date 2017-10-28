@@ -7,8 +7,10 @@ use App\Kecamatan;
 use App\Kelurahan;
 use App\Penyakit;
 use App\Puskesmas\Laporan;
+use App\Utils\Datatables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LaporanController extends Controller
 {
@@ -18,7 +20,7 @@ class LaporanController extends Controller
     }
 
     public function index(){
-        return ['data' => 'All laporan will be here'];
+        return Laporan::all();
     }
 
     public function store(Request $request){
@@ -47,5 +49,38 @@ class LaporanController extends Controller
 
     public function show($id){
         return \App\Laporan::find($id);
+    }
+
+    /**
+     * Load laporan with datatables configuration
+     *
+     * @param Request
+     * @return \Illuminate\Http\Response
+     */
+    public function ajax_laporan(Request $request)
+    {
+//        $this->middleware('auth');
+
+        $start = $request->input('start');
+        $length = $request->input('length');
+        $draw = $request->input('draw');
+
+        $where = "";
+        $where .= Datatables::like_or_order($request);
+
+        $count = DB::table('laporan')->count();
+
+        $data = DB::table('laporan')
+//            ->where($where)
+            ->offset($start)
+            ->limit($length)
+            ->get();
+
+        return [
+            'draw' => $draw,
+            'recordsTotal' => $count,
+            'recordsFiltered' => $count,
+            'data' => $data,
+        ];
     }
 }

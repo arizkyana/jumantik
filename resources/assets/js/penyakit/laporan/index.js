@@ -12,7 +12,25 @@ $(document).ready(function(){
         init: function(){
             const self = this;
 
-            self.el.dataTable();
+            self.el.dataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '/api/penyakit/laporan/ajax_laporan',
+                    method: 'post'
+                },
+                columns: [
+
+                    {data: 'created_at'},
+                    {data: 'pelapor'},
+                    {data: 'pelapor'},
+                    {data: 'penyakit'},
+                    {data: 'tindakan'},
+                    {data: 'status'},
+                    {data: 'id'},
+                    {data: 'id'}
+                ]
+            });
         }
     };
 

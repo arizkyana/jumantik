@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\AreaKecamatan;
 use App\Http\Controllers\Controller;
 use App\Kecamatan;
 use Illuminate\Http\Request;
@@ -84,6 +85,21 @@ class KecamatanController extends Controller
         //
     }
 
+
+    public function area_kecamatan(){
+        $path_coordinates = [];
+        $kecamatan = Kecamatan::where('is_active', TRUE)->get();
+
+        foreach($kecamatan as $item) {
+            $area_kecamatan = AreaKecamatan::where('nama_kecamatan', $item->nama_kecamatan)->get();
+            array_push($path_coordinates, array(
+                'kecamatan' => $item->nama_kecamatan,
+                'area' => $area_kecamatan
+            ));
+        }
+
+        return $path_coordinates;
+    }
 
 
 }

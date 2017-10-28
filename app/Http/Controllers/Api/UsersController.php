@@ -20,7 +20,9 @@ use GuzzleHttp;
 class UsersController extends Controller
 {
 
-    public function __construct(){}
+    public function __construct()
+    {
+    }
 
     public function login(Request $request)
     {
@@ -44,6 +46,36 @@ class UsersController extends Controller
         }
 
         return ['message' => 'user not authenticated'];
+    }
+
+    public function register(Request $request)
+    {
+        $user = new User();
+
+        $user->nik = $request->input('nik');
+        $user->email = $request->input('email');
+        $user->password = bcrypt($request->input('password'));
+        $user->username = $request->input('username');
+        $user->role_id = 4; // default mobile role
+
+        $user->save();
+
+        // Store Client API
+        $_api = new ApiClient();
+
+        $_api->user_id = $user->id;
+        $_api->name = 'Mobile ' . $user->username;
+        $_api->secret = str_random(40);
+        $_api->redirect = 'http://localhost:8000/callback'; // sementara statik dulu
+        $_api->personal_access_client = false;
+        $_api->password_client = true;
+        $_api->revoked = false;
+
+        $_api->save();
+
+        return $user;
+
+
     }
 
     public function logout()

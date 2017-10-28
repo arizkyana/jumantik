@@ -7,8 +7,10 @@ use App\Kecamatan;
 use App\Kelurahan;
 use App\Penyakit;
 use App\Puskesmas\Laporan;
+use App\Utils\Datatables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LaporanController extends Controller
 {
@@ -162,4 +164,9 @@ class LaporanController extends Controller
 
         return redirect('menu')->with('success', 'Berhasil Hapus Menu ' . $id);
     }
+
+    // ajax
+
+
 }
+

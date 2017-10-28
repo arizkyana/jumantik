@@ -22,6 +22,7 @@ Route::prefix('auth')->group(function () {
     Route::post('/login', 'Api\UsersController@login');
     Route::post('/logout', 'Api\UsersController@login');
     Route::post('/forgot', 'Api\UsersController@forgot');
+    Route::post('/register', 'Api\UsersController@register');
     Route::post('/reset_password', 'Api\UsersController@reset_password');
 });
 
@@ -35,6 +36,7 @@ Route::prefix('kelurahan')->middleware('simple.token')->group(function () {
 // Kecamatan
 Route::prefix('kecamatan')->middleware('simple.token')->group(function () {
     Route::get('/', 'Api\KecamatanController@index');
+    Route::get('/area', 'Api\KecamatanController@area_kecamatan');
 });
 
 // Laporan
@@ -44,6 +46,8 @@ Route::prefix('penyakit')->middleware('simple.token')->group(function () {
         Route::post('/store', 'Api\Penyakit\LaporanController@store');
         Route::post('/store_log_kejadian', 'Api\Penyakit\LaporanController@store_log_kejadian');
         Route::get('/show/{laporan}', 'Api\Penyakit\LaporanController@show');
+
+        Route::post('/ajax_laporan', 'Api\Penyakit\LaporanController@ajax_laporan');
     });
 });
 

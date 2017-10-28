@@ -45,7 +45,6 @@ Route::namespace('Penyakit')->group(function () {
         Route::get('/laporan/create', 'LaporanController@create')->name('penyakit/laporan/create');
         Route::get('/laporan/{laporan}/edit', 'LaporanController@edit')->name('penyakit/laporan/edit');
         Route::get('/laporan/show/{laporan}', 'LaporanController@show')->name('penyakit/laporan/show');
-
     });
 });
 
