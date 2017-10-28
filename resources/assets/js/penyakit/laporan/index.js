@@ -23,12 +23,24 @@ $(document).ready(function(){
 
                     {data: 'created_at'},
                     {data: 'pelapor'},
-                    {data: 'pelapor'},
-                    {data: 'penyakit'},
-                    {data: 'tindakan'},
-                    {data: 'status'},
-                    {data: 'id'},
-                    {data: 'id'}
+                    {data: 'tipe_pelapor'},
+                    {data: 'nama_penyakit'},
+                    {data: 'nama_tindakan'},
+                    {data: 'nama_status'},
+                    {
+                        data: 'alamat',
+                        render: function(data, type, row, meta){
+                            const html = data + '<br /><small>' + row.nama_kelurahan + ", " + row.nama_kecamatan + '</small>';
+                            return html;
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row, meta){
+                            const html = '<a href="#" class="btn btn-primary btn-sm"  tooltip="Detail Laporan"><i class="fa fa-eye"></i></a>';
+                            return html;
+                        }
+                    }
                 ]
             });
         }

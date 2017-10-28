@@ -10,16 +10,17 @@
         foreach ($menus as $menu){
             $isShow = false;
 
+            if ($menu->show == 1) {
+                 foreach ($selected_menus as $selected_menu){
+                    if ($menu->id == $selected_menu->menu_id) $isShow = true;
+                 }
 
-
-            foreach ($selected_menus as $selected_menu){
-                if ($menu->id == $selected_menu->menu_id) $isShow = true;
+                    $menu->isShow = $isShow;
+                    if ($menu->isShow) {
+                        array_push($new_menus, $menu);
+                    }
             }
 
-            $menu->isShow = $isShow;
-            if ($menu->isShow) {
-                array_push($new_menus, $menu);
-            }
         }
 
         return build_tree($new_menus);

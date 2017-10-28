@@ -1,0 +1,36 @@
+26-Okt-2017 14:20
+
+Apply Simple Token Api
+Mekanisme Auth menggunakan oauth di hold dulu, karena pertimbangan proses mendapatkan token untuk user mobile.
+Perlu dipelajari lebih lanjut setelah project ini selesai.
+
+26-Okt-2017 14:39
+
+Pasang Fitur API Store Laporan
+Pada tahap ini sudah bisa melakukan store laporan via api yang ter-otorisasi. Setelah ini pasang fitur untuk simpan log lapora (detail laporan)
+detail laporan :
+- id
+- laporan
+- tanggal
+- pelapor
+- foto
+- keterangan
+- tindakan
+- status
+
+28-Okt-2017
+08:31
+
+Pasang marker dan tanda wilayah kecamatan di maps
+
+- Buat library datatable 
+- Table laporan penyakit sudah mengambil data menggunakan ajax
+- Informasi laporan belum di join
+
+13:25
+
+Tampilkan informasi laporan dengan hasil join
+
+! harus segera di ganti nama - nama field pada :
+- penyakit : id_penyakit, nama_penyakit, keterangan_penyakit
+- dst.

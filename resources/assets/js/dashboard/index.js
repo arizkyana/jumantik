@@ -95,6 +95,7 @@ var dashboard = (function () {
     function init() {
         loadmap();
 
+
     }
 
     return {

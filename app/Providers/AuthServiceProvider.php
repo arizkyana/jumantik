@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Log;
 use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
@@ -62,12 +63,14 @@ class AuthServiceProvider extends ServiceProvider
 
         // users
         Gate::define('users', function ($user) {
-            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'users');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'setting-users');
         });
         Gate::define('users-create', function ($user) {
-            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'users-create');
+
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'setting-users-create');
         });
         Gate::define('users-edit', function ($user) {
+            Log::debug('masuk ke gate users-edit : ' . $user->role_id);
             return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'users-edit');
         });
 
@@ -108,6 +111,39 @@ class AuthServiceProvider extends ServiceProvider
             return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'survey-laporan');
         });
 
+        // penyakit
+        Gate::define('penyakit', function ($user) {
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'penyakit');
+        });
+        Gate::define('penyakit-create', function ($user) {
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'penyakit-create');
+        });
+        Gate::define('penyakit-edit', function ($user) {
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'penyakit-edit');
+        });
+
+        // tindakan
+        Gate::define('tindakan', function ($user) {
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'setting-tindakan');
+        });
+        Gate::define('tindakan-create', function ($user) {
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'setting-tindakan-create');
+        });
+        Gate::define('tindakan-edit', function ($user) {
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'setting-tindakan-edit');
+        });
+
+        // status
+        Gate::define('status', function ($user) {
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'setting-status');
+        });
+        Gate::define('status-create', function ($user) {
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'setting-status-create');
+        });
+        Gate::define('status-edit', function ($user) {
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'setting-status-edit');
+        });
+
         Passport::routes();
 
 
@@ -115,6 +151,7 @@ class AuthServiceProvider extends ServiceProvider
 
     private function authorize_menu($role_id, $resource)
     {
+
         $authorize_menu = DB::table('menu')
             ->leftJoin('role_menu', 'role_menu.menu_id', '=', 'menu.id')
             ->where('role_menu.role_id', $role_id)

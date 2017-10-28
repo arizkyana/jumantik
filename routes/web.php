@@ -120,7 +120,26 @@ Route::namespace('Setting')->group(function () {
         Route::resource('users', 'UsersController');
         Route::get('/users', 'UsersController@index')->name('users')->middleware('can:users');
         Route::get('/users/create', 'UsersController@create')->name('users/create')->middleware('can:users-create');
-        Route::get('/users/{users}/edit', 'UsersController@edit')->name('users/edit')->middleware('can:users-edit');
+        Route::get('/users/{users}/edit', 'UsersController@edit')->name('users/edit')->middleware('can:users-x');
+
+        // Penyakit
+        Route::resource('penyakit', 'PenyakitController');
+        Route::get('/penyakit', 'PenyakitController@index')->name('penyakit')->middleware('can:penyakit');
+        Route::get('/penyakit/create', 'PenyakitController@create')->name('penyakit/create')->middleware('can:penyakit-create');
+        Route::get('/penyakit/{users}/edit', 'PenyakitController@edit')->name('penyakit/edit')->middleware('can:penyakit-edit');
+
+        // Tindakan
+        Route::resource('tindakan', 'TindakanController');
+        Route::get('/tindakan', 'TindakanController@index')->name('tindakan')->middleware('can:tindakan');
+        Route::get('/tindakan/create', 'TindakanController@create')->name('tindakan/create')->middleware('can:tindakan-create');
+        Route::get('/tindakan/{users}/edit', 'TindakanController@edit')->name('tindakan/edit')->middleware('can:tindakan-edit');
+
+        // Status
+        Route::resource('status', 'StatusController');
+        Route::get('/status', 'StatusController@index')->name('status')->middleware('can:status');
+        Route::get('/status/create', 'StatusController@create')->name('status/create')->middleware('can:status-create');
+        Route::get('/status/{users}/edit', 'StatusController@edit')->name('status/edit')->middleware('can:status-edit');
+
     });
 });
 

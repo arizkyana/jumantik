@@ -19,11 +19,6 @@ class UsersController extends MyController
 
     private $js = 'users.js';
 
-    public function __construct()
-    {
-        parent::__construct();
-
-    }
 
     /**
      * Display a listing of the resource.
@@ -114,7 +109,6 @@ class UsersController extends MyController
     public function edit($id)
     {
 
-//        $this->authorize('update-role');
 
         $users = User::find($id);
 

@@ -19,11 +19,13 @@ class LaporanController extends Controller
     {
     }
 
-    public function index(){
+    public function index()
+    {
         return Laporan::all();
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $pelapor = $request->auth_user;
 
         $laporan = new \App\Laporan();
@@ -47,7 +49,8 @@ class LaporanController extends Controller
         return $laporan;
     }
 
-    public function show($id){
+    public function show($id)
+    {
         return \App\Laporan::find($id);
     }
 
@@ -72,8 +75,16 @@ class LaporanController extends Controller
 
         $data = DB::table('laporan')
 //            ->where($where)
+            ->leftJoin('users', 'users.id', '=', 'laporan.pelapor')
+            ->leftJoin('role', 'role.id', '=', 'users.role_id')
+            ->leftJoin('penyakit', 'penyakit.id_penyakit', '=', 'laporan.penyakit')
+            ->leftJoin('status', 'status.id_status', '=', 'laporan.status')
+            ->leftJoin('tindakan', 'tindakan.id_tindakan', '=', 'laporan.tindakan')
+            ->leftJoin('kecamatan', 'kecamatan.kecamatan_id', '=', 'laporan.kecamatan')
+            ->leftJoin('kelurahan', 'kelurahan.kelurahan_id', '=', 'laporan.kelurahan')
             ->offset($start)
             ->limit($length)
+            ->select('laporan.*', 'users.nik', 'role.name as tipe_pelapor', 'users.name as pelapor', 'penyakit.nama_penyakit', 'tindakan.nama_tindakan', 'status.nama_status', 'kecamatan.nama_kecamatan', 'kelurahan.nama_kelurahan')
             ->get();
 
         return [

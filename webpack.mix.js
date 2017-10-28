@@ -58,4 +58,14 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'resources/assets/js/penyakit/profile/index.js',
         'resources/assets/js/penyakit/profile/create.js',
     ], 'public/js/penyakit/profile.js')
+    .js([
+        'resources/assets/js/setting/penyakit/index.js',
+    ], 'public/js/setting/penyakit.js')
+    .js([
+        'resources/assets/js/setting/tindakan/index.js',
+    ], 'public/js/setting/tindakan.js')
+    .js([
+        'resources/assets/js/setting/status/index.js',
+    ], 'public/js/setting/status.js')
+
    .sass('resources/assets/sass/app.scss', 'public/css');

@@ -29,7 +29,7 @@ class Datatables
         // search
         if (!empty($search_input['value'])) {
 
-            $like = " WHERE ";
+            $like = " ";
             $keyword = $search_input['value'];
 
             // create search query with '%like%'
@@ -46,20 +46,20 @@ class Datatables
         }
 
         // order by
-        if (isset($order_input)) {
-            $order_by = " ORDER BY ";
-            $column = $order_input[0]['column'];
-            $dir = $order_input[0]['dir']; // asc / desc
-
-            $selected_column = $column_input[$column];
-
-            if ($selected_column['orderable']) {
-                $order_field = $selected_column['data'];
-                $order_by .= $order_field . " " . $dir;
-                $query_str .= $order_by;
-            }
-
-        }
+//        if (isset($order_input)) {
+//            $order_by = " ORDER BY ";
+//            $column = $order_input[0]['column'];
+//            $dir = $order_input[0]['dir']; // asc / desc
+//
+//            $selected_column = $column_input[$column];
+//
+//            if ($selected_column['orderable']) {
+//                $order_field = $selected_column['data'];
+//                $order_by .= $order_field . " " . $dir;
+//                $query_str .= $order_by;
+//            }
+//
+//        }
 
         return $query_str;
     }
