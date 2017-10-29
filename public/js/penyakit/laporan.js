@@ -98,7 +98,13 @@ $(document).ready(function () {
                     url: '/api/penyakit/laporan/ajax_laporan',
                     method: 'post'
                 },
-                columns: [{ data: 'created_at' }, { data: 'pelapor' }, { data: 'tipe_pelapor' }, { data: 'nama_penyakit' }, { data: 'nama_tindakan' }, { data: 'nama_status' }, {
+                columns: [{
+                    data: 'created_at',
+                    render: function render(data, type, row, meta) {
+                        var html = '<a class="text-danger" href="' + base_url + '/penyakit/laporan/' + row.id + '/show">' + data + '</a>';
+                        return html;
+                    }
+                }, { data: 'pelapor' }, { data: 'tipe_pelapor' }, { data: 'nama_penyakit' }, { data: 'nama_tindakan' }, { data: 'nama_status' }, {
                     data: 'alamat',
                     render: function render(data, type, row, meta) {
                         var html = data + '<br /><small>' + row.nama_kelurahan + ", " + row.nama_kecamatan + '</small>';

@@ -101,7 +101,7 @@ class PenyakitController extends MyController
     public function edit($id)
     {
 
-        $penyakit = Penyakit::where('id_penyakit', $id)->first();
+        $penyakit = Penyakit::find($id);
         return view('setting/penyakit/edit')->with([
             'js' => $this->js,
             'penyakit' => $penyakit
@@ -129,7 +129,7 @@ class PenyakitController extends MyController
                 ->with($request->input());
         }
 
-        $_penyakit = $penyakit->where('id_penyakit', $request->input('id'))->first();
+        $_penyakit = $penyakit->find($request->input('id'));
 
         $_penyakit->nama_penyakit = $request->input('nama');
         $_penyakit->keterangan_penyakit = $request->input('keterangan');
@@ -148,7 +148,7 @@ class PenyakitController extends MyController
      */
     public function destroy($id)
     {
-        $role = Penyakit::where('id_penyakit', $id)->first();
+        $role = Penyakit::find($id);
         $role->delete();
 
         return redirect('setting/penyakit')->with('success', 'Berhasil Hapus Penyakit ' . $id);

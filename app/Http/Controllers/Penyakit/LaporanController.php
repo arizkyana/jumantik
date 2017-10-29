@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers\Penyakit;
 
+use App\DetailLaporan;
 use App\Http\Controllers\Controller;
 use App\Kecamatan;
 use App\Kelurahan;
 use App\Penyakit;
 use App\Puskesmas\Laporan;
+use App\Role;
+use App\Status;
+use App\Tindakan;
+use App\User;
 use App\Utils\Datatables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -87,9 +92,33 @@ class LaporanController extends Controller
      */
     public function show($id)
     {
+        $laporan = Laporan::find($id);
+        $penyakit = Penyakit::find($laporan->penyakit);
+        $tindakan = Tindakan::find($laporan->tindakan);
+        $status = Status::find($laporan->status);
+        $kecamatan = Kecamatan::where('kecamatan_id', $laporan->kecamatan)->first();
+        $kelurahan = Kelurahan::where('kelurahan_id', $laporan->kelurahan)->first();
+        $pelapor = User::find($laporan->pelapor);
+        $tipe_pelapor = Role::find($pelapor->role_id);
+        $detail_laporan = DetailLaporan::where('id_laporan', $id)->get();
+
+
         return view('penyakit/laporan/show')->with([
-            'js' => 'penyakit/laporan.js',
-            'title' => 'Detail Laporan ' . $id
+            'title' => 'Detail Laporan ' . $id,
+            'laporan' => [
+                'isi' => $laporan,
+                'penyakit' => $penyakit,
+                'tindakan' => $tindakan,
+                'status' => $status,
+                'kecamatan' => $kecamatan,
+                'kelurahan' => $kelurahan,
+                'pelapor' => [
+                    'pelapor' => $pelapor,
+                    'tipe_pelapor' => $tipe_pelapor
+                ]
+            ],
+            'detail_laporan' => $detail_laporan,
+
         ]);
     }
 

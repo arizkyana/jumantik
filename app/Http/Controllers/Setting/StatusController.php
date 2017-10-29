@@ -103,7 +103,7 @@ class StatusController extends MyController
     public function edit($id)
     {
 
-        $status = Status::where('id_status', $id)->first();
+        $status = Status::find($id);
         return view('setting/status/edit')->with([
             'js' => $this->js,
             'status' => $status
@@ -131,7 +131,7 @@ class StatusController extends MyController
                 ->with($request->input());
         }
 
-        $_penyakit = $penyakit->where('id_status', $request->input('id'))->first();
+        $_penyakit = $penyakit->find($request->input('id'));
 
         $_penyakit->nama_status = $request->input('nama');
         $_penyakit->keterangan_status = $request->input('keterangan');
@@ -150,7 +150,7 @@ class StatusController extends MyController
      */
     public function destroy($id)
     {
-        $role = Status::where('id_status', $id)->first();
+        $role = Status::find($id);
         $role->delete();
 
         return redirect('setting/status')->with('success', 'Berhasil Hapus Status ' . $id);

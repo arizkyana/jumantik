@@ -101,7 +101,7 @@ class TindakanController extends MyController
     public function edit($id)
     {
 
-        $tindakan = Tindakan::where('id_tindakan', $id)->first();
+        $tindakan = Tindakan::find($id);
 
         return view('setting/tindakan/edit')->with([
             'js' => $this->js,
@@ -130,9 +130,8 @@ class TindakanController extends MyController
                 ->with($request->input());
         }
 
-        $_penyakit = $tindakan->where('id_tindakan', $request->input('id'))->first();
+        $_penyakit = $tindakan->find($request->input('id'));
 
-        return $_penyakit;
 
         $_penyakit->nama_tindakan = $request->input('nama');
         $_penyakit->keterangan_tindakan = $request->input('keterangan');
@@ -151,7 +150,7 @@ class TindakanController extends MyController
      */
     public function destroy($id)
     {
-        $role = Tindakan::where('id_tindakan', $id)->first();
+        $role = Tindakan::find($id);
         $role->delete();
 
         return redirect('setting/tindakan')->with('success', 'Berhasil Hapus Tindakan ' . $id);

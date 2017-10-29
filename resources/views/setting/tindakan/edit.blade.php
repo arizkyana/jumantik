@@ -2,7 +2,7 @@
 
 @section('content')
 
-        <form action="{{ action('Setting\TindakanController@update', ['id' => $tindakan->id_tindakan]) }}" method="post">
+        <form action="{{ action('Setting\TindakanController@update', ['id' => $tindakan->id]) }}" method="post">
             <div class="ibox">
                 <div class="ibox-title">
                     <h5>Edit Profile Penyakit</h5>
@@ -19,7 +19,7 @@
                         </div>
                     @endif
 
-                    <input type="hidden" name="id" value="{{ $tindakan->id_tindakan  }}"/>
+                    <input type="hidden" name="id" value="{{ $tindakan->id  }}"/>
                     <div class="form-group {{ $errors->has('nama') ? ' has-error' : '' }}">
                         <div class="row">
                             <label for="name" class="col-md-3 ">Nama <span class="text-danger">*</span></label>

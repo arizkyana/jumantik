@@ -36,7 +36,7 @@
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td>
-                            <a href="{{ route('tindakan/edit', $penyakit->id_tindakan)  }}" class="text-danger">
+                            <a href="{{ route('tindakan/edit', $penyakit->id)  }}" class="text-danger">
                                 {{ $penyakit->nama_tindakan }}
                             </a>
                         </td>
@@ -44,12 +44,12 @@
                         <td>
                             <a class="btn btn-sm btn-danger"
                                onclick="event.preventDefault();
-                                       document.getElementById('delete-{{$penyakit->id_tindakan}}').submit();">
+                                       document.getElementById('delete-{{$penyakit->id}}').submit();">
                                 <i class="glyphicon glyphicon-trash"></i>
                             </a>
 
-                            <form id="delete-{{$penyakit->id_tindakan}}"
-                                  action="{{ action('Setting\TindakanController@destroy', ['id' => $penyakit->id_tindakan]) }}"
+                            <form id="delete-{{$penyakit->id}}"
+                                  action="{{ action('Setting\TindakanController@destroy', ['id' => $penyakit->id]) }}"
                                   method="POST"
                                   style="display: none;">
                                 {{ csrf_field() }}

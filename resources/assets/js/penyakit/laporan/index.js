@@ -4,12 +4,12 @@
 let table = {};
 let filter = {};
 
-$(document).ready(function(){
+$(document).ready(function () {
 
     table = {
         el: $("#table-laporan-jumantik"),
         evt: {},
-        init: function(){
+        init: function () {
             const self = this;
 
             self.el.dataTable({
@@ -21,7 +21,13 @@ $(document).ready(function(){
                 },
                 columns: [
 
-                    {data: 'created_at'},
+                    {
+                        data: 'created_at',
+                        render: function (data, type, row, meta) {
+                            const html = '<a class="text-danger" href="' + base_url + '/penyakit/laporan/' + row.id + '/show">' + data + '</a>';
+                            return html;
+                        }
+                    },
                     {data: 'pelapor'},
                     {data: 'tipe_pelapor'},
                     {data: 'nama_penyakit'},
@@ -29,14 +35,14 @@ $(document).ready(function(){
                     {data: 'nama_status'},
                     {
                         data: 'alamat',
-                        render: function(data, type, row, meta){
+                        render: function (data, type, row, meta) {
                             const html = data + '<br /><small>' + row.nama_kelurahan + ", " + row.nama_kecamatan + '</small>';
                             return html;
                         }
                     },
                     {
                         data: 'id',
-                        render: function(data, type, row, meta){
+                        render: function (data, type, row, meta) {
                             const html = '<a href="#" class="btn btn-primary btn-sm"  tooltip="Detail Laporan"><i class="fa fa-eye"></i></a>';
                             return html;
                         }
@@ -49,7 +55,7 @@ $(document).ready(function(){
     filter.tipePelapor = {
         el: $('#tipe_pelapor'),
         evt: {},
-        init: function(){
+        init: function () {
             const self = this;
 
             self.el.select2();
@@ -59,7 +65,7 @@ $(document).ready(function(){
     filter.tanggalMulai = {
         el: $('#tanggal_mulai'),
         evt: {},
-        init: function(){
+        init: function () {
             const self = this;
 
             self.el.datepicker({
@@ -72,7 +78,7 @@ $(document).ready(function(){
     filter.tanggalAkhir = {
         el: $('#tanggal_akhir'),
         evt: {},
-        init: function(){
+        init: function () {
             const self = this;
 
             self.el.datepicker({

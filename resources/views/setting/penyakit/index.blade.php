@@ -44,12 +44,12 @@
                         <td>
                             <a class="btn btn-sm btn-danger"
                                onclick="event.preventDefault();
-                                       document.getElementById('delete-{{$penyakit->id_penyakit}}').submit();">
+                                       document.getElementById('delete-{{$penyakit->id}}').submit();">
                                 <i class="glyphicon glyphicon-trash"></i>
                             </a>
 
                             <form id="delete-{{$penyakit->id}}"
-                                  action="{{ action('Setting\PenyakitController@destroy', ['id' => $penyakit->id_penyakit]) }}"
+                                  action="{{ action('Setting\PenyakitController@destroy', ['id' => $penyakit->id]) }}"
                                   method="POST"
                                   style="display: none;">
                                 {{ csrf_field() }}

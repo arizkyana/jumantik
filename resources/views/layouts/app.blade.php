@@ -188,6 +188,10 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACK1BU_M2kIo8xohz0dx5RjNOqDwwUKSE" async defer></script>
     @endif
 
+    <script type="text/javascript">
+        var base_url = {!! json_encode(url('/')) !!}
+    </script>
+
     @if (isset($js))
         <script src="{{ mix('js/' . $js) }}"></script>
     @endif
