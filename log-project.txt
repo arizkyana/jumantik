@@ -34,3 +34,23 @@ Tampilkan informasi laporan dengan hasil join
 ! harus segera di ganti nama - nama field pada :
 - penyakit : id_penyakit, nama_penyakit, keterangan_penyakit
 - dst.
+
+30-Okt-2017
+16:36
+
+Perbaikan untuk API Laporan . API Detail Laporan sudah bisa upload foto (belum test lagi).
+Perbaikan untuk otorisasi web. update db role, menu dan role_menu
+
+Done
+- Tampilan laporan dan tampilan detail laporan
+
+Not Yet:
+- Perbaikan filter datatable untuk sorting dan searching
+
+Discover :
+Perilaku UDF Javascript pada Laravel Mix dan Blade template perlu di masukan ke dalam object window.
+
+Next :
+- Filter pada peta Dashboard
+- Notifikasi
+-- Setup dan Kirim Notifikasi

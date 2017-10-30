@@ -41,13 +41,13 @@ class AuthServiceProvider extends ServiceProvider
 
         // role
         Gate::define('role', function ($user) {
-            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'role');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'setting-role');
         });
         Gate::define('role-create', function ($user) {
-            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'role-create');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'setting-role-create');
         });
         Gate::define('role-edit', function ($user) {
-            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'role-edit');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'setting-role-edit');
         });
 
         // menu
@@ -113,13 +113,13 @@ class AuthServiceProvider extends ServiceProvider
 
         // penyakit
         Gate::define('penyakit', function ($user) {
-            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'penyakit');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'setting-penyakit');
         });
         Gate::define('penyakit-create', function ($user) {
-            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'penyakit-create');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'setting-penyakit-create');
         });
         Gate::define('penyakit-edit', function ($user) {
-            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'penyakit-edit');
+            return $user->isSuperAdmin() or $this->authorize_menu($user->role_id, 'setting-penyakit-edit');
         });
 
         // tindakan
