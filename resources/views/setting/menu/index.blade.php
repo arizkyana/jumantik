@@ -23,7 +23,7 @@
                 </a>
             </div>
         </div>
-        <div class="ibox-content no-padding">
+        <div class="ibox-content">
             <table id="table-menu" class="table table-condensed table-striped table-hover">
 
                 <thead>

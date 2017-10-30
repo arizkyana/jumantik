@@ -26,23 +26,24 @@ class LaporanController extends Controller
 
     public function store(Request $request)
     {
-        $pelapor = $request->auth_user;
+        $pelapor = isset($request->auth_user) ? $request->auth_user->id : $request->input('pelapor');
 
         $laporan = new \App\Laporan();
 
-        $laporan->pelapor = $pelapor->id;
+        $laporan->pelapor = $pelapor;
         $laporan->jumlah_suspect = $request->input('jumlah_suspect');
         $laporan->penyakit = $request->input('penyakit'); // demam berdarah
-//        $laporan->intensitas_jentik = $request->input('intensitas_jentik');
+        $laporan->intensitas_jentik = $request->input('intensitas_jentik');
         $laporan->keterangan = $request->input('keterangan');
         $laporan->tindakan = $request->input('tindakan'); // Evakuasi
         $laporan->kecamatan = $request->input('kecamatan');
         $laporan->kelurahan = $request->input('kelurahan');
         $laporan->lat = $request->input('lat');
         $laporan->lon = $request->input('lon');
-        $laporan->status = $request->input('status'); // Open
+        $laporan->alamat = $request->input('alamat');
+        $laporan->status = 1; // Open
         $laporan->is_pekdrs = TRUE;
-        $laporan->update_by = $pelapor->id;
+        $laporan->update_by = $pelapor;
 
         $laporan->save();
 
@@ -78,20 +79,80 @@ class LaporanController extends Controller
             ->leftJoin('users', 'users.id', '=', 'laporan.pelapor')
             ->leftJoin('role', 'role.id', '=', 'users.role_id')
             ->leftJoin('penyakit', 'penyakit.id', '=', 'laporan.penyakit')
-            ->leftJoin('status', 'status.id', '=', 'laporan.status')
+
             ->leftJoin('tindakan', 'tindakan.id', '=', 'laporan.tindakan')
             ->leftJoin('kecamatan', 'kecamatan.kecamatan_id', '=', 'laporan.kecamatan')
             ->leftJoin('kelurahan', 'kelurahan.kelurahan_id', '=', 'laporan.kelurahan')
             ->offset($start)
             ->limit($length)
-            ->select('laporan.*', 'users.nik', 'role.name as tipe_pelapor', 'users.name as pelapor', 'penyakit.nama_penyakit', 'tindakan.nama_tindakan', 'status.nama_status', 'kecamatan.nama_kecamatan', 'kelurahan.nama_kelurahan')
-            ->get();
+            ->select('laporan.*', 'users.nik', 'role.name as tipe_pelapor', 'users.name as pelapor', 'penyakit.nama_penyakit', 'tindakan.nama_tindakan', 'kecamatan.nama_kecamatan', 'kelurahan.nama_kelurahan')
+            ->where('laporan.status', '<>', 0);
+
+
+
+        if ($request->query('tanggal_mulai') && $request->query('tanggal_akhir') && $request->query('tipe_pelapor') && $request->query('penyakit')){
+            $tanggal_mulai = date('Y-m-d', strtotime($request->query('tanggal_mulai')));
+            $tanggal_akhir = date('Y-m-d', strtotime($request->query('tanggal_akhir')));
+            $data->whereBetween('laporan.created_at', [$tanggal_mulai, $tanggal_akhir]);
+            if ($request->query('tipe_pelapor') !== 'all' && $request->query('penyakit') !== 'all') {
+                $data->where('role.id', '=', $request->query('tipe_pelapor'));
+                $data->where('penyakit.id', '=', $request->query('penyakit'));
+            }
+        }
+
+        if ($request->query('tanggal_mulai') && $request->query('tanggal_akhir') && $request->query('tipe_pelapor')){
+            $tanggal_mulai = date('Y-m-d', strtotime($request->query('tanggal_mulai')));
+            $tanggal_akhir = date('Y-m-d', strtotime($request->query('tanggal_akhir')));
+            $data->whereBetween('laporan.created_at', [$tanggal_mulai, $tanggal_akhir]);
+            if ($request->query('tipe_pelapor') !== 'all') {
+                $data->where('role.id', '=', $request->query('tipe_pelapor'));
+            }
+        }
+
+        if ($request->query('tanggal_mulai') && $request->query('tanggal_akhir')){
+            $tanggal_mulai = date('Y-m-d 00:00:00', strtotime($request->query('tanggal_mulai')));
+            $tanggal_akhir = date('Y-m-d 23:59:59', strtotime($request->query('tanggal_akhir')));
+            $data->whereBetween('laporan.created_at', [$tanggal_mulai, $tanggal_akhir]);
+        }
+
+
+        if ($request->query('tipe_pelapor') && $request->query('penyakit')) {
+            if ($request->query('tipe_pelapor') !== 'all' && $request->query('penyakit') !== 'all') {
+                $data->where('role.id', '=', $request->query('tipe_pelapor'));
+                $data->where('penyakit.id', '=', $request->query('penyakit'));
+            }
+        }
+
+        if ($request->query('tipe_pelapor')) {
+            if ($request->query('tipe_pelapor') !== 'all') {
+                $data->where('role.id', '=', $request->query('tipe_pelapor'));
+            }
+        }
+
+        if ($request->query('penyakit')) {
+            if ($request->query('penyakit') !== 'all') {
+                $data->where('penyakit.id', '=', $request->query('penyakit'));
+            }
+        }
+
+
+        $data = $data->get();
 
         return [
             'draw' => $draw,
             'recordsTotal' => $count,
             'recordsFiltered' => $count,
             'data' => $data,
+
         ];
+    }
+
+    public function delete($id)
+    {
+        $laporan = Laporan::find($id);
+        $laporan->status = 0;
+
+        $laporan->save();
+        return $laporan;
     }
 }

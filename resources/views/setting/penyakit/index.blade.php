@@ -20,7 +20,7 @@
                 </a>
             </div>
         </div>
-        <div class="ibox-content no-padding">
+        <div class="ibox-content ">
 
             <table id="table-users" class="table table-condensed table-striped table-hover">
                 <thead>

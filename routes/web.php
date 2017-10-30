@@ -45,6 +45,7 @@ Route::namespace('Penyakit')->group(function () {
         Route::get('/laporan/create', 'LaporanController@create')->name('penyakit/laporan/create');
         Route::get('/laporan/{laporan}/edit', 'LaporanController@edit')->name('penyakit/laporan/edit');
         Route::get('/laporan/{laporan}/show', 'LaporanController@show')->name('penyakit/laporan/show');
+        Route::put('/laporan/selesai/{laporan}', 'LaporanController@selesai')->name('penyakit/laporan/selesai');
     });
 });
 
@@ -149,3 +150,19 @@ Route::resource('apiClient', 'ApiClientController');
 Route::get('/apiClient', 'ApiClientController@index')->name('apiClient')->middleware('can:apiClient');
 Route::get('/apiClient/create', 'ApiClientController@create')->name('apiClient/create')->middleware('can:apiClient-create');
 Route::get('/apiClient/{apiClient}/edit', 'ApiClientController@edit')->name('apiClient/edit')->middleware('can:apiClient-edit');
+
+// Media Access
+Route::get('/media/{filename}', function ($filename) {
+
+    $path = storage_path('app/uploads') . "/" . $filename;
+
+    if (!\Illuminate\Support\Facades\File::exists($path)) abort(404);
+    $file = \Illuminate\Support\Facades\File::get($path);
+    $type = \Illuminate\Support\Facades\File::mimeType($path);
+
+    header('Content-type', $type);
+    return response()
+        ->file($path);
+
+
+})->name('media');

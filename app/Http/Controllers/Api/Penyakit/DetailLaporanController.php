@@ -23,6 +23,35 @@ class DetailLaporanController extends Controller
     public function store(Request $request)
     {
 
+        $detail_laporan = new DetailLaporan();
+        $detail_laporan->id_laporan = $request->input('id_laporan');
+        $detail_laporan->pelapor = 1; // TODO: Change to $request->auth_user after use middleware 'simple.token'
+        $detail_laporan->keterangan = $request->input('keterangan');
+        $detail_laporan->tindakan = $request->input('tindakan');
+        $detail_laporan->status = $request->input('status');
+        $detail_laporan->is_visible = TRUE;
+
+        // if has file
+        if ($request->hasFile('foto')){
+//            $path = strtolower(trim(str_replace(" ", "_", $request->input('nama'))));
+            $foto = $request->file('foto')->store('uploads/');
+            $detail_laporan->foto = $foto;
+        }
+
+        $detail_laporan->save();
+
+        // update laporan
+        $laporan = \App\Laporan::find($request->input('id_laporan'));
+        $laporan->status = $detail_laporan->status;
+        $laporan->tindakan = $detail_laporan->tindakan;
+
+        $laporan->save();
+
+        return [
+            'message' => 'OK',
+            'detail_laporan' => $detail_laporan,
+            'laporan' => $laporan
+        ];
     }
 
     public function show($id)

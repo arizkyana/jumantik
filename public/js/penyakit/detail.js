@@ -60,34 +60,32 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 48);
+/******/ 	return __webpack_require__(__webpack_require__.s = 41);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 48:
+/***/ 41:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(49);
+module.exports = __webpack_require__(42);
 
 
 /***/ }),
 
-/***/ 49:
+/***/ 42:
 /***/ (function(module, exports) {
 
-var table = {};
-$(document).ready(function () {
-    table = {
-        el: $("#table-users"),
-        evt: {},
-        init: function init() {
-            var self = this;
-            self.el.dataTable();
-        }
-    };
+window.openFoto = function (e) {
+    $("#modal_foto").data('foto', $(e).data('foto'));
+    $("#modal_foto").modal();
+};
 
-    table.init();
+$("#modal_foto").on('show.bs.modal', function (e) {
+    var foto = $(this).data('foto');
+    var imgFoto = $("#foto");
+
+    imgFoto.attr('src', base_url + '/media' + foto);
 });
 
 /***/ })

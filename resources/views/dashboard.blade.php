@@ -11,7 +11,7 @@
 
                 </div>
                 <div class="ibox-content">
-                    <div id="map" class="google-map">
+                    <div id="map" class="google-map" style="height: 500px !important;">
 
                     </div>
 

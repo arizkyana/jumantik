@@ -1,4 +1,6 @@
 let table = {};
+
+
 $(document).ready(function(){
     table = {
         el: $("#table-users"),

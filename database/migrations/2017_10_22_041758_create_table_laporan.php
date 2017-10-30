@@ -27,10 +27,10 @@ class CreateTableLaporan extends Migration
             $table->float('lat');
             $table->float('lon');
             $table->integer('status');
-                // open
-                // close
-                // on going
-                // surveyed
+                // open 2
+                // close 3
+                // on going 4
+                // deleted 0
             $table->boolean('is_pekdrs');
             $table->integer('update_by');
 

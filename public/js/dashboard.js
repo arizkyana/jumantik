@@ -81,34 +81,194 @@ module.exports = __webpack_require__(24);
 
 var dashboard = function () {
 
+    function openWindow(object, contentString, map) {
+
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+
+        new google.maps.event.addListener(object, 'click', function (event) {
+            infowindow.setContent(contentString);
+            infowindow.setPosition(event.latLng);
+            infowindow.open(map);
+        });
+    }
+
     function laporanIcon(status) {
         var icon = '/marker/emergency_pinpoint.png';
         switch (status) {
             case 1:
                 icon = '/marker/emergency_pinpoint.png';
                 break;
+            case 2:
+                icon = '/marker/solved.png';
+                break;
+            case 3:
+                icon = '/marker/rescue.png';
+                break;
         }
 
-        return icon;
+        return {
+            url: icon,
+            scaledSize: new google.maps.Size(50, 50)
+        };
     }
 
     function loadLaporan(map) {
-        $.ajax({
-            url: '/api/penyakit/laporan',
-            method: 'get'
-        }).then(function (result) {
-            $.each(result, function (i, laporan) {
-                var latLng = new google.maps.LatLng(laporan.lat, laporan.lon);
-                var marker = new google.maps.Marker({
-                    position: latLng,
-                    title: laporan.keterangan,
-                    icon: laporanIcon(laporan.status),
-                    animation: google.maps.Animation.DROP
+
+        var promise = new Promise(function (resolve, reject) {
+            $.ajax({
+                url: '/api/penyakit/laporan',
+                method: 'get'
+            }).then(function (result) {
+                $.each(result, function (i, laporan) {
+                    var latLng = new google.maps.LatLng(laporan.lat, laporan.lon);
+                    var _laporan = new google.maps.Marker({
+                        position: latLng,
+                        title: laporan.keterangan,
+                        icon: laporanIcon(laporan.status),
+                        animation: google.maps.Animation.DROP,
+                        map: map
+                    });
+
+                    openWindow(_laporan, laporan.keterangan, map);
                 });
 
-                marker.setMap(map);
+                resolve(map);
+            }, function (err) {
+                reject(err);
             });
         });
+
+        return promise;
+    }
+
+    function loadApartement(map) {
+        var promise = new Promise(function (resolve, reject) {
+            $.ajax({
+                url: '/api/master/apartment',
+                method: 'get'
+            }).then(function (result) {
+
+                $.each(result, function (i, apartment) {
+                    var latLng = new google.maps.LatLng(apartment.latitude, apartment.longitude);
+                    var _apartment = new google.maps.Marker({
+                        position: latLng,
+                        title: apartment.nama,
+                        icon: {
+                            url: base_url + '/marker/apartment.png',
+                            scaledSize: new google.maps.Size(32, 32)
+                        },
+                        animation: google.maps.Animation.DROP,
+                        map: map
+                    });
+
+                    openWindow(_apartment, apartment.nama, map);
+                });
+
+                resolve(map);
+            }, function (err) {
+                reject(err);
+            });
+        });
+
+        return promise;
+    }
+
+    function loadFaskes(map) {
+        var promise = new Promise(function (resolve, reject) {
+            $.ajax({
+                url: '/api/master/faskes',
+                method: 'get'
+            }).then(function (result) {
+
+                $.each(result, function (i, faskes) {
+                    var latLng = new google.maps.LatLng(faskes.latitude, faskes.longitude);
+                    var _faskes = new google.maps.Marker({
+                        position: latLng,
+                        title: faskes.nama,
+                        icon: {
+                            url: base_url + '/marker/faskes.png',
+                            scaledSize: new google.maps.Size(32, 32)
+                        },
+                        animation: google.maps.Animation.DROP,
+                        map: map
+                    });
+
+                    openWindow(_faskes, faskes.nama, map);
+                });
+
+                resolve(map);
+            }, function (err) {
+                reject(err);
+            });
+        });
+
+        return promise;
+    }
+
+    function loadPerkimtan(map) {
+        var promise = new Promise(function (resolve, reject) {
+            $.ajax({
+                url: '/api/master/perkimtan',
+                method: 'get'
+            }).then(function (result) {
+
+                $.each(result, function (i, perkimtan) {
+                    var latLng = new google.maps.LatLng(perkimtan.latitude, perkimtan.longitude);
+                    var _perkimtan = new google.maps.Marker({
+                        position: latLng,
+                        title: perkimtan.nama,
+                        icon: {
+                            url: base_url + '/marker/perkimtan.png',
+                            scaledSize: new google.maps.Size(32, 32)
+                        },
+                        animation: google.maps.Animation.DROP,
+                        map: map
+                    });
+
+                    openWindow(_perkimtan, perkimtan.nama, map);
+                });
+
+                resolve(map);
+            }, function (err) {
+                reject(err);
+            });
+        });
+
+        return promise;
+    }
+
+    function loadSekolah(map) {
+        var promise = new Promise(function (resolve, reject) {
+            $.ajax({
+                url: '/api/master/sekolah',
+                method: 'get'
+            }).then(function (result) {
+
+                $.each(result, function (i, sekolah) {
+                    var latLng = new google.maps.LatLng(sekolah.latitude, sekolah.longitude);
+                    var _sekolah = new google.maps.Marker({
+                        position: latLng,
+                        title: sekolah.nama,
+                        icon: {
+                            url: base_url + '/marker/sekolah.png',
+                            scaledSize: new google.maps.Size(32, 32)
+                        },
+                        animation: google.maps.Animation.DROP,
+                        map: map
+                    });
+
+                    openWindow(_sekolah, sekolah.nama, map);
+                });
+
+                resolve(map);
+            }, function (err) {
+                reject(err);
+            });
+        });
+
+        return promise;
     }
 
     function loadmap() {
@@ -159,7 +319,12 @@ var dashboard = function () {
                 });
             });
 
-            loadLaporan(map);
+            if (typeof Promise === 'undefined') {
+                alert('Browser tidak support untuk menampilkan informasi pada peta');
+                return;
+            }
+
+            loadLaporan(map).then(loadApartement).then(loadFaskes).then(loadPerkimtan).then(loadSekolah).catch(logError);
         });
     }
 

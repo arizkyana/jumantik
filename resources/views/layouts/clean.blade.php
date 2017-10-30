@@ -37,24 +37,25 @@
                                 Login
                             </a>
                         </li>
-                    @else
-                        <li>
-                            <a href="{{ route('dashboard') }}">
-                                Dashboard
-                            </a>
-                        </li>
-                        <li>
+                        @else
+                            <li>
+                                <a href="{{ route('dashboard') }}">
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li>
 
-                            <a href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
+                                <a href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                <i class="fa fa-sign-out"></i> Log out
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                {{ csrf_field() }}
-                            </form>
-                        </li>
-                        @endguest
+                                    <i class="fa fa-sign-out"></i> Log out
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                      style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
+                            </li>
+                            @endguest
 
                 </ul>
 
@@ -124,9 +125,7 @@
 <!-- Scripts -->
 {{--<script src="{{ mix('js/app.js') }}"></script>--}}
 
-@if (isset($js))
-    <script src="{{ mix('js/' . $js) }}"></script>
-@endif
+
 
 {{--plugins themes js--}}
 @if (isset($plugins_js))
@@ -139,6 +138,16 @@
 @if (isset($gmaps) && $gmaps)
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACK1BU_M2kIo8xohz0dx5RjNOqDwwUKSE" async
             defer></script>
+@endif
+
+<script type="text/javascript">
+    var base_url = {!! json_encode(url('/')) !!}
+
+    var logError = (e) => {console.log(e);}
+</script>
+
+@if (isset($js))
+    <script src="{{ mix('js/' . $js) }}"></script>
 @endif
 </body>
 </html>

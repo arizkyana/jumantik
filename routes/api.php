@@ -46,9 +46,20 @@ Route::prefix('penyakit')->middleware('simple.token')->group(function () {
         Route::post('/store', 'Api\Penyakit\LaporanController@store');
         Route::post('/store_log_kejadian', 'Api\Penyakit\LaporanController@store_log_kejadian');
         Route::get('/show/{laporan}', 'Api\Penyakit\LaporanController@show');
-
         Route::post('/ajax_laporan', 'Api\Penyakit\LaporanController@ajax_laporan');
+        Route::get('/delete/{laporan}', 'Api\Penyakit\LaporanController@delete');
     });
+
+    Route::prefix('detail_laporan')->group(function(){
+        Route::post('/store', 'Api\Penyakit\DetailLaporanController@store');
+    });
+});
+
+Route::prefix('master')->middleware('simple.token')->group(function(){
+   Route::get('/apartment', 'Api\Master\ApartementController@index');
+   Route::get('/faskes', 'Api\Master\FaskesController@index');
+   Route::get('/perkimtan', 'Api\Master\PerkimtanController@index');
+   Route::get('/sekolah', 'Api\Master\SekolahController@index');
 });
 
 

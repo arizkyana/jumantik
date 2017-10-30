@@ -55,6 +55,9 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'resources/assets/js/penyakit/laporan/create.js',
     ], 'public/js/penyakit/laporan.js')
     .js([
+        'resources/assets/js/penyakit/laporan/detail.js',
+    ], 'public/js/penyakit/detail.js')
+    .js([
         'resources/assets/js/penyakit/profile/index.js',
         'resources/assets/js/penyakit/profile/create.js',
     ], 'public/js/penyakit/profile.js')

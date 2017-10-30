@@ -82,8 +82,8 @@ module.exports = __webpack_require__(40);
  */
 var table = {};
 var filter = {};
-
-$(document).ready(function () {
+var _dataTable = {};
+(function () {
 
     table = {
         el: $("#table-laporan-jumantik"),
@@ -91,12 +91,32 @@ $(document).ready(function () {
         init: function init() {
             var self = this;
 
-            self.el.dataTable({
+            _dataTable = self.el.DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: '/api/penyakit/laporan/ajax_laporan',
+                    url: base_url + '/api/penyakit/laporan/ajax_laporan',
                     method: 'post'
+                },
+                createdRow: function createdRow(row, data) {
+                    var text = "";
+                    var bg = "";
+                    switch (data.status) {
+                        case 1:
+                            text = 'Open';
+                            bg = 'bg-primary';
+                            break;
+                        case 2:
+                            text = 'Finish';
+                            bg = 'bg-success';
+                            break;
+                        case 3:
+                            text = 'On Going';
+                            bg = 'bg-warning';
+                            break;
+                    }
+
+                    $('td', row).eq(6).html(text).addClass(bg);
                 },
                 columns: [{
                     data: 'created_at',
@@ -104,33 +124,62 @@ $(document).ready(function () {
                         var html = '<a class="text-danger" href="' + base_url + '/penyakit/laporan/' + row.id + '/show">' + data + '</a>';
                         return html;
                     }
-                }, { data: 'pelapor' }, { data: 'tipe_pelapor' }, { data: 'nama_penyakit' }, { data: 'nama_tindakan' }, { data: 'nama_status' }, {
+                }, { data: 'pelapor' }, { data: 'tipe_pelapor' }, { data: 'nama_penyakit' }, { data: 'nama_tindakan' }, {
                     data: 'alamat',
                     render: function render(data, type, row, meta) {
                         var html = data + '<br /><small>' + row.nama_kelurahan + ", " + row.nama_kecamatan + '</small>';
                         return html;
                     }
                 }, {
+                    searchable: false,
+                    data: 'status'
+                }, {
                     data: 'id',
                     render: function render(data, type, row, meta) {
-                        var html = '<a href="#" class="btn btn-primary btn-sm"  tooltip="Detail Laporan"><i class="fa fa-eye"></i></a>';
+
+                        var html = '<a onclick="deleteLaporan(' + data + ')" class="btn btn-danger btn-sm"  tooltip="Hapus Laporan"><i class="fa fa-trash"></i></a>';
                         return html;
                     }
                 }]
             });
+        },
+        redraw: function redraw(query) {
+            var url = base_url + '/api/penyakit/laporan/ajax_laporan' + query;
+            _dataTable.ajax.url(url).load();
+            _dataTable.draw(true);
         }
     };
 
     filter.tipePelapor = {
         el: $('#tipe_pelapor'),
-        evt: {},
+        evt: {
+            change: function change(e) {
+                e.preventDefault();
+                table.redraw("?" + $("#form-filter").serialize());
+            }
+        },
         init: function init() {
             var self = this;
 
             self.el.select2();
+
+            self.el.change(self.evt.change);
         }
     };
+    filter.penyakit = {
+        el: $("#penyakit"),
+        evt: {
+            change: function change(e) {
+                e.preventDefault();
 
+                table.redraw("?" + $("#form-filter").serialize());
+            }
+        },
+        init: function init() {
+            var self = this;
+            self.el.change(self.evt.change);
+        }
+    };
     filter.tanggalMulai = {
         el: $('#tanggal_mulai'),
         evt: {},
@@ -143,10 +192,14 @@ $(document).ready(function () {
             });
         }
     };
-
     filter.tanggalAkhir = {
         el: $('#tanggal_akhir'),
-        evt: {},
+        evt: {
+            change: function change(e) {
+                e.preventDefault();
+                table.redraw("?" + $("#form-filter").serialize());
+            }
+        },
         init: function init() {
             var self = this;
 
@@ -154,16 +207,36 @@ $(document).ready(function () {
                 autoclose: true,
                 orientation: 'bottom'
             });
+
+            self.el.change(self.evt.change);
         }
     };
 
     filter.tanggalMulai.init();
     filter.tanggalAkhir.init();
-
     filter.tipePelapor.init();
-
+    filter.penyakit.init();
     table.init();
-});
+})();
+
+window.deleteLaporan = function (id) {
+
+    var confirms = confirm('Apakah anda yakin?');
+    if (confirms) {
+        $.ajax({
+            url: base_url + '/api/penyakit/laporan/delete/' + id,
+            method: 'get'
+
+        }).then(function (result) {
+            console.log(result);
+            table.redraw("");
+        }, logError);
+    }
+};
+
+window.refresh = function () {
+    table.redraw("");
+};
 
 /***/ }),
 

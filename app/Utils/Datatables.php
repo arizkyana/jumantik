@@ -13,7 +13,14 @@ use Illuminate\Http\Request;
 class Datatables
 {
 
-    public function __construct(){}
+
+    public function __construct(){
+
+    }
+
+    public static function is_sort_or_search($request){
+        return $request->input('columns') or $request->input('order') or $request->input('search');
+    }
 
     public static function like_or_order($request)
     {
@@ -45,21 +52,7 @@ class Datatables
             $query_str .= $like;
         }
 
-        // order by
-//        if (isset($order_input)) {
-//            $order_by = " ORDER BY ";
-//            $column = $order_input[0]['column'];
-//            $dir = $order_input[0]['dir']; // asc / desc
-//
-//            $selected_column = $column_input[$column];
-//
-//            if ($selected_column['orderable']) {
-//                $order_field = $selected_column['data'];
-//                $order_by .= $order_field . " " . $dir;
-//                $query_str .= $order_by;
-//            }
-//
-//        }
+
 
         return $query_str;
     }

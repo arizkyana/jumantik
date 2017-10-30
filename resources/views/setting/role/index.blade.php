@@ -26,7 +26,7 @@
                     </a>
                 </div>
             </div>
-            <div class="ibox-content no-padding">
+            <div class="ibox-content">
                 <table id="table-role" class="table table-condensed table-striped table-hover">
                     <thead>
                     <tr>

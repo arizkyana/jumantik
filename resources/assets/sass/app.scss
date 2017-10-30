@@ -9,7 +9,10 @@
 @import "utils";
 
 // Datatables
-@import "datatables";
+@import "../themes/css/plugins/dataTables/datatables.min.css";
+
+// Sweetalert
+@import "../themes/css/plugins/sweetalert/sweetalert.css";
 
 /**
   Inspina Themes

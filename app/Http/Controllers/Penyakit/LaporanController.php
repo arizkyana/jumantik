@@ -102,8 +102,15 @@ class LaporanController extends Controller
         $tipe_pelapor = Role::find($pelapor->role_id);
         $detail_laporan = DetailLaporan::where('id_laporan', $id)->get();
 
+        $detail_laporan = DB::table('detail_laporan')
+            ->select('detail_laporan.foto', 'status.nama_status as status', 'tindakan.nama_tindakan as tindakan', 'detail_laporan.created_at', 'detail_laporan.keterangan', 'detail_laporan.id')
+            ->leftJoin('status', 'detail_laporan.status', '=', 'status.id')
+            ->leftJoin('tindakan', 'detail_laporan.tindakan', '=', 'tindakan.id')
+            ->where('detail_laporan.id_laporan', '=', $id)
+            ->get();
 
         return view('penyakit/laporan/show')->with([
+            'js' => 'penyakit/detail.js',
             'title' => 'Detail Laporan ' . $id,
             'laporan' => [
                 'isi' => $laporan,
@@ -188,13 +195,22 @@ class LaporanController extends Controller
     public function destroy($id)
     {
 
-        $menu = Menu::find($id);
-        $menu->delete();
+        $laporan = Laporan::find($id);
+//        $menu->delete();
 
-        return redirect('menu')->with('success', 'Berhasil Hapus Menu ' . $id);
+        $laporan->status = 0;
+        $laporan->save();
+        return redirect('penyakit/laporan')->with('success', 'Berhasil Hapus Laporan ' . $id);
     }
 
-    // ajax
+    public function selesai($id){
+
+        $laporan = Laporan::find($id);
+
+        $laporan->status = 2; //
+        $laporan->save();
+        return redirect('penyakit/laporan')->with('success', 'Berhasil Selesaikan Laporan ' . $id);
+    }
 
 
 }
