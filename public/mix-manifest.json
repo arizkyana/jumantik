@@ -1,7 +1,6 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
     "/js/users.js": "/js/users.js",
+    "/css/app.css": "/css/app.css",
     "/js/apiClient.js": "/js/apiClient.js",
     "/js/penyakit/profile.js": "/js/penyakit/profile.js",
     "/js/penyakit/laporan.js": "/js/penyakit/laporan.js",

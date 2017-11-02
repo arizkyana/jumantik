@@ -251,12 +251,12 @@ var dashboard = (function () {
                 return;
             }
 
-            loadLaporan(map)
-                .then(loadApartement)
-                .then(loadFaskes)
-                .then(loadPerkimtan)
-                .then(loadSekolah)
-                .catch(logError)
+            // loadLaporan(map)
+            //     .then(loadApartement)
+            //     .then(loadFaskes)
+            //     .then(loadPerkimtan)
+            //     .then(loadSekolah)
+            //     .catch(logError)
 
 
         });
@@ -267,6 +267,14 @@ var dashboard = (function () {
     function init() {
         loadmap();
 
+        // switchery
+
+
+        var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+
+        elems.forEach(function(html) {
+            var switchery = new Switchery(html);
+        });
 
     }
 

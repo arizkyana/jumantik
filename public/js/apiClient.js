@@ -60,22 +60,25 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 15:
+/******/ ([
+/* 0 */,
+/* 1 */,
+/* 2 */,
+/* 3 */,
+/* 4 */,
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(16);
-__webpack_require__(17);
-module.exports = __webpack_require__(18);
+__webpack_require__(6);
+__webpack_require__(7);
+module.exports = __webpack_require__(8);
 
 
 /***/ }),
-
-/***/ 16:
+/* 6 */
 /***/ (function(module, exports) {
 
 
@@ -83,15 +86,13 @@ module.exports = __webpack_require__(18);
 $(document).ready(function () {});
 
 /***/ }),
-
-/***/ 17:
+/* 7 */
 /***/ (function(module, exports) {
 
 console.log("buku users");
 
 /***/ }),
-
-/***/ 18:
+/* 8 */
 /***/ (function(module, exports) {
 
 var table = {};
@@ -109,5 +110,4 @@ $(document).ready(function () {
 });
 
 /***/ })
-
-/******/ });
+/******/ ]);

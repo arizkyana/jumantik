@@ -122,7 +122,12 @@
 
 {{--select 2--}}
 <script src="{{ asset('js/themes/plugins/select2/select2.full.min.js')  }}"></script>
+
+{{--Switchery--}}
+<script src="{{ asset('js/themes/plugins/switchery/switchery.js') }}"></script>
 <!-- Scripts -->
+
+
 {{--<script src="{{ mix('js/app.js') }}"></script>--}}
 
 

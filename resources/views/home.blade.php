@@ -10,44 +10,64 @@
                     <h5>Peta Sebaran</h5>
 
                 </div>
-                <div class="ibox-content">
-                    <div id="map" class="google-map" style="height: 500px !important;">
+                <div class="ibox-content" style="position: relative;">
+                    {{--custom maps tools--}}
+                    <div style="width: 20em; position: absolute; top:0; bottom: 0; z-index: 1000; margin: 60px 8px">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h5 class="panel-title">Wilayah</h5>
+                            </div>
+                            <div class="panel-body no-padding">
+
+                                <form id="filter-wilayah">
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox"  class="js-switch" value="sekolah" checked/> Sekolah
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" class="js-switch" value="faskes" checked/> Fasilitas Kesehatan
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" class="js-switch" value="perkimtan" checked/> Perkimtan
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" class="js-switch" value="perumahan" checked/> Perumahan
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" class="js-switch" value="apartment" checked/> Apartment
+                                            </label>
+                                        </div>
+                                    </div>
+                                </form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    {{--/custom maps tools--}}
+                    <div id="map" class="google-map" style=" height: 500px !important;">
 
                     </div>
 
                 </div>
-                <div class="ibox-footer">
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"/> Sebaran Jumantik
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"/> Sebaran Penyakit
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"/> Lokasi RT
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"/> Lokasi Puskesmas
-                                </label>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+
             </div>
         </div>
 

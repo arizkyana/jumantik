@@ -1,5 +1,6 @@
 let mix = require('laravel-mix');
 
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,7 +12,9 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
+mix
+// themes assset js
+
     .js([
         'resources/assets/js/users/create.js',
         'resources/assets/js/users/edit.js',
@@ -71,4 +74,4 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'resources/assets/js/setting/status/index.js',
     ], 'public/js/setting/status.js')
 
-   .sass('resources/assets/sass/app.scss', 'public/css');
+    .sass('resources/assets/sass/app.scss', 'public/css');

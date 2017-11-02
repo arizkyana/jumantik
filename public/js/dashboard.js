@@ -60,20 +60,20 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 23);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 23:
+/***/ 13:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(24);
+module.exports = __webpack_require__(14);
 
 
 /***/ }),
 
-/***/ 24:
+/***/ 14:
 /***/ (function(module, exports) {
 
 // load map
@@ -324,12 +324,27 @@ var dashboard = function () {
                 return;
             }
 
-            loadLaporan(map).then(loadApartement).then(loadFaskes).then(loadPerkimtan).then(loadSekolah).catch(logError);
+            // loadLaporan(map)
+            //     .then(loadApartement)
+            //     .then(loadFaskes)
+            //     .then(loadPerkimtan)
+            //     .then(loadSekolah)
+            //     .catch(logError)
+
         });
     }
 
     function init() {
         loadmap();
+
+        // switchery
+
+
+        var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+
+        elems.forEach(function (html) {
+            var switchery = new Switchery(html);
+        });
     }
 
     return {
