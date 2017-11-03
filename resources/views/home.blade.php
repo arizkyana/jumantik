@@ -23,35 +23,35 @@
                                     <div class="form-group">
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox"  class="js-switch" value="sekolah" checked/> Sekolah
+                                                <input type="checkbox"  class="js-switch" value="sekolah" onchange="dashboard.changeMapLayer(this, 1)" /> Sekolah
                                             </label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" class="js-switch" value="faskes" checked/> Fasilitas Kesehatan
+                                                <input type="checkbox" class="js-switch" value="faskes" onchange="dashboard.changeMapLayer(this, 2)"/> Fasilitas Kesehatan
                                             </label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" class="js-switch" value="perkimtan" checked/> Perkimtan
+                                                <input type="checkbox" class="js-switch" value="perkimtan" onchange="dashboard.changeMapLayer(this, 3)"/> Perkimtan
                                             </label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" class="js-switch" value="perumahan" checked/> Perumahan
+                                                <input type="checkbox" class="js-switch" value="perumahan" onchange="dashboard.changeMapLayer(this, 5)"/> Perumahan
                                             </label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" class="js-switch" value="apartment" checked/> Apartment
+                                                <input type="checkbox" class="js-switch" value="apartment" onchange="dashboard.changeMapLayer(this, 4)"/> Apartment
                                             </label>
                                         </div>
                                     </div>

@@ -11,6 +11,57 @@
 
                 </div>
                 <div class="ibox-content">
+                    {{--custom maps tools--}}
+                    <div style="width: 20em; position: absolute; top:0; bottom: 0; z-index: 1000; margin: 110px 8px">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h5 class="panel-title">Wilayah</h5>
+                            </div>
+                            <div class="panel-body no-padding">
+
+                                <form id="filter-wilayah">
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox"  class="js-switch" value="sekolah" onchange="dashboard.changeMapLayer(this, 1)" /> Sekolah
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" class="js-switch" value="faskes" onchange="dashboard.changeMapLayer(this, 2)"/> Fasilitas Kesehatan
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" class="js-switch" value="perkimtan" onchange="dashboard.changeMapLayer(this, 3)"/> Perkimtan
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" class="js-switch" value="perumahan" onchange="dashboard.changeMapLayer(this, 5)"/> Perumahan
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" class="js-switch" value="apartment" onchange="dashboard.changeMapLayer(this, 4)"/> Apartment
+                                            </label>
+                                        </div>
+                                    </div>
+                                </form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    {{--/custom maps tools--}}
                     <div id="map" class="google-map" style="height: 500px !important;">
 
                     </div>
@@ -21,7 +72,7 @@
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox"/> Sebaran Jumantik
+                                    <input type="checkbox" /> Sebaran Jumantik
                                 </label>
                             </div>
                         </div>

@@ -22,10 +22,11 @@ class DetailLaporanController extends Controller
 
     public function store(Request $request)
     {
+        $pelapor = isset($request->auth_user) ? $request->auth_user->id : $request->input('pelapor');
 
         $detail_laporan = new DetailLaporan();
         $detail_laporan->id_laporan = $request->input('id_laporan');
-        $detail_laporan->pelapor = 1; // TODO: Change to $request->auth_user after use middleware 'simple.token'
+        $detail_laporan->pelapor = $pelapor; // TODO: Change to $request->auth_user after use middleware 'simple.token'
         $detail_laporan->keterangan = $request->input('keterangan');
         $detail_laporan->tindakan = $request->input('tindakan');
         $detail_laporan->status = $request->input('status');

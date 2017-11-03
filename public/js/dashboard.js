@@ -78,8 +78,16 @@ module.exports = __webpack_require__(14);
 
 // load map
 
+var map;
+var markers = {
+    apartment: [],
+    faskes: [],
+    perkimtan: [],
+    sekolah: [],
+    perumahan: []
+};
 
-var dashboard = function () {
+window.dashboard = function () {
 
     function openWindow(object, contentString, map) {
 
@@ -143,15 +151,20 @@ var dashboard = function () {
         return promise;
     }
 
-    function loadApartement(map) {
-        var promise = new Promise(function (resolve, reject) {
+    function loadApartement(map, isShow) {
+
+        if (!isShow) {
+            // clear marker
+            clearMarker(markers.apartment);
+            markers.apartment = [];
+        } else {
             $.ajax({
                 url: '/api/master/apartment',
                 method: 'get'
             }).then(function (result) {
 
                 $.each(result, function (i, apartment) {
-                    var latLng = new google.maps.LatLng(apartment.latitude, apartment.longitude);
+                    var latLng = new google.maps.LatLng(Number(apartment.latitude), Number(apartment.longitude));
                     var _apartment = new google.maps.Marker({
                         position: latLng,
                         title: apartment.nama,
@@ -159,31 +172,67 @@ var dashboard = function () {
                             url: base_url + '/marker/apartment.png',
                             scaledSize: new google.maps.Size(32, 32)
                         },
-                        animation: google.maps.Animation.DROP,
-                        map: map
+                        animation: google.maps.Animation.DROP
                     });
 
+                    markers.apartment.push(_apartment);
                     openWindow(_apartment, apartment.nama, map);
                 });
 
-                resolve(map);
-            }, function (err) {
-                reject(err);
-            });
-        });
-
-        return promise;
+                // show marker
+                addMarker(markers.apartment);
+            }, logError);
+        }
     }
 
-    function loadFaskes(map) {
-        var promise = new Promise(function (resolve, reject) {
+    function loadPerumahan(map, isShow) {
+
+        if (!isShow) {
+            // clear marker
+            clearMarker(markers.perumahan);
+            markers.perumahan = [];
+        } else {
+            $.ajax({
+                url: '/api/master/perumahan',
+                method: 'get'
+            }).then(function (result) {
+
+                $.each(result, function (i, perumahan) {
+                    var latLng = new google.maps.LatLng(Number(perumahan.latitude), Number(perumahan.longitude));
+                    var _perumahan = new google.maps.Marker({
+                        position: latLng,
+                        title: perumahan.nama,
+                        icon: {
+                            url: base_url + '/marker/perumahan_belum_jadi.png',
+                            scaledSize: new google.maps.Size(32, 32)
+                        },
+                        animation: google.maps.Animation.DROP
+                    });
+
+                    markers.perumahan.push(_perumahan);
+                    openWindow(_perumahan, perumahan.nama, map);
+                });
+
+                // show marker
+                addMarker(markers.perumahan);
+            }, logError);
+        }
+    }
+
+    function loadFaskes(map, isShow) {
+
+        if (!isShow) {
+            clearMarker(markers.faskes);
+            markers.faskes = [];
+        } else {
+
             $.ajax({
                 url: '/api/master/faskes',
                 method: 'get'
             }).then(function (result) {
 
                 $.each(result, function (i, faskes) {
-                    var latLng = new google.maps.LatLng(faskes.latitude, faskes.longitude);
+                    var latLng = new google.maps.LatLng(Number(faskes.latitude), Number(faskes.longitude));
                     var _faskes = new google.maps.Marker({
                         position: latLng,
                         title: faskes.nama,
@@ -191,31 +240,34 @@ var dashboard = function () {
                             url: base_url + '/marker/faskes.png',
                             scaledSize: new google.maps.Size(32, 32)
                         },
-                        animation: google.maps.Animation.DROP,
-                        map: map
-                    });
+                        animation: google.maps.Animation.DROP
 
+                    });
+                    markers.faskes.push(_faskes);
                     openWindow(_faskes, faskes.nama, map);
                 });
 
-                resolve(map);
-            }, function (err) {
-                reject(err);
-            });
-        });
-
-        return promise;
+                addMarker(markers.faskes);
+            }, logError);
+        }
     }
 
-    function loadPerkimtan(map) {
-        var promise = new Promise(function (resolve, reject) {
+    function loadPerkimtan(map, isShow) {
+
+        if (!isShow) {
+            clearMarker(markers.perkimtan);
+            markers.perkimtan = [];
+        } else {
+
             $.ajax({
                 url: '/api/master/perkimtan',
                 method: 'get'
             }).then(function (result) {
 
                 $.each(result, function (i, perkimtan) {
-                    var latLng = new google.maps.LatLng(perkimtan.latitude, perkimtan.longitude);
+
+                    var latLng = new google.maps.LatLng(Number(perkimtan.latitude), Number(perkimtan.longitude));
+
                     var _perkimtan = new google.maps.Marker({
                         position: latLng,
                         title: perkimtan.nama,
@@ -223,31 +275,30 @@ var dashboard = function () {
                             url: base_url + '/marker/perkimtan.png',
                             scaledSize: new google.maps.Size(32, 32)
                         },
-                        animation: google.maps.Animation.DROP,
-                        map: map
-                    });
+                        animation: google.maps.Animation.DROP
 
+                    });
+                    markers.perkimtan.push(_perkimtan);
                     openWindow(_perkimtan, perkimtan.nama, map);
                 });
 
-                resolve(map);
-            }, function (err) {
-                reject(err);
-            });
-        });
-
-        return promise;
+                addMarker(markers.perkimtan);
+            }, logError);
+        }
     }
 
-    function loadSekolah(map) {
-        var promise = new Promise(function (resolve, reject) {
+    function loadSekolah(map, isShow) {
+        if (!isShow) {
+            clearMarker(markers.sekolah);
+            markers.sekolah = [];
+        } else {
             $.ajax({
                 url: '/api/master/sekolah',
                 method: 'get'
             }).then(function (result) {
 
                 $.each(result, function (i, sekolah) {
-                    var latLng = new google.maps.LatLng(sekolah.latitude, sekolah.longitude);
+                    var latLng = new google.maps.LatLng(Number(sekolah.latitude), Number(sekolah.longitude));
                     var _sekolah = new google.maps.Marker({
                         position: latLng,
                         title: sekolah.nama,
@@ -255,30 +306,19 @@ var dashboard = function () {
                             url: base_url + '/marker/sekolah.png',
                             scaledSize: new google.maps.Size(32, 32)
                         },
-                        animation: google.maps.Animation.DROP,
-                        map: map
+                        animation: google.maps.Animation.DROP
                     });
 
+                    markers.sekolah.push(_sekolah);
                     openWindow(_sekolah, sekolah.nama, map);
                 });
 
-                resolve(map);
-            }, function (err) {
-                reject(err);
-            });
-        });
-
-        return promise;
+                addMarker(markers.sekolah);
+            }, logError);
+        }
     }
 
     function loadmap() {
-        var latitude = Number(-6.2383);
-        var longitude = Number(106.9756);
-
-        var map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: latitude, lng: longitude },
-            zoom: 12
-        });
 
         $.ajax({
             url: '/api/kecamatan/area',
@@ -324,18 +364,20 @@ var dashboard = function () {
                 return;
             }
 
-            // loadLaporan(map)
-            //     .then(loadApartement)
-            //     .then(loadFaskes)
-            //     .then(loadPerkimtan)
-            //     .then(loadSekolah)
-            //     .catch(logError)
-
+            loadLaporan(map).catch(logError);
         });
     }
 
     function init() {
-        loadmap();
+        var latitude = Number(-6.2383);
+        var longitude = Number(106.9756);
+
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: latitude, lng: longitude },
+            zoom: 12
+        });
+
+        loadmap(map);
 
         // switchery
 
@@ -347,13 +389,52 @@ var dashboard = function () {
         });
     }
 
+    function changeMapLayer(el, layer) {
+
+        var isChecked = $(el).is(':checked');
+
+        switch (layer) {
+            case 1:
+                loadSekolah(map, isChecked);
+                break;
+            case 2:
+                loadFaskes(map, isChecked);
+                break;
+            case 3:
+                loadPerkimtan(map, isChecked);
+                break;
+            case 4:
+                loadApartement(map, isChecked);
+                break;
+            case 5:
+                loadPerumahan(map, isChecked);
+                break;
+
+        }
+    }
+
+    function addMarker(markers) {
+
+        $.each(markers, function (i, marker) {
+            console.log(marker);
+            marker.setMap(map);
+        });
+    }
+
+    function clearMarker(markers) {
+        $.each(markers, function (i, marker) {
+            marker.setMap(null);
+        });
+    }
+
     return {
-        init: init
+        init: init,
+        changeMapLayer: changeMapLayer
     };
 }();
 
 $(document).ready(function () {
-    dashboard.init();
+    window.dashboard.init();
 });
 
 /***/ })

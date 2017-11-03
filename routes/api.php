@@ -60,6 +60,34 @@ Route::prefix('master')->middleware('simple.token')->group(function(){
    Route::get('/faskes', 'Api\Master\FaskesController@index');
    Route::get('/perkimtan', 'Api\Master\PerkimtanController@index');
    Route::get('/sekolah', 'Api\Master\SekolahController@index');
+   Route::get('/perumahan', 'Api\Master\PerumahanController@index');
+   Route::get('/tindakan', 'Api\Master\TindakanController@index');
+   Route::get('/status', function(){
+      $status = [
+          'deleted' => [
+              'id' => 0,
+              'name' => 'Deleted'
+          ],
+          'open' => [
+              'id' => 1,
+              'name' => 'Open'
+          ],
+          'finish' => [
+              'id' => 2,
+              'name' => 'Finish'
+          ],
+          'on_going' => [
+              'id' => 3,
+              'name' => 'On Going'
+          ],
+          'surveyed' => [
+              'id' => 4,
+              'name' => 'Surveyed'
+          ]
+      ];
+
+      return $status;
+   });
 });
 
 

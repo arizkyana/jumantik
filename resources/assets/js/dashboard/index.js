@@ -1,9 +1,17 @@
 // load map
 
+var map;
+var markers = {
+    apartment: [],
+    faskes: [],
+    perkimtan: [],
+    sekolah: [],
+    perumahan: []
+};
 
-var dashboard = (function () {
+window.dashboard = (function () {
 
-    function openWindow(object, contentString, map){
+    function openWindow(object, contentString, map) {
 
         let infowindow = new google.maps.InfoWindow({
             content: contentString
@@ -67,15 +75,20 @@ var dashboard = (function () {
 
     }
 
-    function loadApartement(map) {
-        let promise = new Promise(function (resolve, reject) {
+    function loadApartement(map, isShow) {
+
+        if (!isShow) {
+            // clear marker
+            clearMarker(markers.apartment);
+            markers.apartment = [];
+        } else {
             $.ajax({
                 url: '/api/master/apartment',
                 method: 'get'
             }).then(function (result) {
 
                 $.each(result, function (i, apartment) {
-                    const latLng = new google.maps.LatLng(apartment.latitude, apartment.longitude);
+                    const latLng = new google.maps.LatLng(Number(apartment.latitude), Number(apartment.longitude));
                     const _apartment = new google.maps.Marker({
                         position: latLng,
                         title: apartment.nama,
@@ -84,30 +97,74 @@ var dashboard = (function () {
                             scaledSize: new google.maps.Size(32, 32)
                         },
                         animation: google.maps.Animation.DROP,
-                        map: map
                     });
 
+                    markers.apartment.push(_apartment);
                     openWindow(_apartment, apartment.nama, map);
                 });
 
-                resolve(map);
-            }, function (err) {
-                reject(err);
-            })
-        });
+                // show marker
+                addMarker(markers.apartment);
 
-        return promise;
+
+            }, logError)
+        }
+
+
     }
 
-    function loadFaskes(map) {
-        let promise = new Promise(function (resolve, reject) {
+    function loadPerumahan(map, isShow) {
+
+        if (!isShow) {
+            // clear marker
+            clearMarker(markers.perumahan);
+            markers.perumahan = [];
+        } else {
+            $.ajax({
+                url: '/api/master/perumahan',
+                method: 'get'
+            }).then(function (result) {
+
+                $.each(result, function (i, perumahan) {
+                    const latLng = new google.maps.LatLng(Number(perumahan.latitude), Number(perumahan.longitude));
+                    const _perumahan = new google.maps.Marker({
+                        position: latLng,
+                        title: perumahan.nama,
+                        icon: {
+                            url: base_url + '/marker/perumahan_belum_jadi.png',
+                            scaledSize: new google.maps.Size(32, 32)
+                        },
+                        animation: google.maps.Animation.DROP,
+                    });
+
+                    markers.perumahan.push(_perumahan);
+                    openWindow(_perumahan, perumahan.nama, map);
+                });
+
+                // show marker
+                addMarker(markers.perumahan);
+
+
+            }, logError)
+        }
+
+
+    }
+
+    function loadFaskes(map, isShow) {
+
+        if(!isShow){
+            clearMarker(markers.faskes);
+            markers.faskes = [];
+        } else {
+
             $.ajax({
                 url: '/api/master/faskes',
                 method: 'get'
             }).then(function (result) {
 
                 $.each(result, function (i, faskes) {
-                    const latLng = new google.maps.LatLng(faskes.latitude, faskes.longitude);
+                    const latLng = new google.maps.LatLng(Number(faskes.latitude), Number(faskes.longitude));
                     const _faskes = new google.maps.Marker({
                         position: latLng,
                         title: faskes.nama,
@@ -116,30 +173,36 @@ var dashboard = (function () {
                             scaledSize: new google.maps.Size(32, 32)
                         },
                         animation: google.maps.Animation.DROP,
-                        map: map
-                    });
 
+                    });
+                    markers.faskes.push(_faskes);
                     openWindow(_faskes, faskes.nama, map);
                 });
 
-                resolve(map);
-            }, function (err) {
-                reject(err);
-            })
-        });
+                addMarker(markers.faskes);
 
-        return promise;
+
+            }, logError);
+        }
     }
 
-    function loadPerkimtan(map) {
-        let promise = new Promise(function (resolve, reject) {
+    function loadPerkimtan(map, isShow) {
+
+        if(!isShow){
+            clearMarker(markers.perkimtan);
+            markers.perkimtan = [];
+        } else {
+
             $.ajax({
                 url: '/api/master/perkimtan',
                 method: 'get'
             }).then(function (result) {
 
+
                 $.each(result, function (i, perkimtan) {
-                    const latLng = new google.maps.LatLng(perkimtan.latitude, perkimtan.longitude);
+
+                    const latLng = new google.maps.LatLng(Number(perkimtan.latitude), Number(perkimtan.longitude));
+
                     const _perkimtan = new google.maps.Marker({
                         position: latLng,
                         title: perkimtan.nama,
@@ -148,30 +211,31 @@ var dashboard = (function () {
                             scaledSize: new google.maps.Size(32, 32)
                         },
                         animation: google.maps.Animation.DROP,
-                        map: map
-                    });
 
+                    });
+                    markers.perkimtan.push(_perkimtan);
                     openWindow(_perkimtan, perkimtan.nama, map);
                 });
 
-                resolve(map);
-            }, function (err) {
-                reject(err);
-            })
-        });
+                addMarker(markers.perkimtan);
 
-        return promise;
+
+            }, logError);
+        }
     }
 
-    function loadSekolah(map) {
-        let promise = new Promise(function (resolve, reject) {
+    function loadSekolah(map, isShow) {
+        if (!isShow){
+            clearMarker(markers.sekolah);
+            markers.sekolah = [];
+        } else {
             $.ajax({
                 url: '/api/master/sekolah',
                 method: 'get'
             }).then(function (result) {
 
                 $.each(result, function (i, sekolah) {
-                    const latLng = new google.maps.LatLng(sekolah.latitude, sekolah.longitude);
+                    const latLng = new google.maps.LatLng(Number(sekolah.latitude), Number(sekolah.longitude));
                     const _sekolah = new google.maps.Marker({
                         position: latLng,
                         title: sekolah.nama,
@@ -180,29 +244,20 @@ var dashboard = (function () {
                             scaledSize: new google.maps.Size(32, 32)
                         },
                         animation: google.maps.Animation.DROP,
-                        map: map
                     });
 
+                    markers.sekolah.push(_sekolah);
                     openWindow(_sekolah, sekolah.nama, map);
                 });
 
-                resolve(map);
-            }, function (err) {
-                reject(err);
-            })
-        });
+                addMarker(markers.sekolah);
 
-        return promise;
+            }, logError);
+        }
     }
 
     function loadmap() {
-        const latitude = Number(-6.2383);
-        const longitude = Number(106.9756);
 
-        let map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: latitude, lng: longitude},
-            zoom: 12
-        });
 
         $.ajax({
             url: '/api/kecamatan/area',
@@ -251,13 +306,7 @@ var dashboard = (function () {
                 return;
             }
 
-            // loadLaporan(map)
-            //     .then(loadApartement)
-            //     .then(loadFaskes)
-            //     .then(loadPerkimtan)
-            //     .then(loadSekolah)
-            //     .catch(logError)
-
+            loadLaporan(map).catch(logError);
 
         });
 
@@ -265,24 +314,72 @@ var dashboard = (function () {
     }
 
     function init() {
-        loadmap();
+        const latitude = Number(-6.2383);
+        const longitude = Number(106.9756);
+
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: latitude, lng: longitude},
+            zoom: 12
+        });
+
+        loadmap(map);
 
         // switchery
 
 
         var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
 
-        elems.forEach(function(html) {
+        elems.forEach(function (html) {
             var switchery = new Switchery(html);
         });
 
     }
 
+    function changeMapLayer(el, layer) {
+
+        let isChecked = $(el).is(':checked');
+
+        switch (layer) {
+            case 1:
+                loadSekolah(map, isChecked);
+                break;
+            case 2:
+                loadFaskes(map, isChecked);
+                break;
+            case 3:
+                loadPerkimtan(map, isChecked);
+                break;
+            case 4:
+                loadApartement(map, isChecked);
+                break;
+            case 5:
+                loadPerumahan(map, isChecked);
+                break;
+
+        }
+    }
+
+    function addMarker(markers){
+
+        $.each(markers, function(i, marker){
+            console.log(marker);
+            marker.setMap(map);
+        });
+    }
+
+    function clearMarker(markers){
+        $.each(markers, function(i, marker){
+            marker.setMap(null);
+        });
+    }
+
     return {
-        init: (init)
+        init: (init),
+        changeMapLayer: (changeMapLayer)
     }
 })();
 
 $(document).ready(function () {
-    dashboard.init();
+    window.dashboard.init();
+
 });

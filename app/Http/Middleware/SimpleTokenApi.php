@@ -19,7 +19,7 @@ class SimpleTokenApi
     public function handle($request, Closure $next)
     {
 
-        return $next($request);
+        if ($request->ajax()) return $next($request);
 
         $secret = $request->header('Authorization');
         $apiClient = ApiClient::where('secret', $secret)->first();

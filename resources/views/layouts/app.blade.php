@@ -182,6 +182,10 @@
         {{--sweetalert--}}
         <script src="{{ asset('js/themes/plugins/sweetalert/sweetalert.min.js') }}"></script>
         {{--/sweetalert--}}
+
+        {{--Switchery--}}
+        <script src="{{ asset('js/themes/plugins/switchery/switchery.js') }}"></script>
+
         {{--<script src="{{ mix('js/app.js') }}"></script>--}}
 
         {{--plugins themes js--}}

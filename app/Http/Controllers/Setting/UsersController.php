@@ -66,7 +66,8 @@ class UsersController extends MyController
             'email' => 'required|email|unique:users,email',
             'role' => 'required',
             'password' => 'required|min:8',
-            'confirm_password' => 'required|min:8|same:password'
+            'confirm_password' => 'required|min:8|same:password',
+            'nik' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -81,6 +82,7 @@ class UsersController extends MyController
         $user->email = $request->input('email');
         $user->password = bcrypt($request->input('password'));
         $user->role_id = $request->input('role');
+        $user->nik = $request->input('nik');
 
         $user->save();
 
@@ -151,7 +153,8 @@ class UsersController extends MyController
             'email' => 'email|unique:users,email',
             'role' => 'required',
             'password' => 'required|min:8',
-            'confirm_password' => 'required|min:8|same:password'
+            'confirm_password' => 'required|min:8|same:password',
+            'nik' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -167,6 +170,7 @@ class UsersController extends MyController
         $_user->email = $request->input('email') ? $request->input('email') : $_user->email;
         $_user->password = bcrypt($request->input('password'));
         $_user->role_id = $request->input('role');
+        $_user->nik = $request->input('nik');
 
         $_user->save();
 

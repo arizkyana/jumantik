@@ -73,6 +73,25 @@
                     </div>
 
                     <fieldset>
+                        <legend>Detail Informasi</legend>
+                        <div class="form-group {{ $errors->has('nik') ? ' nik' : '' }}">
+                            <div class="row">
+                                <label for="nik" class="col-md-3">NIK <span
+                                            class="text-danger">*</span></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="nik" value="{{ $users->nik }}" required/>
+                                    @if ($errors->has('nik'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('nik') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+
+                    <fieldset>
                         <legend>Authentication</legend>
                         <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
                             <div class="row">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Penyakit;
 
+use App\DetailLaporan;
 use App\Http\Controllers\Controller;
 use App\Kecamatan;
 use App\Kelurahan;
@@ -42,7 +43,7 @@ class LaporanController extends Controller
         $laporan->lon = $request->input('lon');
         $laporan->alamat = $request->input('alamat');
         $laporan->status = 1; // Open
-        $laporan->is_pekdrs = TRUE;
+        $laporan->is_pekdrs = $request->input('is_pekdrs');
         $laporan->update_by = $pelapor;
 
         $laporan->save();
@@ -52,7 +53,16 @@ class LaporanController extends Controller
 
     public function show($id)
     {
-        return \App\Laporan::find($id);
+        $laporan = \App\Laporan::find($id);
+        $detail_laporan = DetailLaporan::where('id_laporan', $id)->get();
+
+        if (empty($detail_laporan)) $detail_laporan = [];
+
+        return [
+            'message' => 'OK',
+            'laporan' => $laporan,
+            'detail_laporan' => $detail_laporan
+        ];
     }
 
     /**
@@ -79,7 +89,6 @@ class LaporanController extends Controller
             ->leftJoin('users', 'users.id', '=', 'laporan.pelapor')
             ->leftJoin('role', 'role.id', '=', 'users.role_id')
             ->leftJoin('penyakit', 'penyakit.id', '=', 'laporan.penyakit')
-
             ->leftJoin('tindakan', 'tindakan.id', '=', 'laporan.tindakan')
             ->leftJoin('kecamatan', 'kecamatan.kecamatan_id', '=', 'laporan.kecamatan')
             ->leftJoin('kelurahan', 'kelurahan.kelurahan_id', '=', 'laporan.kelurahan')
@@ -89,8 +98,7 @@ class LaporanController extends Controller
             ->where('laporan.status', '<>', 0);
 
 
-
-        if ($request->query('tanggal_mulai') && $request->query('tanggal_akhir') && $request->query('tipe_pelapor') && $request->query('penyakit')){
+        if ($request->query('tanggal_mulai') && $request->query('tanggal_akhir') && $request->query('tipe_pelapor') && $request->query('penyakit')) {
             $tanggal_mulai = date('Y-m-d', strtotime($request->query('tanggal_mulai')));
             $tanggal_akhir = date('Y-m-d', strtotime($request->query('tanggal_akhir')));
             $data->whereBetween('laporan.created_at', [$tanggal_mulai, $tanggal_akhir]);
@@ -100,7 +108,7 @@ class LaporanController extends Controller
             }
         }
 
-        if ($request->query('tanggal_mulai') && $request->query('tanggal_akhir') && $request->query('tipe_pelapor')){
+        if ($request->query('tanggal_mulai') && $request->query('tanggal_akhir') && $request->query('tipe_pelapor')) {
             $tanggal_mulai = date('Y-m-d', strtotime($request->query('tanggal_mulai')));
             $tanggal_akhir = date('Y-m-d', strtotime($request->query('tanggal_akhir')));
             $data->whereBetween('laporan.created_at', [$tanggal_mulai, $tanggal_akhir]);
@@ -109,7 +117,7 @@ class LaporanController extends Controller
             }
         }
 
-        if ($request->query('tanggal_mulai') && $request->query('tanggal_akhir')){
+        if ($request->query('tanggal_mulai') && $request->query('tanggal_akhir')) {
             $tanggal_mulai = date('Y-m-d 00:00:00', strtotime($request->query('tanggal_mulai')));
             $tanggal_akhir = date('Y-m-d 23:59:59', strtotime($request->query('tanggal_akhir')));
             $data->whereBetween('laporan.created_at', [$tanggal_mulai, $tanggal_akhir]);
