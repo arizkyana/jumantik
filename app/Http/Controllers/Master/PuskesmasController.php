@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Master;
 
-use App\Petugas;
+use App\Puskesmas;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class PetugasController extends Controller
+class PuskesmasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +42,10 @@ class PetugasController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Petugas  $petugas
+     * @param  \App\Puskesmas  $puskesmas
      * @return \Illuminate\Http\Response
      */
-    public function show(Petugas $petugas)
+    public function show(Puskesmas $puskesmas)
     {
         //
     }
@@ -52,10 +53,10 @@ class PetugasController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Petugas  $petugas
+     * @param  \App\Puskesmas  $puskesmas
      * @return \Illuminate\Http\Response
      */
-    public function edit(Petugas $petugas)
+    public function edit(Puskesmas $puskesmas)
     {
         //
     }
@@ -64,10 +65,10 @@ class PetugasController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Petugas  $petugas
+     * @param  \App\Puskesmas  $puskesmas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Petugas $petugas)
+    public function update(Request $request, Puskesmas $puskesmas)
     {
         //
     }
@@ -75,10 +76,10 @@ class PetugasController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Petugas  $petugas
+     * @param  \App\Puskesmas  $puskesmas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Petugas $petugas)
+    public function destroy(Puskesmas $puskesmas)
     {
         //
     }

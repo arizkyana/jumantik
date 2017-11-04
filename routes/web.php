@@ -79,22 +79,18 @@ Route::namespace('Rs')->group(function () {
     });
 });
 
-// Dinkes
-Route::namespace('Dinkes')->group(function () {
-    Route::prefix('dinkes')->group(function () {
-        Route::resource('laporan', 'LaporanController');
-        Route::get('/laporan', 'LaporanController@index')->name('dinkes/laporan');
-        Route::get('/laporan/create', 'LaporanController@create')->name('dinkes/laporan/create');
-        Route::get('/laporan/{laporan}/edit', 'LaporanController@edit')->name('dinkes/laporan/edit');
-
-        Route::resource('jadwal', 'JadwalController');
-        Route::get('/jadwal', 'JadwalController@index')->name('dinkes/jadwal');
-        Route::get('/jadwal/create', 'JadwalController@create')->name('dinkes/jadwal/create');
-        Route::get('/jadwal/{jadwal}/edit', 'JadwalController@edit')->name('dinkes/jadwal/edit');
+Route::namespace('Master')->group(function () {
+    Route::prefix('master')->group(function () {
+        Route::prefix('dinkes')->group(function () {
+            Route::resource('dinkes', 'DinkesController');
+            Route::get('/', 'DinkesController@index')->name('master/dinkes');
+            Route::get('/create', 'DinkesController@create')->name('master/dinkes/create');
+            Route::get('/{dinkes}/edit', 'DinkesController@edit')->name('master/dinkes/edit');
+        });
     });
-
-
 });
+
+
 
 // maps
 Route::get('/maps', 'MapsController@index')->name('maps');

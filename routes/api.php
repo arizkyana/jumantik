@@ -55,6 +55,7 @@ Route::prefix('penyakit')->middleware('simple.token')->group(function () {
     });
 });
 
+
 Route::prefix('master')->middleware('simple.token')->group(function(){
    Route::get('/apartment', 'Api\Master\ApartementController@index');
    Route::get('/faskes', 'Api\Master\FaskesController@index');

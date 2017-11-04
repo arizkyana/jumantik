@@ -4,6 +4,7 @@
     "/js/apiClient.js": "/js/apiClient.js",
     "/js/penyakit/profile.js": "/js/penyakit/profile.js",
     "/js/penyakit/laporan.js": "/js/penyakit/laporan.js",
+    "/js/master/dinkes.js": "/js/master/dinkes.js",
     "/js/jumantik/laporan.js": "/js/jumantik/laporan.js",
     "/js/setting/tindakan.js": "/js/setting/tindakan.js",
     "/js/setting/status.js": "/js/setting/status.js",

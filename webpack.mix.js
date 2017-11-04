@@ -74,4 +74,9 @@ mix
         'resources/assets/js/setting/status/index.js',
     ], 'public/js/setting/status.js')
 
+    .js([
+        'resources/assets/js/master/dinkes/index.js',
+        'resources/assets/js/master/dinkes/create.js'
+    ], 'public/js/master/dinkes.js')
+
     .sass('resources/assets/sass/app.scss', 'public/css');

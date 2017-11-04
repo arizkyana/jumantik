@@ -35,11 +35,13 @@ class UsersController extends Controller
             // grant type : password
 
             $apiClient = ApiClient::where('user_id', $user->id)->first();
+            $role = Role::find($user->role_id);
 
             Log::info('Success Login ' . $apiClient->user_id);
 
             $user->secret = $apiClient->secret;
             Auth::user()->secret = $apiClient->secret;
+            Auth::user()->role = $role;
 
             return Auth::user();
 

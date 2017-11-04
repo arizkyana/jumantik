@@ -258,7 +258,6 @@ window.dashboard = (function () {
 
     function loadmap() {
 
-
         $.ajax({
             url: '/api/kecamatan/area',
             method: 'get'
