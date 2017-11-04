@@ -79,4 +79,19 @@ mix
         'resources/assets/js/master/dinkes/create.js'
     ], 'public/js/master/dinkes.js')
 
+    .js([
+        'resources/assets/js/master/puskesmas/index.js',
+        'resources/assets/js/master/puskesmas/create.js'
+    ], 'public/js/master/puskesmas.js')
+
+    .js([
+        'resources/assets/js/master/rumah_sakit/index.js',
+        'resources/assets/js/master/rumah_sakit/create.js'
+    ], 'public/js/master/rumah_sakit.js')
+
+    .js([
+        'resources/assets/js/master/petugas/index.js',
+        'resources/assets/js/master/petugas/create.js'
+    ], 'public/js/master/petugas.js')
+
     .sass('resources/assets/sass/app.scss', 'public/css');

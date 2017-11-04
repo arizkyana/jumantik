@@ -87,6 +87,31 @@ Route::namespace('Master')->group(function () {
             Route::get('/create', 'DinkesController@create')->name('master/dinkes/create');
             Route::get('/{dinkes}/edit', 'DinkesController@edit')->name('master/dinkes/edit');
         });
+
+        Route::prefix('puskesmas')->group(function () {
+            Route::resource('puskesmas', 'PuskesmasController');
+            Route::get('/', 'PuskesmasController@index')->name('master/puskesmas');
+            Route::get('/create', 'PuskesmasController@create')->name('master/puskesmas/create');
+            Route::get('/{dinkes}/edit', 'PuskesmasController@edit')->name('master/puskesmas/edit');
+        });
+
+        Route::prefix('rumah_sakit')->group(function () {
+            Route::resource('rumahsakit', 'RumahSakitController');
+            Route::get('/', 'RumahSakitController@index')->name('master/rumah_sakit');
+            Route::get('/create', 'RumahSakitController@create')->name('master/rumah_sakit/create');
+            Route::get('/{dinkes}/edit', 'RumahSakitController@edit')->name('master/rumah_sakit/edit');
+        });
+
+        Route::prefix('petugas')->group(function () {
+            Route::resource('petugas', 'PetugasController');
+            Route::get('/', 'PetugasController@index')->name('master/petugas');
+            Route::get('/create', 'PetugasController@create')->name('master/petugas/create');
+            Route::get('/{dinkes}/edit', 'PetugasController@edit')->name('master/petugas/edit');
+        });
+
+
+
+
     });
 });
 
