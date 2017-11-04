@@ -94,4 +94,15 @@ mix
         'resources/assets/js/master/petugas/create.js'
     ], 'public/js/master/petugas.js')
 
+
+    .js([
+        'resources/assets/js/notification/setup/index.js',
+        'resources/assets/js/notification/setup/create.js'
+    ], 'public/js/notification/setup.js')
+
+
+    .js([
+        'resources/assets/js/notification/history/index.js',
+    ], 'public/js/notification/history.js')
+
     .sass('resources/assets/sass/app.scss', 'public/css');

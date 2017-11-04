@@ -79,6 +79,17 @@ Route::namespace('Rs')->group(function () {
     });
 });
 
+// Notification
+Route::namespace('Notification')->group(function(){
+    Route::prefix('notification')->group(function(){
+        Route::resource('setup', 'SetupController');
+        Route::get('/', 'SetupController@index')->name('notification/setup');
+        Route::get('/create', 'SetupController@create')->name('notification/setup/create');
+        Route::get('/{dinkes}/edit', 'SetupController@edit')->name('notification/setup/edit');
+    });
+});
+
+// Master
 Route::namespace('Master')->group(function () {
     Route::prefix('master')->group(function () {
         Route::prefix('dinkes')->group(function () {
