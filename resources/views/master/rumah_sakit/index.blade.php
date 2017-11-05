@@ -51,7 +51,7 @@
                             </a>
 
                             <form id="delete-{{$rumah_sakit->id}}"
-                                  action="{{ action('Master\rumah_sakitController@destroy', ['id' => $rumah_sakit->id]) }}"
+                                  action="{{ action('Master\RumahSakitController@destroy', ['id' => $rumah_sakit->id]) }}"
                                   method="POST"
                                   style="display: none;">
                                 {{ csrf_field() }}

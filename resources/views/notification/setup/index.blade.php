@@ -28,7 +28,8 @@
                     <th>No</th>
                     <th>Created Date</th>
                     <th>Title</th>
-                    <th>Action</th>
+                    <th>Type</th>
+                    <th class="text-center">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -37,9 +38,36 @@
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $item->created_at }}</td>
                         <td>
-                            <a href="{{ route('notification/setup/edit', $item) }}" class="text-danger">{{ $item->title }}</a>
+                            <a href="{{ route('notification/setup/edit', $item) }}"
+                               class="text-danger">{{ $item->title }}</a>
                         </td>
-                        <td></td>
+                        <td>
+                            @if ($item->type == 1)
+                                <label class="label label-info">Broadcast</label>
+                            @else
+                                <label class="label label-primary">Single</label>
+                            @endif
+                        </td>
+                        <td>
+                            <div class="text-right">
+                                <a href="{{ route('notification/setup/show' , $item) }}" class="btn btn-sm btn-primary">
+                                    <i class="fa fa-paper-plane"></i>
+                                </a>
+                                <button type="button" class="btn btn-sm btn-danger"
+                                        onclick="event.preventDefault();
+                                                document.getElementById('delete-{{$item->id}}').submit();">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                </button>
+
+                                <form id="delete-{{$item->id}}"
+                                      action="{{ action('Notification\SetupController@destroy', ['id' => $item->id]) }}"
+                                      method="POST"
+                                      style="display: none;">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
+                                </form>
+                            </div>
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>

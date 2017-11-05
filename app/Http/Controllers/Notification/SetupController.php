@@ -33,8 +33,9 @@ class SetupController extends Controller
     public function index()
     {
 
-        $notifications = NotificationSetup::where('is_visible', true)->get();
-
+        $notifications = NotificationSetup::where('is_visible', true)
+            ->orderByDesc('created_at')
+            ->get();
 
         return view('notification/setup/index')->with([
             'js' => $this->js,
@@ -101,12 +102,21 @@ class SetupController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Menu $menu
+     * @param  \App\NotificationSetup $setup
      * @return \Illuminate\Http\Response
      */
-    public function show(Menu $menu)
+    public function show(NotificationSetup $setup)
     {
-        //
+        $roles = Role::all();
+        $users = User::all();
+
+        return view('notification/setup/show')
+            ->with([
+                'js' => $this->js,
+                'setup' => $setup,
+                'roles' => $roles,
+                'users' => $users
+            ]);
     }
 
     /**
@@ -125,7 +135,7 @@ class SetupController extends Controller
 
         return view('notification/setup/edit')->with([
             'js' => $this->js,
-            'notification_setup' => $notification_setup,
+            'setup' => $notification_setup,
             'roles' => $roles,
             'users' => $users
         ]);
@@ -141,8 +151,10 @@ class SetupController extends Controller
     public function update(Request $request, NotificationSetup $_notification_setup)
     {
 
+
+
         $validator = Validator::make($request->all(), [
-            'title' => 'required|max:100|unique:notificationSetup,title',
+            'title' => 'required|max:100|unique:notification_setup,title',
             'body' => 'required',
             'type' => 'required',
         ]);
@@ -156,6 +168,7 @@ class SetupController extends Controller
         $notification_setup = $_notification_setup->find($request->input('id'));
         $notification_setup->title = $request->input('title');
         $notification_setup->body = $request->input('body');
+        $notification_setup->type = $request->input('type');
         $notification_setup->created_by = Auth::user()->id;
 
         $notification_setup->save();

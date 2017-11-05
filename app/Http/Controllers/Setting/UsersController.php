@@ -27,7 +27,7 @@ class UsersController extends MyController
      */
     public function index(Request $request)
     {
-        $users = User::all();
+        $users = User::orderByDesc('created_at')->get();
 
         foreach ($users as $user) :
             $role = Role::find($user->role_id);

@@ -85,7 +85,9 @@ Route::namespace('Notification')->group(function(){
         Route::resource('setup', 'SetupController');
         Route::get('/', 'SetupController@index')->name('notification/setup');
         Route::get('/create', 'SetupController@create')->name('notification/setup/create');
-        Route::get('/{dinkes}/edit', 'SetupController@edit')->name('notification/setup/edit');
+        Route::get('/{setup}/edit', 'SetupController@edit')->name('notification/setup/edit');
+        Route::get('/{setup}/show', 'SetupController@show')->name('notification/setup/show');
+//        Route::post('/{setup}/send', 'SetupController@send')->name();
     });
 });
 
