@@ -15,7 +15,7 @@
         <div class="ibox-title">
             <h5>Daftar Notifikasi</h5>
             <div class="ibox-tools">
-                <a href="{{ route('notification/setup/create') }}" class="btn btn-primary">
+                <a href="{{ route('notifikasi/setup/create') }}" class="btn btn-primary">
                     <i class="glyphicon glyphicon-plus-sign"></i> Tambah Notifikasi
                 </a>
             </div>
@@ -38,7 +38,7 @@
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $item->created_at }}</td>
                         <td>
-                            <a href="{{ route('notification/setup/edit', $item) }}"
+                            <a href="{{ route('notifikasi/setup/edit', $item) }}"
                                class="text-danger">{{ $item->title }}</a>
                         </td>
                         <td>
@@ -50,7 +50,7 @@
                         </td>
                         <td>
                             <div class="text-right">
-                                <a href="{{ route('notification/setup/show' , $item) }}" class="btn btn-sm btn-primary">
+                                <a href="{{ route('notifikasi/setup/show' , $item) }}" class="btn btn-sm btn-primary">
                                     <i class="fa fa-paper-plane"></i>
                                 </a>
                                 <button type="button" class="btn btn-sm btn-danger"
@@ -60,7 +60,7 @@
                                 </button>
 
                                 <form id="delete-{{$item->id}}"
-                                      action="{{ action('Notification\SetupController@destroy', ['id' => $item->id]) }}"
+                                      action="{{ action('Notifikasi\SetupController@destroy', ['id' => $item->id]) }}"
                                       method="POST"
                                       style="display: none;">
                                     {{ csrf_field() }}

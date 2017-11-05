@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Notification;
+namespace App\Http\Controllers\Notifikasi;
 
 use App\Dinkes;
 use App\Http\Controllers\Controller;
 use App\Kecamatan;
 use App\Kelurahan;
+use App\NotificationHistory;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Validator;
 
 class HistoryController extends Controller
 {
-    private $js = 'master/dinkes.js';
+    private $js = 'notification/history.js';
 
     public function __construct()
     {
@@ -32,17 +33,21 @@ class HistoryController extends Controller
     public function index()
     {
 
-        $dinkes = DB::table('dinkes')
-            ->select('dinkes.*', 'users.name as pic_name')
-            ->leftJoin('users', 'dinkes.pic', '=', 'users.id')
+        $histories = DB::table('notification_history')
+            ->select('notification_history.created_at', 'notification_history.status','users.name', 'role.name as role', 'notification_setup.title')
+            ->leftJoin('notification_setup', 'notification_history.id_notification_setup', '=', 'notification_setup.id')
+            ->leftJoin('users', 'notification_history.receiver', '=', 'users.id')
+            ->leftJoin('role', 'users.role_id', '=', 'role.id')
+            ->orderByDesc('notification_history.created_at')
             ->get();
 
 
 
-        return view('master/dinkes/index')->with([
-            'js' => $this->js,
-            'dinkes' => $dinkes
-        ]);
+        return view('notifikasi/history/index')
+            ->with([
+                'js' => $this->js,
+                'histories' => $histories
+            ]);
     }
 
     /**

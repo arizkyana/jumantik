@@ -69,7 +69,8 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(55);
-module.exports = __webpack_require__(56);
+__webpack_require__(56);
+module.exports = __webpack_require__(57);
 
 
 /***/ }),
@@ -166,6 +167,42 @@ var kecamatan, kelurahan, role;
     kecamatan.init();
     role.init();
 })();
+
+/***/ }),
+
+/***/ 57:
+/***/ (function(module, exports) {
+
+var _dataTable;
+var table, kecamatan;
+window.dinkes = function () {
+
+    function init() {
+        initTable();
+    }
+
+    function initTable() {
+        table = {
+            el: $("#table-users"),
+            evt: {},
+            init: function init() {
+                var self = this;
+
+                self.el.DataTable();
+            }
+        };
+
+        table.init();
+    }
+
+    return {
+        init: init
+    };
+}();
+
+$(document).ready(function () {
+    window.dinkes.init();
+});
 
 /***/ })
 

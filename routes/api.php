@@ -55,7 +55,7 @@ Route::prefix('penyakit')->middleware('simple.token')->group(function () {
     });
 });
 
-
+// Master
 Route::prefix('master')->middleware('simple.token')->group(function(){
    Route::get('/apartment', 'Api\Master\ApartementController@index');
    Route::get('/faskes', 'Api\Master\FaskesController@index');
@@ -91,6 +91,10 @@ Route::prefix('master')->middleware('simple.token')->group(function(){
    });
 });
 
+// Notifikasi
+Route::prefix('notifikasi')->middleware('simple.token')->group(function(){
+   Route::get('/', 'Api\Notifikasi\SetupController@index');
+});
 
 // api unauthenticated
 Route::get('/403', function () {

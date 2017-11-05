@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <form action="{{ action('Notification\SetupController@update', ['id' => $setup->id]) }}" method="post">
+    <form action="{{ action('Notifikasi\SetupController@update', ['id' => $setup->id]) }}" method="post">
         <div class="ibox">
             <div class="ibox-title">
                 <h5>Edit Notifikasi</h5>
@@ -86,7 +86,7 @@
             </div>
             <div class="ibox-footer text-right">
                 <button type="submit" class="btn btn-primary">Simpan</button>
-                <a href="{{ route('notification/setup') }}" class="btn btn-default">Batal</a>
+                <a href="{{ route('notifikasi/setup') }}" class="btn btn-default">Batal</a>
             </div>
         </div>
     </form>

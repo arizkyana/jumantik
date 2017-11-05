@@ -80,15 +80,23 @@ Route::namespace('Rs')->group(function () {
 });
 
 // Notification
-Route::namespace('Notification')->group(function(){
-    Route::prefix('notification')->group(function(){
+Route::namespace('Notifikasi')->group(function(){
+    Route::prefix('notifikasi')->group(function(){
+
+        Route::resource('history', 'HistoryController');
+        Route::get('/', 'HistoryController@index')->name('notifikasi/history');
+
         Route::resource('setup', 'SetupController');
-        Route::get('/', 'SetupController@index')->name('notification/setup');
-        Route::get('/create', 'SetupController@create')->name('notification/setup/create');
-        Route::get('/{setup}/edit', 'SetupController@edit')->name('notification/setup/edit');
-        Route::get('/{setup}/show', 'SetupController@show')->name('notification/setup/show');
-//        Route::post('/{setup}/send', 'SetupController@send')->name();
+        Route::get('/', 'SetupController@index')->name('notifikasi/setup');
+        Route::get('/create', 'SetupController@create')->name('notifikasi/setup/create');
+        Route::get('/{setup}/edit', 'SetupController@edit')->name('notifikasi/setup/edit');
+        Route::get('/{setup}/show', 'SetupController@show')->name('notifikasi/setup/show');
+        Route::post('/{setup}/send', 'SetupController@send')->name('notifikasi/setup/send');
+
+
     });
+
+
 });
 
 // Master

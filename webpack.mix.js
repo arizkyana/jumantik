@@ -97,7 +97,8 @@ mix
 
     .js([
         'resources/assets/js/notification/setup/index.js',
-        'resources/assets/js/notification/setup/create.js'
+        'resources/assets/js/notification/setup/create.js',
+        'resources/assets/js/notification/setup/show.js'
     ], 'public/js/notification/setup.js')
 
 

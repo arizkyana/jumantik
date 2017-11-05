@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Notification;
+namespace App\Http\Controllers\Notifikasi;
 
 use App\Dinkes;
 use App\Http\Controllers\Controller;
 use App\Kecamatan;
 use App\Kelurahan;
+use App\NotificationHistory;
 use App\NotificationSetup;
 use App\Role;
 use App\User;
@@ -37,7 +38,7 @@ class SetupController extends Controller
             ->orderByDesc('created_at')
             ->get();
 
-        return view('notification/setup/index')->with([
+        return view('notifikasi/setup/index')->with([
             'js' => $this->js,
             'notifications' => $notifications
         ]);
@@ -51,9 +52,9 @@ class SetupController extends Controller
     public function create()
     {
         $roles = Role::all();
-        $users = User::all();
+        $users = User::orderByDesc('created_at')->get();
 
-        return view('notification/setup/create')
+        return view('notifikasi/setup/create')
             ->with([
                 'users' => $users,
                 'js' => $this->js,
@@ -79,7 +80,7 @@ class SetupController extends Controller
 
         if ($validator->fails()) {
 
-            return redirect('notification/setup/create')
+            return redirect('notifikasi/setup/create')
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -94,7 +95,7 @@ class SetupController extends Controller
         $notification_setup->save();
 
 
-        return redirect('notification/setup/create')->with('success', 'Berhasil Tambah Setup Notifikasi ' . $notification_setup->title);
+        return redirect('notifikasi/setup/create')->with('success', 'Berhasil Tambah Setup Notifikasi ' . $notification_setup->title);
 
 
     }
@@ -108,9 +109,9 @@ class SetupController extends Controller
     public function show(NotificationSetup $setup)
     {
         $roles = Role::all();
-        $users = User::all();
+        $users = User::orderByDesc('created_at')->get();
 
-        return view('notification/setup/show')
+        return view('notifikasi/setup/show')
             ->with([
                 'js' => $this->js,
                 'setup' => $setup,
@@ -133,7 +134,7 @@ class SetupController extends Controller
         $roles = Role::all();
         $users = User::all();
 
-        return view('notification/setup/edit')->with([
+        return view('notifikasi/setup/edit')->with([
             'js' => $this->js,
             'setup' => $notification_setup,
             'roles' => $roles,
@@ -160,7 +161,7 @@ class SetupController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('notification/setup/' . $request->input('id') . '/edit')
+            return redirect('notifikasi/setup/' . $request->input('id') . '/edit')
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -173,7 +174,7 @@ class SetupController extends Controller
 
         $notification_setup->save();
 
-        return redirect('notification/setup/' . $request->input('id') . '/edit')->with('success', 'Berhasil Update Setup Notifikasi ' . $_notification_setup->title);
+        return redirect('notifikasi/setup/' . $request->input('id') . '/edit')->with('success', 'Berhasil Update Setup Notifikasi ' . $_notification_setup->title);
     }
 
     /**
@@ -190,6 +191,49 @@ class SetupController extends Controller
 
         $role->save();
 
-        return redirect('notification/setup')->with('success', 'Berhasil Hapus Setup Notifikasi ' . $id);
+        return redirect('notifikasi/setup')->with('success', 'Berhasil Hapus Setup Notifikasi ' . $id);
+    }
+
+    /**
+     * Send Notification
+     */
+
+    public function send(Request $request, NotificationSetup $setup){
+
+        $histories = [];
+
+        if ($setup->type == 2) {
+            $receivers = $request->input('users');
+
+            foreach($receivers as $receiver) {
+                $history = new NotificationHistory();
+                $history->id_notification_setup = $setup->id;
+                $history->receiver = $receiver;
+                $history->status = 1;
+                $history->is_visible = true;
+                $history->save();
+
+                array_push($histories, $history);
+            }
+
+        } else {
+
+
+            // Broadcast
+            $users = User::all();
+
+            foreach ($users as $user) {
+                $history = new NotificationHistory();
+                $history->id_notification_setup = $setup->id;
+                $history->receiver = $user->id;
+                $history->status = 1;
+                $history->is_visible = true;
+                $history->save();
+
+                array_push($histories, $history);
+            }
+        }
+
+        return redirect('notifikasi/setup')->with('success', 'Berhasil Kirim Notifikasi');
     }
 }
