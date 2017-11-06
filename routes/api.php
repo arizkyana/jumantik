@@ -22,8 +22,10 @@ Route::prefix('auth')->group(function () {
     Route::post('/login', 'Api\UsersController@login');
     Route::post('/logout', 'Api\UsersController@login');
     Route::post('/forgot', 'Api\UsersController@forgot');
-    Route::post('/register', 'Api\UsersController@register');
+    Route::post('/registration', 'Api\UsersController@registration');
     Route::post('/reset_password', 'Api\UsersController@reset_password');
+    Route::get('/roles', 'Api\UsersController@roles');
+
 });
 
 

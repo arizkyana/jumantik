@@ -45,6 +45,8 @@ class FCM
         $client->request('POST', $this->FCM_URL_LEGACY, [
             'body' => $body
         ]);
+
+        return json_encode((string) $client->getBody(), true);
     }
 
 

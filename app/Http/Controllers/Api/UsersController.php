@@ -11,6 +11,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Validator;
@@ -26,7 +27,19 @@ class UsersController extends Controller
 
     public function login(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|min:5, max:16',
+            'nik' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return $validator->messages()->all();
+        }
+
         $user = User::where('nik', $request->input('nik'))->first();
+
+        if (empty($user)) return ['message' => 'user not found'];
 
         Log::info('Call api/auth/login');
 
@@ -50,15 +63,30 @@ class UsersController extends Controller
         return ['message' => 'user not authenticated'];
     }
 
-    public function register(Request $request)
+    public function registration(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:100',
+            'email' => 'required|email|unique:users,email',
+            'role' => 'required',
+            'password' => 'required|min:8',
+            'confirm_password' => 'required|min:8|same:password',
+            'nik' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return ['message' => $validator->messages()->all()];
+        }
+
         $user = new User();
 
         $user->nik = $request->input('nik');
         $user->email = $request->input('email');
         $user->password = bcrypt($request->input('password'));
-        $user->username = $request->input('username');
-        $user->role_id = 4; // default mobile role
+        $user->name = $request->input('name');
+        $user->role_id = $request->input('role'); // default mobile role
+        $user->fcm_token = $request->input('fcm_token');
 
         $user->save();
 
@@ -75,6 +103,8 @@ class UsersController extends Controller
 
         $_api->save();
 
+        $user->secret = $_api->secret;
+        $user->role = Role::find($user->role_id);
         return $user;
 
 
@@ -86,4 +116,67 @@ class UsersController extends Controller
         return ['message' => 'you logged out'];
     }
 
+    public function roles(){
+        return DB::table('role')
+            ->whereNotIn('id', [1,2,3])
+            ->get();
+    }
+
+    public function forgot(Request $request){
+        $email = $request->input('email');
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'email|required',
+        ]);
+
+        if ($validator->fails()) {
+            return ['message' => $validator->messages()->all()];
+        }
+
+        $user = User::where('email', $email)->first();
+
+        $new_password = str_random(5);
+
+        $updated_user = User::find($user->id);
+        $updated_user->password = bcrypt($new_password);
+
+        $updated_user->save();
+
+        return [
+            'user' => $user,
+            'new_password' => $new_password
+        ];
+
+    }
+
+    public function reset_password(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'old_password' => 'required|min:5',
+            'new_password' => 'required|min:8',
+            'confirm_password' => 'required|min:8|same:new_password',
+            'email' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return ['message' => $validator->messages()->all()];
+        }
+
+        $user = User::where('email', $request->email)->first();
+
+        $updated_user = User::find($user->id);
+
+
+
+        $new_password = $request->input('new_password');
+        $updated_user->password = bcrypt($new_password);
+
+        $updated_user->save();
+
+        return [
+            'message' => 'Success Update New Password',
+            'user' => $user
+        ];
+
+    }
 }
