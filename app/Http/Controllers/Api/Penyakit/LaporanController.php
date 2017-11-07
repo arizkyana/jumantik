@@ -73,14 +73,11 @@ class LaporanController extends Controller
      */
     public function ajax_laporan(Request $request)
     {
-//        $this->middleware('auth');
 
         $start = $request->input('start');
         $length = $request->input('length');
         $draw = $request->input('draw');
 
-        $where = "";
-        $where .= Datatables::like_or_order($request);
 
         $count = DB::table('laporan')->count();
 
@@ -143,6 +140,8 @@ class LaporanController extends Controller
             }
         }
 
+        $data = Datatables::like($request, $data);
+        $data = Datatables::order($request, $data);
 
         $data = $data->get();
 

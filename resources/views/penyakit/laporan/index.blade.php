@@ -75,6 +75,8 @@
                     <th>Tipe Pelapor</th>
                     <th>Penyakit</th>
                     <th>Tindakan</th>
+                    <th>Kecamatan</th>
+                    <th>Kelurahan</th>
                     <th>Lokasi</th>
                     <th>Status</th>
 

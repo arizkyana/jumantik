@@ -94,6 +94,7 @@ var _dataTable = {};
             _dataTable = self.el.DataTable({
                 processing: true,
                 serverSide: true,
+                saveState: true,
                 ajax: {
                     url: base_url + '/api/penyakit/laporan/ajax_laporan',
                     method: 'post'
@@ -120,19 +121,37 @@ var _dataTable = {};
                 },
                 columns: [{
                     data: 'created_at',
+                    name: 'laporan.created_at',
+                    searchable: false,
                     render: function render(data, type, row, meta) {
                         var html = '<a class="text-danger" href="' + base_url + '/penyakit/laporan/' + row.id + '/show">' + data + '</a>';
                         return html;
                     }
-                }, { data: 'pelapor' }, { data: 'tipe_pelapor' }, { data: 'nama_penyakit' }, { data: 'nama_tindakan' }, {
+                }, {
+                    data: 'pelapor',
+                    name: 'users.name'
+
+                }, {
+                    data: 'tipe_pelapor',
+                    name: 'role.name'
+
+                }, {
+                    data: 'nama_penyakit',
+                    name: 'penyakit.nama_penyakit'
+                }, {
+                    data: 'nama_tindakan',
+                    name: 'tindakan.nama_tindakan'
+                }, { data: 'nama_kecamatan', name: 'kecamatan.nama_kecamatan', visible: false }, { data: 'nama_kelurahan', name: 'kelurahan.nama_kelurahan', visible: false }, {
                     data: 'alamat',
+                    name: 'laporan.alamat',
                     render: function render(data, type, row, meta) {
                         var html = data + '<br /><small>' + row.nama_kelurahan + ", " + row.nama_kecamatan + '</small>';
                         return html;
                     }
                 }, {
                     searchable: false,
-                    data: 'status'
+                    data: 'status',
+                    name: 'laporan.status'
                 }]
             });
         },

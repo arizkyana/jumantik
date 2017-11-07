@@ -14,47 +14,56 @@ class Datatables
 {
 
 
-    public function __construct(){
+    public function __construct()
+    {
 
     }
 
-    public static function is_sort_or_search($request){
+    public static function is_sort_or_search($request)
+    {
         return $request->input('columns') or $request->input('order') or $request->input('search');
     }
 
-    public static function like_or_order($request)
+    public static function like($request, $data)
     {
-
-        $query_str = "";
-
-        // input
         $column_input = $request->input('columns');
-        $order_input = $request->input('order');
         $search_input = $request->input('search');
-
 
         // search
         if (!empty($search_input['value'])) {
 
-            $like = " ";
             $keyword = $search_input['value'];
 
             // create search query with '%like%'
+            $data->where($column_input[0]['name'], 'like', '%' . $keyword . '%');
             foreach ($column_input as $key => $val) {
                 // field is able to search
 
-
-                if ($val['searchable']) {
-                    $like .= "upper(" . $val['data'] . ")" . " LIKE '%" . strtoupper($keyword) . "%' OR ";
+                if ($val['searchable'] === "true") {
+                    $data->orWhere($val['name'], 'like', '%' . $keyword . '%');
                 }
             }
-            $like = rtrim($like, " OR ");
-            $query_str .= $like;
+
         }
 
+        return $data;
+    }
+
+    public static function order($request, $data)
+    {
+        // order by
+
+        $column_input = $request->input('columns');
+        $order_input = $request->input('order');
+
+        $column = $column_input[$order_input[0]['column']]['name'];
 
 
-        return $query_str;
+        $data->orderBy($column, $order_input[0]['dir']);
+
+        return $data;
+
+
     }
 
 }
