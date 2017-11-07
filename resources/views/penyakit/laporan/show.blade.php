@@ -28,13 +28,11 @@
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal"><span
                                         aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                            <h4 class="modal-title">Foto</h4>
-                            <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting
-                                industry.
-                            </small>
+                            <h4 class="modal-title">Foto Evidance</h4>
+
                         </div>
                         <div class="modal-body">
-                            <div style="width: 300px">
+                            <div style="width: 300px;" class="center-block">
                                 <img id="foto" class="img-responsive" alt="foto"/>
                             </div>
                         </div>
@@ -46,6 +44,33 @@
                 </div>
             </div>
             {{--/modal foto--}}
+
+            {{--modal laporan pe--}}
+            <div class="modal inmodal fade" id="modal_laporan_pe" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span
+                                        aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title">Laporan PE</h4>
+
+                        </div>
+                        <div class="modal-body">
+                            <div style="width: 500px; padding: 10px;" class="center-block border-left-right">
+                                <h3>Laporan PE</h3>
+                                <p>
+                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{--/modal laporan pe--}}
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -56,6 +81,9 @@
                             </div>
                         </div>
                     </div>
+
+                </div>
+                <div class="col-md-6">
                     <div class="form-group">
                         <div class="row">
                             <label for="pelapor" class="col-md-3">Tipe Pelapor</label>
@@ -67,67 +95,101 @@
                 </div>
 
             </div>
-            <fieldset>
-                <legend>Laporan</legend>
+            <div class="row">
+                <div class="col-md-6">
+                    <fieldset>
+                        <legend>Laporan</legend>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <div class="row">
-                                <label for="penyakit" class="col-md-3">Penyakit</label>
-                                <div class="col-md-9">
-                                    {{ $laporan['penyakit']->nama_penyakit }}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label for="penyakit" class="col-md-4">Penyakit</label>
+                                        <div class="col-md-8">
+                                            {{ $laporan['penyakit']->nama_penyakit }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label for="suspect" class="col-md-4">Suspect</label>
+                                        <div class="col-md-8">
+                                            {{ $laporan['isi']->jumlah_suspect }} Jiwa
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label for="keterangan" class="col-md-4">Keterangan</label>
+                                        <div class="col-md-8">
+                                            <p class="text-justify">{{ $laporan['isi']->keterangan }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label for="intensitas_jentik" class="col-md-4">Intensitas Jentik</label>
+                                        <div class="col-md-8">
+                                            {{ $laporan['isi']->intensitas_jentik }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label for="Tindakan" class="col-md-4">Tindakan</label>
+                                        <div class="col-md-8">
+                                            {{ isset($laporan['tindakan']->nama_tindakan) ? $laporan['tindakan']->nama_tindakan : '-'  }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label for="Status" class="col-md-4">Status</label>
+                                        <div class="col-md-8">
+                                            {{ isset($laporan['status']->nama_status) ? $laporan['status']->nama_status : '-' }}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <label for="suspect" class="col-md-3">Suspect</label>
-                                <div class="col-md-9">
-                                    {{ $laporan['isi']->jumlah_suspect }} Jiwa
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <label for="keterangan" class="col-md-3">Keterangan</label>
-                                <div class="col-md-9">
-                                    {{ $laporan['isi']->keterangan }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <div class="row">
-                                <label for="intensitas_jentik" class="col-md-3">Intensitas Jentik</label>
-                                <div class="col-md-9">
-                                    {{ $laporan['isi']->intensitas_jentik }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <label for="Tindakan" class="col-md-3">Tindakan</label>
-                                <div class="col-md-9">
-                                    {{ isset($laporan['tindakan']->nama_tindakan) ? $laporan['tindakan']->nama_tindakan : '-'  }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <label for="Status" class="col-md-3">Status</label>
-                                <div class="col-md-9">
-                                    {{ isset($laporan['status']->nama_status) ? $laporan['status']->nama_status : '-' }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </fieldset>
                 </div>
-            </fieldset>
+                <div class="col-md-6">
+                    <fieldset>
+                        <legend>DBD</legend>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label for="penyakit" class="col-md-4">KDRS</label>
+                                        <div class="col-md-8">
+                                           -
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label for="suspect" class="col-md-4">PE</label>
+                                        <div class="col-md-8">
+                                            <button type="button" data-toggle="modal" data-target="#modal_laporan_pe" class="btn btn-primary btn-sm btn-block">
+                                                <i class="fa fa-eye"></i> Lihat Laporan
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
             <fieldset>
                 <legend>Detail Laporan</legend>
-                <table class="table table-striped table-hover table-condensed">
+                <table id="table-detail-laporan" class="table table-striped table-hover table-condensed">
                     <thead>
                     <tr>
                         <th>Tanggal Event</th>
@@ -155,6 +217,15 @@
                     @endforeach
                     </tbody>
                 </table>
+            </fieldset>
+            <fieldset>
+                <legend>Lokasi</legend>
+                <input type="hidden" id="lat" name="lat" value="{{ $laporan['isi']->lat }}" />
+                <input type="hidden" id="lon" name="lon" value="{{ $laporan['isi']->lon }}" />
+                <div id="map" class="google-map" style=" height: 500px !important;">
+
+                </div>
+
             </fieldset>
         </div>
         <div class="ibox-footer no-overflow">

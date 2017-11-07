@@ -74,7 +74,7 @@
             if ($is_child) {
                 echo '<li><a href='.url($menu['url']).'>'.$menu['name'].'</a></li>';
             } else {
-                echo "<li><a data-child='".$is_child."' href='".url($menu['url'])."'><i class='fa fa-dashboard'></i><span class='nav-label'>".$menu['name']."</span></a></li>";
+                echo "<li><a data-child='".$is_child."' href='".url($menu['url'])."'><i class='fa fa-th-large'></i><span class='nav-label'>".$menu['name']."</span></a></li>";
             }
         }
     }

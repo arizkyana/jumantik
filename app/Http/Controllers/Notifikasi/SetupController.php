@@ -10,8 +10,10 @@ use App\NotificationHistory;
 use App\NotificationSetup;
 use App\Role;
 use App\User;
+use App\Utils\FCM;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -153,7 +155,6 @@ class SetupController extends Controller
     {
 
 
-
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:100|unique:notification_setup,title',
             'body' => 'required',
@@ -198,14 +199,21 @@ class SetupController extends Controller
      * Send Notification
      */
 
-    public function send(Request $request, NotificationSetup $setup){
+    public function send(Request $request, NotificationSetup $setup)
+    {
 
         $histories = [];
+
+        $registration_ids = [];
 
         if ($setup->type == 2) {
             $receivers = $request->input('users');
 
-            foreach($receivers as $receiver) {
+            foreach ($receivers as $receiver) {
+
+                $user = User::find($receiver);
+
+
                 $history = new NotificationHistory();
                 $history->id_notification_setup = $setup->id;
                 $history->receiver = $receiver;
@@ -214,6 +222,7 @@ class SetupController extends Controller
                 $history->save();
 
                 array_push($histories, $history);
+                array_push($registration_ids, $user->fcm_token);
             }
 
         } else {
@@ -233,6 +242,12 @@ class SetupController extends Controller
                 array_push($histories, $history);
             }
         }
+
+
+        // send notification
+//        $fcm = new FCM();
+//
+//        return $fcm->send_messages($registration_ids, $setup->title, $setup->body);
 
         return redirect('notifikasi/setup')->with('success', 'Berhasil Kirim Notifikasi');
     }

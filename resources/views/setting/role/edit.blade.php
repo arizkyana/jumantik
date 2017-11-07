@@ -37,32 +37,51 @@
                     <legend>
                         Akses Menu
                     </legend>
-                    @foreach($menus as $menu)
 
-                        @if ($menu->parent == 0)
-                            <div class="checkbox">
-                                <label>
-                                    @if ($menu->selected == true)
-                                        <input checked type="checkbox" name="menus[]"
-                                               value="{{$menu->id}}"/> {{ $menu->name }}
-                                    @else
-                                        <input type="checkbox" name="menus[]" value="{{$menu->id}}"/> {{ $menu->name }}
-                                    @endif
-                                </label>
-                            </div>
-                        @else
-                            <div class="padding-left-md checkbox">
-                                <label>
-                                    @if ($menu->selected == true)
-                                        <input checked type="checkbox" name="menus[]"
-                                               value="{{$menu->id}}"/> {{ $menu->name }}
-                                    @else
-                                        <input type="checkbox" name="menus[]" value="{{$menu->id}}"/> {{ $menu->name }}
-                                    @endif
-                                </label>
-                            </div>
-                        @endif
-                    @endforeach
+                    <ul>
+                        @php
+                            function print_role_menu($menu, $is_child = FALSE){
+                                $has_children = is_array($menu['children']) and isset($menu['children']);
+                                if ($has_children) {
+                                    echo "<li>";
+                                    echo "<div class='checkbox'>";
+                                    if ($menu->selected == true) {
+                                        echo '<label><input checked type="checkbox" name="menus[]" value="'.$menu->id.'"/> '. $menu->name .'</label>';
+                                    } else {
+                                        echo '<label><input type="checkbox" name="menus[]" value="'.$menu->id.'"/> '. $menu->name .'</label>';
+                                    }
+                                    echo "</div>";
+                                    echo "<ul>";
+                                    foreach ($menu['children'] as $child){
+
+                                        print_role_menu($child, TRUE);
+
+                                    }
+                                    echo "</ul>";
+                                    echo "</li>";
+                                } else {
+                                    echo "<li>";
+                                    echo "<div class='checkbox'>";
+                                    if ($menu->selected == true) {
+                                        echo '<label><input checked type="checkbox" name="menus[]" value="'.$menu->id.'"/> '. $menu->name .'</label>';
+                                    } else {
+                                        echo '<label><input type="checkbox" name="menus[]" value="'.$menu->id.'"/> '. $menu->name .'</label>';
+                                    }
+                                    echo "</div>";
+                                    echo "</li>";
+
+                                }
+                            }
+                        @endphp
+
+                        @foreach($menus as $menu)
+                            @php
+                                print_role_menu($menu);
+                            @endphp
+                        @endforeach
+
+
+                    </ul>
 
                 </fieldset>
 

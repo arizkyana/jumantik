@@ -65,14 +65,7 @@ let _dataTable = {};
                         data: 'status'
                     },
 
-                    {
-                        data: 'id',
-                        render: function (data, type, row, meta) {
 
-                            const html = '<a onclick="deleteLaporan(' + data + ')" class="btn btn-danger btn-sm"  tooltip="Hapus Laporan"><i class="fa fa-trash"></i></a>';
-                            return html;
-                        }
-                    }
 
                 ]
             });
@@ -156,6 +149,8 @@ let _dataTable = {};
 })();
 
 window.deleteLaporan = (id) => {
+
+
 
     let confirms = confirm('Apakah anda yakin?');
     if (confirms) {

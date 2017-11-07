@@ -12,6 +12,7 @@ use App\Utils\Datatables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Validator;
 
 class DetailLaporanController extends Controller
 {
@@ -22,6 +23,17 @@ class DetailLaporanController extends Controller
 
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'id_laporan' => 'required',
+            'keterangan' => 'required',
+            'tindakan' => 'required',
+            'status' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return ['message' => $validator->messages()->all()];
+        }
+
         $pelapor = isset($request->auth_user) ? $request->auth_user->id : $request->input('pelapor');
 
         $detail_laporan = new DetailLaporan();
@@ -30,6 +42,7 @@ class DetailLaporanController extends Controller
         $detail_laporan->keterangan = $request->input('keterangan');
         $detail_laporan->tindakan = $request->input('tindakan');
         $detail_laporan->status = $request->input('status');
+
         $detail_laporan->is_visible = TRUE;
 
         // if has file
@@ -99,5 +112,43 @@ class DetailLaporanController extends Controller
             'recordsFiltered' => $count,
             'data' => $data,
         ];
+    }
+
+    public function approval(Request $request, DetailLaporan $detail_laporan){
+
+        $validator = Validator::make($request->all(), [
+            'status' => 'required',
+            'tindakan' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return ['message' => $validator->messages()->all()];
+        }
+
+        $approved_by = $request->auth_user->id;
+
+        $status = $request->input('status');
+        $tindakan = $request->input('tindakan');
+        $is_pekdrs = $request->input('is_pekdrs') ? true : false;
+
+        $detail_laporan->status = $status;
+        $detail_laporan->tindakan = $tindakan;
+
+        $detail_laporan->approved_by = $approved_by;
+        $detail_laporan->save();
+
+        $laporan = Laporan::find($detail_laporan->id_laporan);
+
+        $laporan->status = $status;
+        $laporan->tindakan = $tindakan;
+        $laporan->is_pekdrs = $is_pekdrs;
+        $laporan->approved_by = $approved_by;
+
+        $laporan->save();
+
+        return [
+            'laporan' => $laporan
+        ];
+
     }
 }

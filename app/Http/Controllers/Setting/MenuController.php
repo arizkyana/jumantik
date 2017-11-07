@@ -161,6 +161,6 @@ class MenuController extends Controller
         $menu = Menu::find($id);
         $menu->delete();
 
-        return redirect('menu')->with('success', 'Berhasil Hapus Menu ' . $id);
+        return redirect('setting/menu')->with('success', 'Berhasil Hapus Menu ' . $id);
     }
 }

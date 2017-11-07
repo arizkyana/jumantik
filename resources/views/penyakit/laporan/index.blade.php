@@ -77,7 +77,7 @@
                     <th>Tindakan</th>
                     <th>Lokasi</th>
                     <th>Status</th>
-                    <th class="text-center">Action</th>
+
                 </tr>
                 </thead>
                 <tbody>

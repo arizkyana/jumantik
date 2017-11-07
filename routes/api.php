@@ -54,6 +54,7 @@ Route::prefix('penyakit')->middleware('simple.token')->group(function () {
 
     Route::prefix('detail_laporan')->group(function(){
         Route::post('/store', 'Api\Penyakit\DetailLaporanController@store');
+        Route::post('/approval', 'Api\Penyakit\DetailLaporanController@approval');
     });
 });
 

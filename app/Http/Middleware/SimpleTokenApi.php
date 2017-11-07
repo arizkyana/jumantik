@@ -32,7 +32,7 @@ class SimpleTokenApi
             return $next($request);
         };
 
-        return redirect('/api/403');
+        return response('unauthenticated', 403);
 
     }
 }

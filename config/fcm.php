@@ -7,7 +7,7 @@
  */
 
 return [
-    'FCM_SERVER_KEY' => env('FCM_SERVER_KEY', 'AIzaSyD2tMDNFjhzjnA5pft6rE1tDcv-XnMxHTc'),
+    'FCM_SERVER_KEY' => env('FCM_SERVER_KEY', 'test'),
     'FCM_SENDER_KEY' => env('FCM_SENDER_KEY', '613796250855'),
-    'FCM_URL_LEGACY' => env('FCM_URL_LEGACY', 'https://fcm.googleapis.com/fcm/send')
+    'FCM_URL_LEGACY' => env('FCM_URL_LEGACY', 'https://fcm.googleapis.com/fcm/')
 ];

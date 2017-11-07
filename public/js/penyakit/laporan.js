@@ -133,13 +133,6 @@ var _dataTable = {};
                 }, {
                     searchable: false,
                     data: 'status'
-                }, {
-                    data: 'id',
-                    render: function render(data, type, row, meta) {
-
-                        var html = '<a onclick="deleteLaporan(' + data + ')" class="btn btn-danger btn-sm"  tooltip="Hapus Laporan"><i class="fa fa-trash"></i></a>';
-                        return html;
-                    }
                 }]
             });
         },

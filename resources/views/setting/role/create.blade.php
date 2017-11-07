@@ -38,22 +38,43 @@
                         Akses Menu
                     </legend>
 
-                    @foreach($menus as $menu)
+                    <ul>
+                        @php
+                           function print_role_menu($menu, $is_child = FALSE){
+                               $has_children = is_array($menu['children']) and isset($menu['children']);
+                               if ($has_children) {
+                                   echo "<li>";
+                                   echo "<div class='checkbox'>";
+                                   echo '<label><input type="checkbox" name="menus[]" value="'.$menu->id.'"/> '. $menu->name .'</label>';
+                                   echo "</div>";
+                                   echo "<ul>";
+                                   foreach ($menu['children'] as $child){
 
-                        @if ($menu->parent == 0)
-                            <div class="checkbox" data-content="parent">
-                                <label>
-                                    <input type="checkbox" name="menus[]" value="{{$menu->id}}"/> {{ $menu->name }}
-                                </label>
-                            </div>
-                        @else
-                            <div class="padding-left-md checkbox">
-                                <label>
-                                    <input type="checkbox" name="menus[]" value="{{$menu->id}}"/> {{ $menu->name }}
-                                </label>
-                            </div>
-                        @endif
-                    @endforeach
+                                       print_role_menu($child, TRUE);
+
+                                   }
+                                   echo "</ul>";
+                                   echo "</li>";
+                               } else {
+                                   echo "<li>";
+                                   echo "<div class='checkbox'>";
+                                   echo '<label><input type="checkbox" name="menus[]" value="'.$menu->id.'"/> '. $menu->name .'</label>';
+                                   echo "</div>";
+                                   echo "</li>";
+
+                               }
+                           }
+                        @endphp
+
+                        @foreach($menus as $menu)
+                            @php
+                                print_role_menu($menu);
+                            @endphp
+                        @endforeach
+
+
+
+                    </ul>
 
                 </fieldset>
 

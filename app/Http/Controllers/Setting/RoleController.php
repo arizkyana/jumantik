@@ -46,10 +46,11 @@ class RoleController extends MyController
     public function create()
     {
 
+        $menus = $this->build_tree_role_menu(Menu::all());
 
-        $menus = Menu::all();
         return view('setting/role/create')->with('menus', $menus);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -71,7 +72,6 @@ class RoleController extends MyController
         }
 
 
-
         $role = new Role();
         $role->name = $request->input('name');
 
@@ -80,7 +80,7 @@ class RoleController extends MyController
 
         $menus = $request->input('menus');
 
-        foreach($menus as $menu) {
+        foreach ($menus as $menu) {
             $role_menu = new RoleMenu();
             $role_menu->role_id = $role->id;
             $role_menu->menu_id = $menu;
@@ -118,13 +118,15 @@ class RoleController extends MyController
         $menus = Menu::all();
         $selected_menus = RoleMenu::where('role_id', $id)->get();
 
-        foreach ($menus as $menu){
+        foreach ($menus as $menu) {
             $selected = false;
-            foreach ($selected_menus as $selected_menu){
+            foreach ($selected_menus as $selected_menu) {
                 if ($menu->id == $selected_menu->menu_id) $selected = true;
             }
             $menu->selected = $selected;
         }
+
+        $menus = $this->build_tree_role_menu($menus);
 
         return view('setting/role/edit')->with([
             'role' => $role,
@@ -163,7 +165,7 @@ class RoleController extends MyController
 
         RoleMenu::where('role_id', $request->input('id'))->delete();
 
-        foreach($menus as $menu) {
+        foreach ($menus as $menu) {
             $role_menu = new RoleMenu();
             $role_menu->role_id = $role->id;
             $role_menu->menu_id = $menu;
@@ -185,5 +187,23 @@ class RoleController extends MyController
         $role->delete();
 
         return redirect('role')->with('success', 'Berhasil Hapus Role ' . $id);
+    }
+
+    private function build_tree_role_menu($elements, $parentId = 0)
+    {
+        $branch = array();
+
+        foreach ($elements as $element) {
+
+            if ($element['parent'] == $parentId) {
+                $children = $this->build_tree_role_menu($elements, $element['id']);
+                if ($children) {
+                    $element['children'] = $children;
+                }
+                $branch[] = $element;
+            }
+        }
+
+        return $branch;
     }
 }
