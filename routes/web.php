@@ -36,6 +36,12 @@ Route::get('/survey/create', 'SurveyController@create')->name('survey/create')->
 Route::get('/survey/{survey}/edit', 'SurveyController@edit')->name('survey/edit')->middleware('can:survey-edit');
 Route::get('/survey/{laporan}/laporan', 'SurveyController@laporan')->name('survey/laporan')->middleware('can:survey-laporan');
 
+Route::resource('jadwal', 'JadwalController');
+Route::get('/jadwl', 'JadwalController@index')->name('jadwal');
+Route::get('/jadwal/create', 'JadwalController@create')->name('jadwal/create');
+Route::get('/jadwal/{jadwal}/edit', 'JadwalController@edit')->name('jadwal/edit');
+
+
 
 // Penyakit
 Route::namespace('Penyakit')->group(function () {

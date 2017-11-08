@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Dinkes;
+use App\Jadwal;
 use App\Kecamatan;
 use App\Kelurahan;
 use App\Role;
@@ -29,16 +30,11 @@ class JadwalController extends Controller
     public function index()
     {
 
-        $dinkes = DB::table('dinkes')
-            ->select('dinkes.*', 'users.name as pic_name')
-            ->leftJoin('users', 'dinkes.pic', '=', 'users.id')
-            ->get();
+        $jadwal = Jadwal::where('is_visible', true)->get();
 
-
-
-        return view('master/dinkes/index')->with([
+        return view('jadwal/index')->with([
             'js' => $this->js,
-            'dinkes' => $dinkes
+            'jadwal' => $jadwal
         ]);
     }
 
@@ -49,14 +45,23 @@ class JadwalController extends Controller
      */
     public function create()
     {
-        $kecamatan = Kecamatan::all();
-        $roles = Role::all();
+        $pic = DB::table('users')
+            ->select('users.*')
+            ->leftJoin('role', 'users.role_id', '=', 'role.id')
+            ->where('role.name', 'like', '%jumantik%')
+            ->get();
 
-        return view('master/dinkes/create')
+        $supervisor = DB::table('users')
+            ->select('users.*')
+            ->leftJoin('role', 'users.role_id', '=', 'role.id')
+            ->where('role.name', 'like', '%puskesmas%')
+            ->get();
+
+        return view('jadwal/create')
             ->with([
-                'kecamatan' => $kecamatan,
                 'js' => $this->js,
-                'roles' => $roles
+                'pic' => $pic,
+                'supervisor' => $supervisor
             ]);
     }
 
@@ -70,52 +75,38 @@ class JadwalController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'nama' => 'required|max:100|unique:dinkes,nama',
-            'alamat' => 'required',
-            'kelurahan' => 'required',
-            'kecamatan' => 'required',
-            'pic_nama' => 'required',
-            'pic_nik' => 'required|unique:users,nik',
-            'email' => 'required|email|unique:users,email',
-            'pic_phone' => 'required',
-            'role' => 'required',
-            'password' => 'required|min:8',
-            'confirm_password' => 'required|min:8|same:password'
+            'mulai' => 'required',
+            'akhir' => 'required',
+            'pic' => 'required',
+            'supervisor' => 'required',
+            'title' => 'required|unique:jadwal,title',
+            'keterangan' => 'required|email|unique:users,email',
+
         ]);
 
 
         if ($validator->fails()) {
 
-            return redirect('master/dinkes/create')
+            return redirect('jadwal/create')
                 ->withErrors($validator)
                 ->withInput();
         }
 
-        $dinkes = new Dinkes();
-        $dinkes->nama = $request->input('nama');
-        $dinkes->alamat= $request->input('alamat');
-        $dinkes->kelurahan = $request->input('kelurahan');
-        $dinkes->kecamatan = $request->input('kecamatan');
+        $jadwal = new Jadwal();
+        $jadwal->mulai = $request->input('mulai');
+        $jadwal->akhir= $request->input('akhir');
+        $jadwal->pic = $request->input('pic');
+        $jadwal->supervisor = $request->input('supervisor');
+        $jadwal->title = $request->input('title');
+        $jadwal->keterangan = $request->input('keterangan');
 
-        $dinkes->is_visible = true;
+        $jadwal->is_visible = true;
+        $jadwal->status = 1;
 
-        // create new user by pic
-        $user = new User();
-        $user->name = $request->input('pic_nama');
-        $user->nik = $request->input('pic_nik');
-        $user->email = $request->input('email');
-        $user->phone = $request->input('pic_phone');
-        $user->role_id = $request->input('role');
-        $user->password = bcrypt($request->input('password'));
-        $user->is_active = true;
-        $user->save();
-
-        $dinkes->pic = $user->id;
-        $dinkes->created_by = Auth::user()->id;
-        $dinkes->save();
+        $jadwal->created_by = Auth::user()->id;
 
 
-        return redirect('master/dinkes/create')->with('success', 'Berhasil Tambah Dinkes ' . $dinkes->nama);
+        return redirect('jadwal/create')->with('success', 'Berhasil Tambah Jadwal ' . $jadwal->title);
 
 
     }
@@ -137,24 +128,12 @@ class JadwalController extends Controller
      * @param  \App\Menu $menu
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Jadwal $jadwal)
     {
 
-        $dinkes = Dinkes::find($id);
-
-        $pic = User::find($dinkes->pic);
-
-        $kecamatan = Kecamatan::all();
-        $kelurahan = Kelurahan::where('kecamatan_id', $dinkes->kecamatan)->get();
-        $roles = Role::all();
-
-        return view('master/dinkes/edit')->with([
+        return view('jadwal/edit')->with([
             'js' => $this->js,
-            'dinkes' => $dinkes,
-            'kecamatan' => $kecamatan,
-            'roles' => $roles,
-            'pic' => $pic,
-            'kelurahan' => $kelurahan
+            'jadwal' => $jadwal,
         ]);
     }
 
@@ -165,54 +144,40 @@ class JadwalController extends Controller
      * @param  \App\Menu $menu
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Dinkes $_dinkes)
+    public function update(Request $request, Jadwal $jadwal)
     {
 
         $validator = Validator::make($request->all(), [
-            'nama' => 'required|max:100|unique:dinkes,nama',
-            'alamat' => 'required',
-            'kelurahan' => 'required',
-            'kecamatan' => 'required',
-            'pic_nama' => 'required',
-            'pic_nik' => 'required|unique:users,nik',
-            'email' => 'required|email|unique:users,email',
-            'pic_phone' => 'required',
-            'role' => 'required',
-            'password' => 'required|min:8',
-            'confirm_password' => 'required|min:8|same:password'
+            'mulai' => 'required',
+            'akhir' => 'required',
+            'pic' => 'required',
+            'supervisor' => 'required',
+            'title' => 'required|unique:jadwal,title',
+            'keterangan' => 'required|email|unique:users,email',
+
         ]);
 
         if ($validator->fails()) {
-            return redirect('master/dinkes/' . $request->input('id') . '/edit')
+            return redirect('jadwal/' . $request->input('id') . '/edit')
                 ->withErrors($validator)
                 ->withInput();
         }
 
-        $dinkes = $_dinkes->find($request->input('id'));
-        $dinkes->nama = $request->input('nama');
-        $dinkes->alamat= $request->input('alamat');
-        $dinkes->kelurahan = $request->input('kelurahan');
-        $dinkes->kecamatan = $request->input('kecamatan');
 
-        $dinkes->is_visible = true;
+        $jadwal->mulai = $request->input('mulai');
+        $jadwal->akhir= $request->input('akhir');
+        $jadwal->pic = $request->input('pic');
+        $jadwal->supervisor = $request->input('supervisor');
+        $jadwal->title = $request->input('title');
+        $jadwal->keterangan = $request->input('keterangan');
 
-        // create new user by pic
-        $user = User::find($request->input('pic_id'));
-        $user->name = $request->input('pic_nama');
-        $user->nik = $request->input('pic_nik');
-        $user->email = $request->input('email');
-        $user->phone = $request->input('pic_phone');
-        $user->role_id = $request->input('role');
-        $user->password = bcrypt($request->input('password'));
-        $user->is_active = true;
-        $user->save();
+        $jadwal->is_visible = true;
+        $jadwal->status = 1;
 
-        $dinkes->pic = $user->id;
-        $dinkes->created_by = Auth::user()->id;
-        $dinkes->save();
+        $jadwal->created_by = Auth::user()->id;
 
 
-        return redirect('master/dinkes/' . $request->input('id') . '/edit')->with('success', 'Berhasil Update Dinkes ' . $_dinkes->nama_dinkes);
+        return redirect('master/dinkes/' . $request->input('id') . '/edit')->with('success', 'Berhasil Update Jadwal ' . $jadwal->title);
     }
 
     /**
@@ -223,12 +188,12 @@ class JadwalController extends Controller
      */
     public function destroy($id)
     {
-        $role = Dinkes::find($id);
+        $jadwal = Jadwal::find($id);
 
-        $role->is_visible = false;
+        $jadwal->is_visible = false;
 
-        $role->save();
+        $jadwal->save();
 
-        return redirect('master/dinkes')->with('success', 'Berhasil Hapus Dinkes ' . $id);
+        return redirect('master/dinkes')->with('success', 'Berhasil Hapus Jadwal ' . $jadwal->title);
     }
 }

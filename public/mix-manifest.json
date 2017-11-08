@@ -20,6 +20,7 @@
     "/js/notification/history.js": "/js/notification/history.js",
     "/js/menu.js": "/js/menu.js",
     "/js/laporan.js": "/js/laporan.js",
+    "/js/jadwal.js": "/js/jadwal.js",
     "/js/dinkes/laporan.js": "/js/dinkes/laporan.js",
     "/js/dinkes/jadwal.js": "/js/dinkes/jadwal.js",
     "/js/dashboard.js": "/js/dashboard.js"
