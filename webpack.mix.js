@@ -108,6 +108,7 @@ mix
 
     .js([
         'resources/assets/js/jadwal/index.js',
+        'resources/assets/js/jadwal/create.js',
     ], 'public/js/jadwal.js')
 
     .sass('resources/assets/sass/app.scss', 'public/css');
