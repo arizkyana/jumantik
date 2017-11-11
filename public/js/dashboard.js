@@ -327,7 +327,7 @@ window.dashboard = function () {
 
             var coords = [];
             var rgb = "255,255,0";
-            $.each(result, function (i, area) {
+            $.each(result.data, function (i, area) {
                 coords = $.map(area.area, function (o) {
                     rgb = o.rgb;
                     return {
