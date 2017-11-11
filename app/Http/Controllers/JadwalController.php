@@ -30,7 +30,27 @@ class JadwalController extends Controller
     public function index()
     {
 
-        $jadwal = Jadwal::where('is_visible', true)->get();
+        $jadwal = DB::table('jadwal')
+            ->select(
+                'jadwal.id',
+                'jadwal.mulai',
+                'jadwal.akhir',
+                'jadwal.jam_mulai',
+                'jadwal.jam_akhir',
+                'jadwal.status',
+                'jadwal.title',
+                'jadwal.keterangan',
+
+                'pic.name as pic',
+                'supervisor.name as supervisor'
+            )
+            ->join('users as pic', 'jadwal.pic', '=', 'pic.id')
+            ->join('users as supervisor', 'jadwal.supervisor', '=', 'supervisor.id')
+            ->orderByDesc('jadwal.created_at')
+            ->where('jadwal.is_visible', true)
+            ->get();
+
+//        return $jadwal;
 
         return view('jadwal/index')->with([
             'js' => $this->js,
@@ -77,11 +97,12 @@ class JadwalController extends Controller
         $validator = Validator::make($request->all(), [
             'mulai' => 'required',
             'akhir' => 'required',
+            'jam_mulai' => 'required',
+            'jam_akhir' => 'required',
             'pic' => 'required',
             'supervisor' => 'required',
             'title' => 'required|unique:jadwal,title',
-            'keterangan' => 'required|email|unique:users,email',
-
+            'keterangan' => 'required',
         ]);
 
 
@@ -93,8 +114,10 @@ class JadwalController extends Controller
         }
 
         $jadwal = new Jadwal();
-        $jadwal->mulai = $request->input('mulai');
-        $jadwal->akhir= $request->input('akhir');
+        $jadwal->mulai = date('Y-m-d', strtotime($request->input('mulai')));
+        $jadwal->akhir= date('Y-m-d', strtotime($request->input('akhir')));
+        $jadwal->jam_mulai = $request->input('jam_mulai');
+        $jadwal->jam_akhir = $request->input('jam_akhir');
         $jadwal->pic = $request->input('pic');
         $jadwal->supervisor = $request->input('supervisor');
         $jadwal->title = $request->input('title');
@@ -105,6 +128,7 @@ class JadwalController extends Controller
 
         $jadwal->created_by = Auth::user()->id;
 
+        $jadwal->save();
 
         return redirect('jadwal/create')->with('success', 'Berhasil Tambah Jadwal ' . $jadwal->title);
 
@@ -130,10 +154,24 @@ class JadwalController extends Controller
      */
     public function edit(Jadwal $jadwal)
     {
+        $pic = DB::table('users')
+            ->select('users.*')
+            ->leftJoin('role', 'users.role_id', '=', 'role.id')
+            ->where('role.name', 'like', '%jumantik%')
+            ->get();
+
+        $supervisor = DB::table('users')
+            ->select('users.*')
+            ->leftJoin('role', 'users.role_id', '=', 'role.id')
+            ->where('role.name', 'like', '%puskesmas%')
+            ->get();
+
 
         return view('jadwal/edit')->with([
             'js' => $this->js,
             'jadwal' => $jadwal,
+            'pic' => $pic,
+            'supervisor' => $supervisor
         ]);
     }
 
@@ -150,22 +188,27 @@ class JadwalController extends Controller
         $validator = Validator::make($request->all(), [
             'mulai' => 'required',
             'akhir' => 'required',
+            'jam_mulai' => 'required',
+            'jam_akhir' => 'required',
             'pic' => 'required',
             'supervisor' => 'required',
             'title' => 'required|unique:jadwal,title',
-            'keterangan' => 'required|email|unique:users,email',
+            'keterangan' => 'required',
 
         ]);
 
         if ($validator->fails()) {
-            return redirect('jadwal/' . $request->input('id') . '/edit')
+            return redirect('jadwal/' . $jadwal->id . '/edit')
                 ->withErrors($validator)
                 ->withInput();
         }
 
 
-        $jadwal->mulai = $request->input('mulai');
-        $jadwal->akhir= $request->input('akhir');
+
+        $jadwal->mulai = date('Y-m-d', strtotime($request->input('mulai')));
+        $jadwal->akhir= date('Y-m-d', strtotime($request->input('akhir')));
+        $jadwal->jam_mulai = $request->input('jam_mulai');
+        $jadwal->jam_akhir = $request->input('jam_akhir');
         $jadwal->pic = $request->input('pic');
         $jadwal->supervisor = $request->input('supervisor');
         $jadwal->title = $request->input('title');
@@ -176,8 +219,9 @@ class JadwalController extends Controller
 
         $jadwal->created_by = Auth::user()->id;
 
+        $jadwal->save();
 
-        return redirect('master/dinkes/' . $request->input('id') . '/edit')->with('success', 'Berhasil Update Jadwal ' . $jadwal->title);
+        return redirect('jadwal/' . $jadwal->id . '/edit')->with('success', 'Berhasil Update Jadwal ' . $jadwal->title);
     }
 
     /**
@@ -194,6 +238,6 @@ class JadwalController extends Controller
 
         $jadwal->save();
 
-        return redirect('master/dinkes')->with('success', 'Berhasil Hapus Jadwal ' . $jadwal->title);
+        return redirect('jadwal')->with('success', 'Berhasil Hapus Jadwal ' . $jadwal->title);
     }
 }

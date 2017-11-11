@@ -56,32 +56,36 @@
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>
-                            </div>
-                            @if ($errors->has('pic'))
-                                <span class="help-block">
+                                @if ($errors->has('pic'))
+                                    <span class="help-block">
                                         <strong>{{ $errors->first('pic') }}</strong>
                                     </span>
-                            @endif
+                                @endif
+                            </div>
+
                         </div>
                     </div>
 
                     <div class="form-group {{ $errors->has('pic') ? 'has-error' : '' }}">
 
                         <div class="row">
-                            <label for="supervisor" class="col-md-3">Supervisor <span class="text-danger">*</span></label>
+                            <label for="supervisor" class="col-md-3">Supervisor <span
+                                        class="text-danger">*</span></label>
                             <div class="col-md-9">
-                                <select name="supervisor" id="supervisor" class="form-control" data-placeholder="Pilih Supervisor">
+                                <select name="supervisor" id="supervisor" class="form-control"
+                                        data-placeholder="Pilih Supervisor">
                                     <option value=""></option>
                                     @foreach ($supervisor as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>
-                            </div>
-                            @if ($errors->has('supervisor'))
-                                <span class="help-block">
+                                @if ($errors->has('supervisor'))
+                                    <span class="help-block">
                                         <strong>{{ $errors->first('supervisor') }}</strong>
                                     </span>
-                            @endif
+                                @endif
+                            </div>
+
                         </div>
                     </div>
 
@@ -92,28 +96,80 @@
                     <legend>Waktu</legend>
                     <div class="form-group {{ $errors->has('mulai') ? 'has-error' : '' }}">
                         <div class="row">
-                            <label for="mulai" class="col-md-3">Mulai</label>
+                            <label for="mulai" class="col-md-3">Tanggal Mulai</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" name="mulai" id="mulai" />
-                            </div>
-                            @if ($errors->has('mulai'))
-                                <span class="help-block">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                    <input type="text" class="form-control" name="mulai" id="mulai"/>
+                                </div>
+                                @if ($errors->has('mulai'))
+                                    <span class="help-block">
                                         <strong>{{ $errors->first('mulai') }}</strong>
                                     </span>
-                            @endif
+                                @endif
+                            </div>
+
                         </div>
                     </div>
                     <div class="form-group {{ $errors->has('akhir') ? 'has-error' : '' }}">
                         <div class="row">
-                            <label for="akhir" class="col-md-3">Akhir</label>
+                            <label for="akhir" class="col-md-3">Tanggal Akhir</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" name="akhir" id="akhir" />
-                            </div>
-                            @if ($errors->has('akhir'))
-                                <span class="help-block">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                    <input type="text" class="form-control" name="akhir" id="akhir"/>
+                                </div>
+                                @if ($errors->has('akhir'))
+                                    <span class="help-block">
                                         <strong>{{ $errors->first('akhir') }}</strong>
                                     </span>
-                            @endif
+                                @endif
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group {{ $errors->has('jam_mulai') ? 'has-error' : '' }}">
+                        <div class="row">
+                            <label for="jam_mulai" class="col-md-3">Jam Mulai</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-clock-o"></i>
+                                    </span>
+                                    <input type="text" class="form-control" name="jam_mulai" id="jam_mulai"/>
+                                </div>
+                                @if ($errors->has('jam_mulai'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('jam_mulai') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group {{ $errors->has('jam_akhir') ? 'has-error' : '' }}">
+                        <div class="row">
+                            <label for="jam_akhir" class="col-md-3">Jam Akhir</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-clock-o"></i>
+                                    </span>
+                                    <input type="text" class="form-control" name="jam_akhir" id="jam_akhir"/>
+                                </div>
+                                @if ($errors->has('jam_akhir'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('jam_akhir') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
                         </div>
                     </div>
                 </fieldset>

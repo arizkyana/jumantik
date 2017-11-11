@@ -68,7 +68,8 @@
 /***/ 60:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(61);
+__webpack_require__(61);
+module.exports = __webpack_require__(62);
 
 
 /***/ }),
@@ -117,6 +118,85 @@ $(document).ready(function () {
     table.init();
     supervisor.init();
     pic.init();
+});
+
+window.remove = function (id) {
+    event.preventDefault();
+
+    swal({
+        title: "Apakah Anda Yakin?",
+        text: "Jadwal yang sudah di hapus tidak dapat di kembalikan!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya, Hapus!",
+        cancelButtonText: 'Batal',
+        closeOnConfirm: false,
+        html: false
+    }, function () {
+        document.getElementById('delete-' + id).submit();
+        swal("Berhasil!", "Jadwal sudah dihapus.", "success");
+    });
+};
+
+/***/ }),
+
+/***/ 62:
+/***/ (function(module, exports) {
+
+/**
+ * Created by agungrizkyana on 11/9/17.
+ */
+
+window.jadwal = function () {
+
+    function initDatePicker() {
+        var el = {
+            tanggalMulai: $("#mulai"),
+            tanggalAkhir: $("#akhir")
+        };
+
+        el.tanggalMulai.datepicker({
+            orientation: 'top'
+        });
+
+        el.tanggalAkhir.datepicker({
+            orientation: 'top'
+        });
+
+        return el;
+    }
+
+    function initClockPicker() {
+        var el = {
+            jamMulai: $("#jam_mulai"),
+            jamAkhir: $("#jam_akhir")
+        };
+
+        el.jamMulai.clockpicker({
+            placement: 'top',
+            donetext: 'Done'
+        });
+        el.jamAkhir.clockpicker({
+            placement: 'top',
+            donetext: 'Done'
+        });
+
+        return el;
+    }
+
+    function init() {
+        initClockPicker();
+        initDatePicker();
+    }
+
+    return {
+        init: init
+    };
+}();
+
+$(document).ready(function () {
+    window.jadwal.init();
 });
 
 /***/ })

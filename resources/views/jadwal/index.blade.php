@@ -30,6 +30,7 @@
                     <th>Keterangan</th>
                     <th>Mulai</th>
                     <th>Akhir</th>
+                    <th>Jam</th>
                     <th>PIC</th>
                     <th>Supervisor</th>
                     <th>Action</th>
@@ -40,17 +41,17 @@
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td>
-                            <a href="{{ route('jadwal/edit', $jadwal)  }}" class="text-danger">
+                            <a href="{{ route('jadwal/edit', $jadwal->id)  }}" class="text-danger">
                                 {{ $jadwal->title }}
                             </a>
                         </td>
                         <td>{{ $jadwal->keterangan }}</td>
+                        <td>{{ $jadwal->mulai }}</td>
+                        <td>{{ $jadwal->akhir }}</td>
+                        <td>{{ $jadwal->jam_mulai }} - {{ $jadwal->jam_akhir }}</td>
+                        <td>{{ $jadwal->pic }}</td>
+                        <td>{{ $jadwal->supervisor }}</td>
                         <td>
-                            <a class="btn btn-sm btn-danger"
-                               onclick="event.preventDefault();
-                                       document.getElementById('delete-{{$jadwal->id}}').submit();">
-                                <i class="glyphicon glyphicon-trash"></i>
-                            </a>
 
                             <form id="delete-{{$jadwal->id}}"
                                   action="{{ action('JadwalController@destroy', ['id' => $jadwal->id]) }}"
@@ -59,6 +60,13 @@
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
                             </form>
+
+                            <a class="btn btn-sm btn-danger"
+                               onclick="remove({{$jadwal->id}})">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+
+
                         </td>
                     </tr>
                 @endforeach

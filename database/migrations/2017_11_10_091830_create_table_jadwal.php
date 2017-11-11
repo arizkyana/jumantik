@@ -15,8 +15,10 @@ class CreateTableJadwal extends Migration
     {
         Schema::create('jadwal', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamp('mulai');
-            $table->timestamp('akhir')->nullable();
+            $table->date('mulai');
+            $table->date('akhir')->nullable();
+            $table->time('jam_mulai');
+            $table->time('jam_akhir');
             $table->integer('pic'); // 1 - Sent , 2 - Done, 3 - Failed
             $table->integer('supervisor');
             $table->integer('status'); // 1 Undone , 2 Done , 3 On Going

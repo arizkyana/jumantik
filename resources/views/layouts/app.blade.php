@@ -186,6 +186,9 @@
         {{--Switchery--}}
         <script src="{{ asset('js/themes/plugins/switchery/switchery.js') }}"></script>
 
+        {{--Clockpicker--}}
+        <script src="{{ asset('js/themes/plugins/clockpicker/clockpicker.js') }}"></script>
+
         {{--<script src="{{ mix('js/app.js') }}"></script>--}}
 
         {{--plugins themes js--}}
