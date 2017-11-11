@@ -8,6 +8,7 @@ use App\Menu;
 use App\Role;
 use App\RoleMenu;
 use App\User;
+use App\Utils\ResponseMod;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,11 +31,12 @@ class UsersController extends Controller
 
         $validator = Validator::make($request->all(), [
             'password' => 'required|min:5, max:16',
-            'nik' => 'required'
+            'nik' => 'required',
+            'fcm_token' => 'required'
         ]);
 
         if ($validator->fails()) {
-            return $validator->messages()->all();
+            return ResponseMod::failed($validator->messages()->all());
         }
 
         $user = User::where('nik', $request->input('nik'))->first();
@@ -52,11 +54,15 @@ class UsersController extends Controller
 
             Log::info('Success Login ' . $apiClient->user_id);
 
+            $user->fcm_token = $request->input('fcm_token');
+            $user->save();
+
             $user->secret = $apiClient->secret;
+            Auth::user()->fcm_token = $user->fcm_token;
             Auth::user()->secret = $apiClient->secret;
             Auth::user()->role = $role;
 
-            return Auth::user();
+            return ResponseMod::success(Auth::user());
 
         }
 
