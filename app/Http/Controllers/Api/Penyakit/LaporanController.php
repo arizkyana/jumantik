@@ -9,6 +9,7 @@ use App\Kelurahan;
 use App\Penyakit;
 use App\Puskesmas\Laporan;
 use App\Utils\Datatables;
+use App\Utils\ResponseMod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -27,6 +28,25 @@ class LaporanController extends Controller
 
     public function store(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            'jumlah_suspect' => 'required',
+            'penyakit' => 'required',
+            'intensitas_jenitk' => 'required',
+            'keterangan' => 'required',
+            'tindakan' => 'required',
+            'kecamatan' => 'required',
+            'kelurahan' => 'required',
+            'lat' => 'required',
+            'lon' => 'required',
+            'alamat' => 'required',
+            'is_pekdrs' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return ResponseMod::failed($validator->messages()->all());
+        }
+
         $pelapor = isset($request->auth_user) ? $request->auth_user->id : $request->input('pelapor');
 
         $laporan = new \App\Laporan();
@@ -48,7 +68,7 @@ class LaporanController extends Controller
 
         $laporan->save();
 
-        return $laporan;
+        return ResponseMod::success($laporan);
     }
 
     public function show($id)
@@ -58,11 +78,10 @@ class LaporanController extends Controller
 
         if (empty($detail_laporan)) $detail_laporan = [];
 
-        return [
-            'message' => 'OK',
+        return ResponseMod::success([
             'laporan' => $laporan,
             'detail_laporan' => $detail_laporan
-        ];
+        ]);
     }
 
     /**

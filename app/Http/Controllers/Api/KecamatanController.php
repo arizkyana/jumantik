@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\AreaKecamatan;
 use App\Http\Controllers\Controller;
 use App\Kecamatan;
+use App\Utils\ResponseMod;
 use Illuminate\Http\Request;
 
 class KecamatanController extends Controller
@@ -16,7 +17,7 @@ class KecamatanController extends Controller
      */
     public function index()
     {
-        return Kecamatan::where('is_active', TRUE)->get();
+        return ResponseMod::success(Kecamatan::where('is_active', TRUE)->get());
     }
 
     /**
@@ -98,7 +99,7 @@ class KecamatanController extends Controller
             ));
         }
 
-        return $path_coordinates;
+        return ResponseMod::success($path_coordinates);
     }
 
 

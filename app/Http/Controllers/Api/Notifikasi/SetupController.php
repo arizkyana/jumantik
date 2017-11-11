@@ -10,6 +10,7 @@ use App\NotificationHistory;
 use App\NotificationSetup;
 use App\Role;
 use App\User;
+use App\Utils\ResponseMod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -26,9 +27,9 @@ class SetupController extends Controller
             ->where('receiver', '=', $user->id)
             ->get();
 
-        return [
+        return ResponseMod::success([
             'receiver' => $user,
             'notifications' => $notifikasi
-        ];
+        ]);
     }
 }

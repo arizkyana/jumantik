@@ -7,6 +7,7 @@ use App\AreaKecamatan;
 use App\Http\Controllers\Controller;
 use App\Kecamatan;
 use App\Tindakan;
+use App\Utils\ResponseMod;
 use Illuminate\Http\Request;
 
 class TindakanController extends Controller
@@ -18,7 +19,7 @@ class TindakanController extends Controller
      */
     public function index()
     {
-        return Tindakan::all();
+        return ResponseMod::success(Tindakan::all());
     }
 
 

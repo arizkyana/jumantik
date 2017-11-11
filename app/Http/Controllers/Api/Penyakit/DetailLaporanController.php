@@ -9,6 +9,7 @@ use App\Kelurahan;
 use App\Penyakit;
 use App\Puskesmas\Laporan;
 use App\Utils\Datatables;
+use App\Utils\ResponseMod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +32,7 @@ class DetailLaporanController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return ['message' => $validator->messages()->all()];
+            return ResponseMod::success($validator->messages()->all());
         }
 
         $pelapor = isset($request->auth_user) ? $request->auth_user->id : $request->input('pelapor');
@@ -61,16 +62,15 @@ class DetailLaporanController extends Controller
 
         $laporan->save();
 
-        return [
-            'message' => 'OK',
+        return ResponseMod::success([
             'detail_laporan' => $detail_laporan,
             'laporan' => $laporan
-        ];
+        ]);
     }
 
     public function show($id)
     {
-        return \App\Laporan::find($id);
+        return ResponseMod::success(\App\Laporan::find($id));
     }
 
     /**
@@ -122,7 +122,7 @@ class DetailLaporanController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return ['message' => $validator->messages()->all()];
+            return ResponseMod::failed($validator->messages()->all());
         }
 
         $approved_by = $request->auth_user->id;
@@ -146,9 +146,9 @@ class DetailLaporanController extends Controller
 
         $laporan->save();
 
-        return [
+        return ResponseMod::success([
             'laporan' => $laporan
-        ];
+        ]);
 
     }
 }

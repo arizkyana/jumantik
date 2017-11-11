@@ -6,6 +6,7 @@ use App\AreaKecamatan;
 use App\Http\Controllers\Controller;
 use App\Kecamatan;
 use App\Perkimtan;
+use App\Utils\ResponseMod;
 use Illuminate\Http\Request;
 
 class PerkimtanController extends Controller
@@ -17,7 +18,7 @@ class PerkimtanController extends Controller
      */
     public function index()
     {
-        return Perkimtan::all();
+        return ResponseMod::success(Perkimtan::all());
     }
 
 
