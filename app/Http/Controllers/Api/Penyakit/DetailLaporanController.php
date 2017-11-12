@@ -62,6 +62,16 @@ class DetailLaporanController extends Controller
 
         $laporan->save();
 
+        $laporan->onStoreDetail([
+            'pelapor' => $pelapor,
+            'body' => [
+                'keterangan' => $request->input('keterangan'),
+                'tindakan' => $request->input('tindakan'),
+                'status' => $request->input('status'),
+                'laporan' => $laporan->title,
+            ]
+        ]);
+
         return ResponseMod::success([
             'detail_laporan' => $detail_laporan,
             'laporan' => $laporan
@@ -119,6 +129,7 @@ class DetailLaporanController extends Controller
         $validator = Validator::make($request->all(), [
             'status' => 'required',
             'tindakan' => 'required',
+
         ]);
 
         if ($validator->fails()) {
@@ -137,7 +148,7 @@ class DetailLaporanController extends Controller
         $detail_laporan->approved_by = $approved_by;
         $detail_laporan->save();
 
-        $laporan = Laporan::find($detail_laporan->id_laporan);
+        $laporan = \App\Laporan::find($detail_laporan->id_laporan);
 
         $laporan->status = $status;
         $laporan->tindakan = $tindakan;
@@ -145,6 +156,15 @@ class DetailLaporanController extends Controller
         $laporan->approved_by = $approved_by;
 
         $laporan->save();
+
+        $laporan->onApproved([
+            'approved_by' => $approved_by,
+            'body' => [
+                'tindakan' => $request->input('tindakan'),
+                'status' => $request->input('status'),
+                'laporan' => $laporan->title,
+            ]
+        ]);
 
         return ResponseMod::success([
             'laporan' => $laporan

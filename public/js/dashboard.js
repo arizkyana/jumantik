@@ -129,7 +129,7 @@ window.dashboard = function () {
                 url: '/api/penyakit/laporan',
                 method: 'get'
             }).then(function (result) {
-                $.each(result.data, function (i, laporan) {
+                $.each(result, function (i, laporan) {
                     var latLng = new google.maps.LatLng(laporan.lat, laporan.lon);
                     var _laporan = new google.maps.Marker({
                         position: latLng,

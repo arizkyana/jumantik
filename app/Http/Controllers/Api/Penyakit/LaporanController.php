@@ -13,6 +13,7 @@ use App\Utils\ResponseMod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Validator;
 
 class LaporanController extends Controller
 {
@@ -32,7 +33,7 @@ class LaporanController extends Controller
         $validator = Validator::make($request->all(), [
             'jumlah_suspect' => 'required',
             'penyakit' => 'required',
-            'intensitas_jenitk' => 'required',
+            'intensitas_jentik' => 'required',
             'keterangan' => 'required',
             'tindakan' => 'required',
             'kecamatan' => 'required',
@@ -67,6 +68,19 @@ class LaporanController extends Controller
         $laporan->update_by = $pelapor;
 
         $laporan->save();
+
+        $laporan->onStore([
+            'pelapor' => $pelapor,
+            'body' => [
+                'keterangan' => $request->input('keterangan'),
+                'alamat' => $request->input('alamat'),
+                'lat' => $request->input('lat'),
+                'lon' => $request->input('lon'),
+                'kecamatan' => $request->input('kecamatan'),
+                'kelurahan' => $request->input('kelurahan')
+            ]
+        ]);
+
 
         return ResponseMod::success($laporan);
     }

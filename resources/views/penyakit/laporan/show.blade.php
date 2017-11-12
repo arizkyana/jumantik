@@ -148,7 +148,7 @@
                                     <div class="row">
                                         <label for="Status" class="col-md-4">Status</label>
                                         <div class="col-md-8">
-                                            {{ isset($laporan['status']->nama_status) ? $laporan['status']->nama_status : '-' }}
+                                            {{ isset($laporan['status']) ? $laporan['status'] : '-' }}
                                         </div>
                                     </div>
                                 </div>
@@ -205,7 +205,7 @@
                             <td>{{ $item->created_at }}</td>
                             <td>{{ $item->keterangan }}</td>
                             <td>{{ $item->tindakan }}</td>
-                            <td>{{ $item->status }}</td>
+                            <td>{{ \App\Status::alias($item->status) }}</td>
                             <td>
                                 <button type="button" onclick="openFoto(this)"
                                         data-foto="{{ str_replace('uploads//', '/', $item->foto) }}"

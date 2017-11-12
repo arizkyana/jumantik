@@ -96,7 +96,7 @@ class LaporanController extends Controller
         $laporan = Laporan::find($id);
         $penyakit = Penyakit::find($laporan->penyakit);
         $tindakan = Tindakan::find($laporan->tindakan);
-        $status = Status::find($laporan->status);
+        $status = Status::alias($laporan->status);
         $kecamatan = Kecamatan::where('kecamatan_id', $laporan->kecamatan)->first();
         $kelurahan = Kelurahan::where('kelurahan_id', $laporan->kelurahan)->first();
         $pelapor = User::find($laporan->pelapor);
@@ -104,11 +104,12 @@ class LaporanController extends Controller
         $detail_laporan = DetailLaporan::where('id_laporan', $id)->get();
 
         $detail_laporan = DB::table('detail_laporan')
-            ->select('detail_laporan.foto', 'status.nama_status as status', 'tindakan.nama_tindakan as tindakan', 'detail_laporan.created_at', 'detail_laporan.keterangan', 'detail_laporan.id')
-            ->leftJoin('status', 'detail_laporan.status', '=', 'status.id')
+            ->select('detail_laporan.status', 'detail_laporan.foto', 'tindakan.nama_tindakan as tindakan', 'detail_laporan.created_at', 'detail_laporan.keterangan', 'detail_laporan.id')
             ->leftJoin('tindakan', 'detail_laporan.tindakan', '=', 'tindakan.id')
             ->where('detail_laporan.id_laporan', '=', $id)
+            ->orderByDesc('detail_laporan.created_at')
             ->get();
+
 
         return view('penyakit/laporan/show')->with([
             'js' => 'penyakit/detail.js',
