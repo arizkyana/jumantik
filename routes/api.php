@@ -105,3 +105,8 @@ Route::get('/403', function () {
         'message' => 'unauthenticated'
     ];
 });
+
+
+Route::post('/test_fcm', function(Request $request){
+   return 'ini test fcm';
+});

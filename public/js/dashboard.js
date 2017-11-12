@@ -129,7 +129,7 @@ window.dashboard = function () {
                 url: '/api/penyakit/laporan',
                 method: 'get'
             }).then(function (result) {
-                $.each(result, function (i, laporan) {
+                $.each(result.data, function (i, laporan) {
                     var latLng = new google.maps.LatLng(laporan.lat, laporan.lon);
                     var _laporan = new google.maps.Marker({
                         position: latLng,
@@ -163,7 +163,7 @@ window.dashboard = function () {
                 method: 'get'
             }).then(function (result) {
 
-                $.each(result, function (i, apartment) {
+                $.each(result.data, function (i, apartment) {
                     var latLng = new google.maps.LatLng(Number(apartment.latitude), Number(apartment.longitude));
                     var _apartment = new google.maps.Marker({
                         position: latLng,
@@ -197,7 +197,7 @@ window.dashboard = function () {
                 method: 'get'
             }).then(function (result) {
 
-                $.each(result, function (i, perumahan) {
+                $.each(result.data, function (i, perumahan) {
                     var latLng = new google.maps.LatLng(Number(perumahan.latitude), Number(perumahan.longitude));
                     var _perumahan = new google.maps.Marker({
                         position: latLng,
@@ -231,7 +231,7 @@ window.dashboard = function () {
                 method: 'get'
             }).then(function (result) {
 
-                $.each(result, function (i, faskes) {
+                $.each(result.data, function (i, faskes) {
                     var latLng = new google.maps.LatLng(Number(faskes.latitude), Number(faskes.longitude));
                     var _faskes = new google.maps.Marker({
                         position: latLng,
@@ -264,7 +264,7 @@ window.dashboard = function () {
                 method: 'get'
             }).then(function (result) {
 
-                $.each(result, function (i, perkimtan) {
+                $.each(result.data, function (i, perkimtan) {
 
                     var latLng = new google.maps.LatLng(Number(perkimtan.latitude), Number(perkimtan.longitude));
 
@@ -297,7 +297,7 @@ window.dashboard = function () {
                 method: 'get'
             }).then(function (result) {
 
-                $.each(result, function (i, sekolah) {
+                $.each(result.data, function (i, sekolah) {
                     var latLng = new google.maps.LatLng(Number(sekolah.latitude), Number(sekolah.longitude));
                     var _sekolah = new google.maps.Marker({
                         position: latLng,

@@ -25,34 +25,45 @@ class FCM
         $this->FCM_URL_LEGACY = Config::get('fcm.FCM_URL_LEGACY');
     }
 
-    public function send_messages(array $receivers, $title, $body){
+    public function send_messages(array $receivers, $title, $body)
+    {
 
-//        $body = json_encode([
-//            'registration_ids' => $receivers,
-//            'notification' => [
-//                'title' => $title,
-//                'body' => $body
-//            ]
-//        ]);
-//
-//
-//        $client = new Client([
-//            'base_uri' => $this->FCM_URL_LEGACY,
-//            'headers' => [
-//                'Authorization' => 'key=' . $this->FCM_SERVER_KEY,
-//                'Content-type' => 'application/json'
-//            ]
-//        ]);
-//
-//        $client->post('send', [
-//            'body' => $body
-//        ]);
+        $body = json_encode([
+            'registration_ids' => $receivers,
+            'notification' => [
+                'title' => $title,
+                'body' => $body
+            ]
+        ]);
 
-        $client = new \GuzzleHttp\Psr7\Request('POST', $this->FCM_URL_LEGACY);
-        $client->post('send', $body);
-        return json_encode((string) $client->getBody(), true);
 
-        return json_encode((string) $client->getBody(), true);
+        $fields = array(
+            'registration_ids' => $receivers,
+            'notification' => [
+                'title' => $title,
+                'icon' => 'jumantik'
+            ],
+            'data' => array(
+                "message" => $body
+            )
+        );
+        $fields = json_encode($fields);
+
+        $headers = array(
+            'Authorization: key=' . $this->FCM_SERVER_KEY,
+            'Content-Type: application/json'
+        );
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $this->FCM_URL_LEGACY . 'send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+
+        $result = curl_exec($ch);
+        curl_close($ch);
+        return $result;
     }
 
 

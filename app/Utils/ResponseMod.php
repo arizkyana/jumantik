@@ -29,4 +29,19 @@ class ResponseMod
         ];
     }
 
+    public function curl($url, $method, $headers, $body = "", $port = 8081)
+    {
+        $data = $body;
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $result = curl_exec($ch);
+
+        return $result;
+    }
+
 }

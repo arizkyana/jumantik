@@ -80,7 +80,7 @@ module.exports = __webpack_require__(57);
 
 var _dataTable;
 var table, kecamatan;
-window.dinkes = function () {
+window.notifikasi = function () {
 
     function init() {
         initTable();
@@ -88,12 +88,12 @@ window.dinkes = function () {
 
     function initTable() {
         table = {
-            el: $("#table-dinkes"),
+            el: $("#table-setup"),
             evt: {},
             init: function init() {
                 var self = this;
 
-                self.el.DataTable();
+                _dataTable = self.el.DataTable();
             }
         };
 
@@ -106,7 +106,7 @@ window.dinkes = function () {
 }();
 
 $(document).ready(function () {
-    window.dinkes.init();
+    window.notifikasi.init();
 });
 
 /***/ }),
