@@ -416,9 +416,12 @@ window.dashboard = function () {
     function addMarker(markers) {
 
         $.each(markers, function (i, marker) {
-            console.log(marker);
+            console.log(marker); //
             marker.setMap(map);
         });
+
+        // Add a marker clusterer to manage the markers.
+        new MarkerClusterer(map, markers, { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' });
     }
 
     function clearMarker(markers) {

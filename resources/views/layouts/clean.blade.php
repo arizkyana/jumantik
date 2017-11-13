@@ -144,6 +144,8 @@
 
 {{--gmaps required--}}
 @if (isset($gmaps) && $gmaps)
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+    </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACK1BU_M2kIo8xohz0dx5RjNOqDwwUKSE" async
             defer></script>
 @endif
