@@ -51,7 +51,7 @@
                             </a>
 
                             <form id="delete-{{$petugas->id}}"
-                                  action="{{ action('Master\petugasController@destroy', ['id' => $petugas->id]) }}"
+                                  action="{{ action('Master\PetugasController@destroy', ['id' => $petugas->id]) }}"
                                   method="POST"
                                   style="display: none;">
                                 {{ csrf_field() }}

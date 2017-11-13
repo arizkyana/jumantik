@@ -186,7 +186,7 @@ class RoleController extends MyController
         $role = Role::find($id);
         $role->delete();
 
-        return redirect('role')->with('success', 'Berhasil Hapus Role ' . $id);
+        return redirect('setting/role')->with('success', 'Berhasil Hapus Role ' . $id);
     }
 
     private function build_tree_role_menu($elements, $parentId = 0)

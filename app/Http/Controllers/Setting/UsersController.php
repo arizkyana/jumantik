@@ -216,7 +216,7 @@ class UsersController extends MyController
         $role = User::find($id);
         $role->delete();
 
-        return redirect('users')->with('success', 'Berhasil Hapus User ' . $id);
+        return redirect('setting/users')->with('success', 'Berhasil Hapus User ' . $id);
     }
 
 
