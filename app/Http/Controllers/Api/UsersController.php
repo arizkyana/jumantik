@@ -8,6 +8,7 @@ use App\Menu;
 use App\Role;
 use App\RoleMenu;
 use App\User;
+use App\Utils\ResponseMod;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,11 +31,12 @@ class UsersController extends Controller
 
         $validator = Validator::make($request->all(), [
             'password' => 'required|min:5, max:16',
-            'nik' => 'required'
+            'nik' => 'required',
+            'fcm_token' => 'required'
         ]);
 
         if ($validator->fails()) {
-            return $validator->messages()->all();
+            return ResponseMod::failed($validator->messages()->all());
         }
 
         $user = User::where('nik', $request->input('nik'))->first();
@@ -52,11 +54,15 @@ class UsersController extends Controller
 
             Log::info('Success Login ' . $apiClient->user_id);
 
+            $user->fcm_token = $request->input('fcm_token');
+            $user->save();
+
             $user->secret = $apiClient->secret;
+            Auth::user()->fcm_token = $user->fcm_token;
             Auth::user()->secret = $apiClient->secret;
             Auth::user()->role = $role;
 
-            return Auth::user();
+            return ResponseMod::success(Auth::user());
 
         }
 
@@ -72,11 +78,12 @@ class UsersController extends Controller
             'role' => 'required',
             'password' => 'required|min:8',
             'confirm_password' => 'required|min:8|same:password',
-            'nik' => 'required'
+            'nik' => 'required',
+            'fcm_token' => 'required'
         ]);
 
         if ($validator->fails()) {
-            return ['message' => $validator->messages()->all()];
+            return ResponseMod::failed($validator->messages()->all());
         }
 
         $user = new User();
@@ -105,7 +112,7 @@ class UsersController extends Controller
 
         $user->secret = $_api->secret;
         $user->role = Role::find($user->role_id);
-        return $user;
+        return ResponseMod::success($user);
 
 
     }
@@ -113,16 +120,21 @@ class UsersController extends Controller
     public function logout()
     {
         Auth::logout();
-        return ['message' => 'you logged out'];
+        return ResponseMod::success('you logged out');
     }
 
-    public function roles(){
-        return DB::table('role')
-            ->whereNotIn('id', [1,2,3])
+    public function roles()
+    {
+
+        $role = DB::table('role')
+            ->whereNotIn('id', [1, 2, 3])
             ->get();
+
+        return ResponseMod::success($role);
     }
 
-    public function forgot(Request $request){
+    public function forgot(Request $request)
+    {
         $email = $request->input('email');
 
         $validator = Validator::make($request->all(), [
@@ -130,7 +142,7 @@ class UsersController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return ['message' => $validator->messages()->all()];
+            return ResponseMod::failed($validator->messages()->all());
         }
 
         $user = User::where('email', $email)->first();
@@ -142,14 +154,15 @@ class UsersController extends Controller
 
         $updated_user->save();
 
-        return [
+        return ResponseMod::success([
             'user' => $user,
             'new_password' => $new_password
-        ];
+        ]);
 
     }
 
-    public function reset_password(Request $request){
+    public function reset_password(Request $request)
+    {
 
         $validator = Validator::make($request->all(), [
             'old_password' => 'required|min:5',
@@ -159,7 +172,7 @@ class UsersController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return ['message' => $validator->messages()->all()];
+            return ResponseMod::failed($validator->messages()->all());
         }
 
         $user = User::where('email', $request->email)->first();
@@ -167,16 +180,15 @@ class UsersController extends Controller
         $updated_user = User::find($user->id);
 
 
-
         $new_password = $request->input('new_password');
         $updated_user->password = bcrypt($new_password);
 
         $updated_user->save();
 
-        return [
+        return ResponseMod::success([
             'message' => 'Success Update New Password',
             'user' => $user
-        ];
+        ]);
 
     }
 }

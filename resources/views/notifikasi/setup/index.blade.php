@@ -22,7 +22,7 @@
         </div>
         <div class="ibox-content ">
 
-            <table id="table-dinkes" class="table table-condensed table-striped table-hover">
+            <table id="table-setup" class="table table-condensed table-striped table-hover">
                 <thead>
                 <tr>
                     <th>No</th>

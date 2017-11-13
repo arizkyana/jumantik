@@ -245,10 +245,14 @@ class SetupController extends Controller
 
 
         // send notification
-//        $fcm = new FCM();
-//
-//        return $fcm->send_messages($registration_ids, $setup->title, $setup->body);
+        $fcm = new FCM();
 
-        return redirect('notifikasi/setup')->with('success', 'Berhasil Kirim Notifikasi');
+        $sent = $fcm->send_messages($receivers, $setup->title, $setup->body);
+
+        Log::info($sent);
+
+        return redirect('notifikasi/'.$setup->id.'/show')->with('success', 'Berhasil Kirim Notifikasi!');
+
+
     }
 }

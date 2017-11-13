@@ -202,7 +202,7 @@
             </div>
             <div class="ibox-footer text-right">
                 <button type="submit" class="btn btn-primary">Simpan</button>
-                <a href="{{ route('master/dinkes') }}" class="btn btn-default">Batal</a>
+                <a href="{{ route('master/puskesmas') }}" class="btn btn-default">Batal</a>
             </div>
         </div>
     </form>

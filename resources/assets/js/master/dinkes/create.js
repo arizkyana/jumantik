@@ -25,7 +25,7 @@ var kecamatan,
                 }).then(function (result) {
                     kelurahan.el.select2().val(null).trigger('change');
                     kelurahan.el.empty();
-                    $.each(result, function (i, item) {
+                    $.each(result.data, function (i, item) {
 
                         let options = "<option value='" + item.kelurahan_id + "'>" + item.nama_kelurahan + "</option>";
                         kelurahan.el.append(options)

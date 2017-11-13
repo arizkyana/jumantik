@@ -99,6 +99,7 @@ var _dataTable = {};
                     url: base_url + '/api/penyakit/laporan/ajax_laporan',
                     method: 'post'
                 },
+                order: [[0, 'desc']],
                 createdRow: function createdRow(row, data) {
                     var text = "";
                     var bg = "";

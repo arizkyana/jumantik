@@ -9,6 +9,7 @@ use App\Kelurahan;
 use App\Penyakit;
 use App\Puskesmas\Laporan;
 use App\Utils\Datatables;
+use App\Utils\ResponseMod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +32,7 @@ class DetailLaporanController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return ['message' => $validator->messages()->all()];
+            return ResponseMod::success($validator->messages()->all());
         }
 
         $pelapor = isset($request->auth_user) ? $request->auth_user->id : $request->input('pelapor');
@@ -61,16 +62,25 @@ class DetailLaporanController extends Controller
 
         $laporan->save();
 
-        return [
-            'message' => 'OK',
+        $laporan->onStoreDetail([
+            'pelapor' => $pelapor,
+            'body' => [
+                'keterangan' => $request->input('keterangan'),
+                'tindakan' => $request->input('tindakan'),
+                'status' => $request->input('status'),
+                'laporan' => $laporan->title,
+            ]
+        ]);
+
+        return ResponseMod::success([
             'detail_laporan' => $detail_laporan,
             'laporan' => $laporan
-        ];
+        ]);
     }
 
     public function show($id)
     {
-        return \App\Laporan::find($id);
+        return ResponseMod::success(\App\Laporan::find($id));
     }
 
     /**
@@ -119,10 +129,11 @@ class DetailLaporanController extends Controller
         $validator = Validator::make($request->all(), [
             'status' => 'required',
             'tindakan' => 'required',
+
         ]);
 
         if ($validator->fails()) {
-            return ['message' => $validator->messages()->all()];
+            return ResponseMod::failed($validator->messages()->all());
         }
 
         $approved_by = $request->auth_user->id;
@@ -137,7 +148,7 @@ class DetailLaporanController extends Controller
         $detail_laporan->approved_by = $approved_by;
         $detail_laporan->save();
 
-        $laporan = Laporan::find($detail_laporan->id_laporan);
+        $laporan = \App\Laporan::find($detail_laporan->id_laporan);
 
         $laporan->status = $status;
         $laporan->tindakan = $tindakan;
@@ -146,9 +157,18 @@ class DetailLaporanController extends Controller
 
         $laporan->save();
 
-        return [
+        $laporan->onApproved([
+            'approved_by' => $approved_by,
+            'body' => [
+                'tindakan' => $request->input('tindakan'),
+                'status' => $request->input('status'),
+                'laporan' => $laporan->title,
+            ]
+        ]);
+
+        return ResponseMod::success([
             'laporan' => $laporan
-        ];
+        ]);
 
     }
 }

@@ -6,6 +6,7 @@ use App\Apartment;
 use App\AreaKecamatan;
 use App\Http\Controllers\Controller;
 use App\Kecamatan;
+use App\Utils\ResponseMod;
 use Illuminate\Http\Request;
 
 class ApartementController extends Controller
@@ -17,7 +18,7 @@ class ApartementController extends Controller
      */
     public function index()
     {
-        return Apartment::all();
+        return ResponseMod::success(Apartment::all());
     }
 
 

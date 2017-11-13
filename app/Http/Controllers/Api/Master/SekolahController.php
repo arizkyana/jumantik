@@ -6,6 +6,7 @@ use App\AreaKecamatan;
 use App\Http\Controllers\Controller;
 use App\Kecamatan;
 use App\Sekolah;
+use App\Utils\ResponseMod;
 use Illuminate\Http\Request;
 
 class SekolahController extends Controller
@@ -17,7 +18,7 @@ class SekolahController extends Controller
      */
     public function index()
     {
-        return Sekolah::all();
+        return ResponseMod::success(Sekolah::all());
     }
 
 

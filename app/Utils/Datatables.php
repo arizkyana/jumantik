@@ -63,7 +63,6 @@ class Datatables
 
         return $data;
 
-
     }
 
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Kecamatan;
 use App\Kelurahan;
+use App\Utils\ResponseMod;
 use Illuminate\Http\Request;
 
 class KelurahanController extends Controller
@@ -16,7 +17,7 @@ class KelurahanController extends Controller
      */
     public function index()
     {
-        return Kelurahan::where('is_active', TRUE)->get();
+        return ResponseMod::success(Kelurahan::where('is_active', TRUE)->get());
     }
 
     /**
@@ -53,10 +54,10 @@ class KelurahanController extends Controller
 
     public function get_by_kecamatan($kecamatan_id){
 
-        return Kelurahan::where([
+        return ResponseMod::success(Kelurahan::where([
             'kecamatan_id'=> $kecamatan_id,
             'is_active' => TRUE
-        ])->get();
+        ])->get());
     }
 
     /**

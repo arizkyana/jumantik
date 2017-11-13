@@ -7,6 +7,7 @@ use App\AreaKecamatan;
 use App\Http\Controllers\Controller;
 use App\Kecamatan;
 use App\Perumahan;
+use App\Utils\ResponseMod;
 use Illuminate\Http\Request;
 
 class PerumahanController extends Controller
@@ -18,7 +19,7 @@ class PerumahanController extends Controller
      */
     public function index()
     {
-        return Perumahan::all();
+        return ResponseMod::success(Perumahan::all());
     }
 
 
