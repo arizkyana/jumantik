@@ -101,6 +101,13 @@ Route::namespace('Master')->group(function () {
             Route::get('/{dinkes}/edit', 'PetugasController@edit')->name('master/petugas/edit')->middleware('can:master-petugas-edit');
         });
 
+        Route::prefix('ketua_warga')->group(function () {
+            Route::resource('ketuawarga', 'KetuaWargaController');
+            Route::get('/', 'KetuaWargaController@index')->name('master/ketua_warga')->middleware('can:master-ketua_warga');
+            Route::get('/create', 'KetuaWargaController@create')->name('master/ketua_warga/create')->middleware('can:master-ketua_warga-create');
+            Route::get('/{ketua_warga}/edit', 'KetuaWargaController@edit')->name('master/ketua_warga/edit')->middleware('can:master-ketua_warga-edit');
+        });
+
 
     });
 });

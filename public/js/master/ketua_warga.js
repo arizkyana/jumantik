@@ -60,27 +60,26 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 57);
+/******/ 	return __webpack_require__(__webpack_require__.s = 54);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 57:
+/***/ 54:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(58);
-__webpack_require__(59);
-module.exports = __webpack_require__(60);
+__webpack_require__(55);
+module.exports = __webpack_require__(56);
 
 
 /***/ }),
 
-/***/ 58:
+/***/ 55:
 /***/ (function(module, exports) {
 
 var _dataTable;
 var table, kecamatan;
-window.notifikasi = function () {
+window.dinkes = function () {
 
     function init() {
         initTable();
@@ -88,12 +87,12 @@ window.notifikasi = function () {
 
     function initTable() {
         table = {
-            el: $("#table-setup"),
+            el: $("#table-dinkes"),
             evt: {},
             init: function init() {
                 var self = this;
 
-                _dataTable = self.el.DataTable();
+                self.el.DataTable();
             }
         };
 
@@ -106,15 +105,21 @@ window.notifikasi = function () {
 }();
 
 $(document).ready(function () {
-    window.notifikasi.init();
+    window.dinkes.init();
 });
 
 /***/ }),
 
-/***/ 59:
+/***/ 56:
 /***/ (function(module, exports) {
 
-var kecamatan, kelurahan, role;
+var kecamatan,
+    kelurahan,
+    role,
+    masaBakti = {
+    mulai: {},
+    akhir: {}
+};
 (function () {
 
     kelurahan = {
@@ -139,7 +144,7 @@ var kecamatan, kelurahan, role;
                 }).then(function (result) {
                     kelurahan.el.select2().val(null).trigger('change');
                     kelurahan.el.empty();
-                    $.each(result, function (i, item) {
+                    $.each(result.data, function (i, item) {
 
                         var options = "<option value='" + item.kelurahan_id + "'>" + item.nama_kelurahan + "</option>";
                         kelurahan.el.append(options);
@@ -163,46 +168,34 @@ var kecamatan, kelurahan, role;
         }
     };
 
+    masaBakti.mulai = {
+        el: $("#masa_bakti_mulai"),
+        evt: {},
+        init: function init() {
+            var self = this;
+            self.el.datepicker({
+                autoclose: true
+            });
+        }
+    };
+
+    masaBakti.akhir = {
+        el: $("#masa_bakti_akhir"),
+        evt: {},
+        init: function init() {
+            var self = this;
+            self.el.datepicker({
+                autoclose: true
+            });
+        }
+    };
+
     kelurahan.init();
     kecamatan.init();
+    masaBakti.mulai.init();
+    masaBakti.akhir.init();
     role.init();
 })();
-
-/***/ }),
-
-/***/ 60:
-/***/ (function(module, exports) {
-
-var _dataTable;
-var table, kecamatan;
-window.dinkes = function () {
-
-    function init() {
-        initTable();
-    }
-
-    function initTable() {
-        table = {
-            el: $("#table-users"),
-            evt: {},
-            init: function init() {
-                var self = this;
-
-                self.el.DataTable();
-            }
-        };
-
-        table.init();
-    }
-
-    return {
-        init: init
-    };
-}();
-
-$(document).ready(function () {
-    window.dinkes.init();
-});
 
 /***/ })
 

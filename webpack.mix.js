@@ -94,6 +94,11 @@ mix
         'resources/assets/js/master/petugas/create.js'
     ], 'public/js/master/petugas.js')
 
+    .js([
+        'resources/assets/js/master/ketua_warga/index.js',
+        'resources/assets/js/master/ketua_warga/create.js'
+    ], 'public/js/master/ketua_warga.js')
+
 
     .js([
         'resources/assets/js/notification/setup/index.js',
