@@ -8,6 +8,7 @@ var markers = {
     sekolah: [],
     perumahan: []
 };
+var cluster;
 
 window.dashboard = (function () {
 
@@ -361,19 +362,23 @@ window.dashboard = (function () {
     function addMarker(markers){
 
         $.each(markers, function(i, marker){
-            console.log(marker);//
+
             marker.setMap(map);
         });
 
         // Add a marker clusterer to manage the markers.
-        new MarkerClusterer(map, markers,
-            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+        // cluster = new MarkerClusterer(map, markers,
+        //     {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
     }
 
     function clearMarker(markers){
+        console.log("masuk clear marker");
         $.each(markers, function(i, marker){
             marker.setMap(null);
         });
+
+        // cluster.setMap(null);
+        // cluster.clearMarkers();
     }
 
     return {

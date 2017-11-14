@@ -55,6 +55,50 @@ class Laporan extends Model
         Log::info($sent);
     }
 
+    public function onUpdate($notify){
+        /*
+         * Setelah simpan laporan via api, kirim notifikasi ke puskesmas
+         */
+
+        $notifikasi = new NotificationSetup();
+        $notifikasi->title = 'Update Laporan Jentik!';
+        $notifikasi->body = $notify['body']['keterangan'] . ' ' . $notify['body']['alamat'] . ' ' . $notify['body']['kecamatan'] . ' ' . $notify['body']['kelurahan'];
+        $notifikasi->type = 2;
+        $notifikasi->created_by = $notify['pelapor'];
+        $notifikasi->is_visible = true;
+
+        $notifikasi->save();
+
+        $users = DB::table('users')
+            ->select('users.fcm_token', 'users.id')
+            ->leftJoin('role', 'users.role_id', '=', 'role.id')
+            ->where('role.name', '=', 'jumantik')
+            ->orWhere('role.name', '=', 'puskesmas')
+            ->orWhere('role.name', '=', 'rs')
+            ->get();
+
+        $receivers = [];
+        foreach ($users as $user){
+
+            $notifikasi_history = new NotificationHistory();
+
+            $notifikasi_history->id_notification_setup = $notifikasi->id;
+            $notifikasi_history->status = 1;
+            $notifikasi_history->receiver = $user->id;
+            $notifikasi_history->is_visible = true;
+            $notifikasi_history->save();
+
+            array_push($receivers, $user->fcm_token);
+
+        }
+
+        $fcm = new FCM();
+
+        $sent = $fcm->send_messages($receivers, $notifikasi->title, $notifikasi->body);
+
+        Log::info($sent);
+    }
+
     public function onStoreDetail($notify){
         /*
          * Setelah simpan laporan via api, kirim notifikasi ke puskesmas

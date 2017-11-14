@@ -50,6 +50,8 @@ Route::prefix('penyakit')->middleware('simple.token')->group(function () {
         Route::get('/show/{laporan}', 'Api\Penyakit\LaporanController@show');
         Route::post('/ajax_laporan', 'Api\Penyakit\LaporanController@ajax_laporan');
         Route::get('/delete/{laporan}', 'Api\Penyakit\LaporanController@delete');
+        Route::put('/edit/{laporan}', 'Api\Penyakit\LaporanController@edit');
+
     });
 
     Route::prefix('detail_laporan')->group(function(){

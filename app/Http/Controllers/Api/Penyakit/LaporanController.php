@@ -85,6 +85,66 @@ class LaporanController extends Controller
         return ResponseMod::success($laporan);
     }
 
+    public function edit(Request $request, \App\Laporan $laporan)
+    {
+
+
+
+        $validator = Validator::make($request->all(), [
+            'jumlah_suspect' => 'required',
+            'penyakit' => 'required',
+            'intensitas_jentik' => 'required',
+            'keterangan' => 'required',
+            'tindakan' => 'required',
+            'kecamatan' => 'required',
+            'kelurahan' => 'required',
+            'lat' => 'required',
+            'lon' => 'required',
+            'alamat' => 'required',
+            'is_pekdrs' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return ResponseMod::failed($validator->messages()->all());
+        }
+
+        $pelapor = isset($request->auth_user) ? $request->auth_user->id : $request->input('pelapor');
+
+
+
+        $laporan->pelapor = $pelapor;
+        $laporan->jumlah_suspect = $request->input('jumlah_suspect');
+        $laporan->penyakit = $request->input('penyakit'); // demam berdarah
+        $laporan->intensitas_jentik = $request->input('intensitas_jentik');
+        $laporan->keterangan = $request->input('keterangan');
+        $laporan->tindakan = $request->input('tindakan'); // Evakuasi
+        $laporan->kecamatan = $request->input('kecamatan');
+        $laporan->kelurahan = $request->input('kelurahan');
+        $laporan->lat = $request->input('lat');
+        $laporan->lon = $request->input('lon');
+        $laporan->alamat = $request->input('alamat');
+        $laporan->status = $request->input('status'); // Open
+        $laporan->is_pekdrs = $request->input('is_pekdrs');
+        $laporan->update_by = $pelapor;
+
+        $laporan->save();
+
+        $laporan->onUpdate([
+            'pelapor' => $pelapor,
+            'body' => [
+                'keterangan' => $request->input('keterangan'),
+                'alamat' => $request->input('alamat'),
+                'lat' => $request->input('lat'),
+                'lon' => $request->input('lon'),
+                'kecamatan' => $request->input('kecamatan'),
+                'kelurahan' => $request->input('kelurahan')
+            ]
+        ]);
+
+
+        return ResponseMod::success($laporan);
+    }
+
     public function show($id)
     {
         $laporan = \App\Laporan::find($id);
