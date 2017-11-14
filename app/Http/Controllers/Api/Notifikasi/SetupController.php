@@ -22,7 +22,7 @@ class SetupController extends Controller
         $user = $request->auth_user;
 
         $notifikasi = DB::table('notification_history')
-            ->select('notification_history.status', 'notification_history.created_at', 'notification_setup.title', 'notification_setup.body')
+            ->select('notification_history.status', 'notification_history.created_at', 'notification_setup.title', 'notification_setup.body', 'notification_history.id_laporan')
             ->leftJoin('notification_setup', 'notification_history.id_notification_setup', '=', 'notification_setup.id')
             ->where('receiver', '=', $user->id)
             ->get();
