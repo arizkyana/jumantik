@@ -61,6 +61,7 @@ class Laporan extends Model
             $notifikasi_history->id_notification_setup = $notifikasi->id;
             $notifikasi_history->status = 1;
             $notifikasi_history->receiver = $user->id;
+            $notifikasi_history->id_laporan = $notify['laporan'];
             $notifikasi_history->is_visible = true;
             $notifikasi_history->save();
 
@@ -106,6 +107,7 @@ class Laporan extends Model
             $notifikasi_history->id_notification_setup = $notifikasi->id;
             $notifikasi_history->status = 1;
             $notifikasi_history->receiver = $user->id;
+            $notifikasi_history->id_laporan = $notify['laporan'];
             $notifikasi_history->is_visible = true;
             $notifikasi_history->save();
 
@@ -152,6 +154,7 @@ class Laporan extends Model
             $notifikasi_history->id_notification_setup = $notifikasi->id;
             $notifikasi_history->status = 1;
             $notifikasi_history->receiver = $user->id;
+            $notifikasi_history->id_laporan = $notify['laporan'];
             $notifikasi_history->is_visible = true;
             $notifikasi_history->save();
 

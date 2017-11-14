@@ -64,6 +64,7 @@ class DetailLaporanController extends Controller
 
         $laporan->onStoreDetail([
             'pelapor' => $pelapor,
+            'laporan' => $request->input('id_laporan'),
             'body' => [
                 'keterangan' => $request->input('keterangan'),
                 'tindakan' => $request->input('tindakan'),

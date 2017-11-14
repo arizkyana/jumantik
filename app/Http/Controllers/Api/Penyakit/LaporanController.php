@@ -71,6 +71,7 @@ class LaporanController extends Controller
 
         $laporan->onStore([
             'pelapor' => $pelapor,
+            'laporan' => $laporan->id,
             'body' => [
                 'keterangan' => $request->input('keterangan'),
                 'alamat' => $request->input('alamat'),
@@ -131,6 +132,7 @@ class LaporanController extends Controller
 
         $laporan->onUpdate([
             'pelapor' => $pelapor,
+            'laporan' => $laporan->id,
             'body' => [
                 'keterangan' => $request->input('keterangan'),
                 'alamat' => $request->input('alamat'),
