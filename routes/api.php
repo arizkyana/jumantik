@@ -41,6 +41,12 @@ Route::prefix('kecamatan')->middleware('simple.token')->group(function () {
     Route::get('/area', 'Api\KecamatanController@area_kecamatan');
 });
 
+// Jadwal
+Route::prefix('jadwal')->middleware('simple.token')->group(function(){
+    Route::get('/', 'Api\JadwalController@index');
+    Route::get('/wilayah/{user}', 'Api\JadwalController@wilayah');
+});
+
 // Laporan
 Route::prefix('penyakit')->middleware('simple.token')->group(function () {
     Route::prefix('laporan')->group(function(){

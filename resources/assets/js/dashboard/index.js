@@ -390,4 +390,10 @@ window.dashboard = (function () {
 $(document).ready(function () {
     window.dashboard.init();
 
+    $("input[name=bulan]").datepicker({
+        format: "yyyy-mm",
+        startView: "months",
+        minViewMode: "months",
+        autoclose: true
+    });
 });

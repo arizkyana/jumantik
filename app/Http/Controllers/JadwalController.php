@@ -75,6 +75,8 @@ class JadwalController extends Controller
             ->select('users.*')
             ->leftJoin('role', 'users.role_id', '=', 'role.id')
             ->where('role.name', 'like', '%puskesmas%')
+            ->orWhere('role.name', 'like', '%dinkes%')
+            ->orWhere('role.name', 'like', '%rs%')
             ->get();
 
         return view('jadwal/create')
@@ -103,6 +105,9 @@ class JadwalController extends Controller
             'supervisor' => 'required',
             'title' => 'required|unique:jadwal,title',
             'keterangan' => 'required',
+            'alamat' => 'required',
+            'kelurahan' => 'required',
+            'kecamatan' => 'required'
         ]);
 
 
@@ -122,6 +127,10 @@ class JadwalController extends Controller
         $jadwal->supervisor = $request->input('supervisor');
         $jadwal->title = $request->input('title');
         $jadwal->keterangan = $request->input('keterangan');
+
+        $jadwal->alamat = $request->input('alamat');
+        $jadwal->kecamatan = $request->input('kecamatan');
+        $jadwal->kelurahan = $request->input('kelurahan');
 
         $jadwal->is_visible = true;
         $jadwal->status = 1;
@@ -164,6 +173,8 @@ class JadwalController extends Controller
             ->select('users.*')
             ->leftJoin('role', 'users.role_id', '=', 'role.id')
             ->where('role.name', 'like', '%puskesmas%')
+            ->orWhere('role.name', 'like', '%dinkes%')
+            ->orWhere('role.name', 'like', '%rs%')
             ->get();
 
 
@@ -194,6 +205,9 @@ class JadwalController extends Controller
             'supervisor' => 'required',
             'title' => 'required|unique:jadwal,title',
             'keterangan' => 'required',
+            'alamat' => 'required',
+            'kelurahan' => 'required',
+            'kecamatan' => 'required'
 
         ]);
 
@@ -213,6 +227,10 @@ class JadwalController extends Controller
         $jadwal->supervisor = $request->input('supervisor');
         $jadwal->title = $request->input('title');
         $jadwal->keterangan = $request->input('keterangan');
+
+        $jadwal->alamat = $request->input('alamat');
+        $jadwal->kecamatan = $request->input('kecamatan');
+        $jadwal->kelurahan = $request->input('kelurahan');
 
         $jadwal->is_visible = true;
         $jadwal->status = 1;
@@ -240,4 +258,6 @@ class JadwalController extends Controller
 
         return redirect('jadwal')->with('success', 'Berhasil Hapus Jadwal ' . $jadwal->title);
     }
+
+
 }

@@ -122,6 +122,7 @@
 
 {{--Datatable--}}
 <script src="{{ asset('js/themes/plugins/dataTables/datatables.min.js') }}"></script>
+<script src="{{ asset('js/themes/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
 
 {{--select 2--}}
 <script src="{{ asset('js/themes/plugins/select2/select2.full.min.js')  }}"></script>

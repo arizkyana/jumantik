@@ -11,12 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home')->with([
-        'js' => 'dashboard.js',
-        'gmaps' => true
-    ]);
-});
+Route::get('/', 'HomeController@index');
 
 Auth::routes();
 
@@ -40,6 +35,7 @@ Route::resource('jadwal', 'JadwalController');
 Route::get('/jadwal', 'JadwalController@index')->name('jadwal')->middleware('can:jadwal');
 Route::get('/jadwal/create', 'JadwalController@create')->name('jadwal/create')->middleware('can:jadwal-create');
 Route::get('/jadwal/{jadwal}/edit', 'JadwalController@edit')->name('jadwal/edit')->middleware('can:jadwal-edit');
+//Route::get('/jadwal/wilayah/{users}', 'JadwalController@wilayah')->name('jadwal/wilayah')->middleware('can:jadwal-wilayah');
 
 
 // Penyakit
