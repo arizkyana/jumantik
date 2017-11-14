@@ -13,7 +13,8 @@ class Laporan extends Model
 
 
     // after store
-    public function onStore($notify){
+    public function onStore($notify)
+    {
         /*
          * Setelah simpan laporan via api, kirim notifikasi ke puskesmas
          */
@@ -27,14 +28,33 @@ class Laporan extends Model
 
         $notifikasi->save();
 
+
+        //sender
+        $sender = DB::table('users')
+            ->select('role.name')
+            ->leftJoin('role', 'users.role_id', '=', 'role.id')
+            ->where('users.id', '=', $notify['pelapor'])
+            ->first();
+
+        //receiver
         $users = DB::table('users')
             ->select('users.fcm_token', 'users.id')
-            ->leftJoin('role', 'users.role_id', '=', 'role.id')
-            ->where('role.name', '=', 'puskesmas')
-            ->get();
+            ->leftJoin('role', 'users.role_id', '=', 'role.id');
+
+        if ($sender->name == 'rs') {
+            $users->where('role.name', '=', 'jumantik')
+                ->orWhere('role.name', '=', 'puskesmas')
+                ->get();
+        } else if ($sender->name == 'warga' || $sender->name == 'ketua_warga'){
+            $users->where('role.name', '=', 'puskesmas')
+                ->get();
+        } else {
+            $users->get();
+        }
+
 
         $receivers = [];
-        foreach ($users as $user){
+        foreach ($users as $user) {
 
             $notifikasi_history = new NotificationHistory();
 
@@ -55,7 +75,8 @@ class Laporan extends Model
         Log::info($sent);
     }
 
-    public function onUpdate($notify){
+    public function onUpdate($notify)
+    {
         /*
          * Setelah simpan laporan via api, kirim notifikasi ke puskesmas
          */
@@ -78,7 +99,7 @@ class Laporan extends Model
             ->get();
 
         $receivers = [];
-        foreach ($users as $user){
+        foreach ($users as $user) {
 
             $notifikasi_history = new NotificationHistory();
 
@@ -99,7 +120,8 @@ class Laporan extends Model
         Log::info($sent);
     }
 
-    public function onStoreDetail($notify){
+    public function onStoreDetail($notify)
+    {
         /*
          * Setelah simpan laporan via api, kirim notifikasi ke puskesmas
          */
@@ -123,7 +145,7 @@ class Laporan extends Model
             ->get();
 
         $receivers = [];
-        foreach ($users as $user){
+        foreach ($users as $user) {
 
             $notifikasi_history = new NotificationHistory();
 
@@ -146,7 +168,8 @@ class Laporan extends Model
 
     }
 
-    public function onApproved($notify){
+    public function onApproved($notify)
+    {
         /*
          * Setelah simpan laporan via api, kirim notifikasi ke puskesmas
          */
@@ -171,7 +194,7 @@ class Laporan extends Model
             ->get();
 
         $receivers = [];
-        foreach ($users as $user){
+        foreach ($users as $user) {
 
             $notifikasi_history = new NotificationHistory();
 
