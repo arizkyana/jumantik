@@ -46,6 +46,7 @@ class DashboardController extends Controller
             'js' => 'dashboard.js',
             'title' => 'Dashboard',
             'gmaps' => true,
+            'chart' => true,
             'jadwal' => $jadwal
         ]);
     }

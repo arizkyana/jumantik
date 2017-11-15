@@ -114,8 +114,6 @@
 <!-- Sparkline demo data  -->
 <script src="{{ asset('js/themes/demo/sparkline-demo.js') }}"></script>
 
-<!-- ChartJS-->
-<script src="{{ asset('js/themes/plugins/chartJs/Chart.min.js') }}"></script>
 
 <!-- Toastr -->
 <script src="{{ asset('js/themes/plugins/toastr/toastr.min.js') }}"></script>
@@ -132,9 +130,7 @@
 <!-- Scripts -->
 
 
-{{--<script src="{{ mix('js/app.js') }}"></script>--}}
-
-
+<script src="{{ mix('js/app.js') }}"></script>
 
 {{--plugins themes js--}}
 @if (isset($plugins_js))

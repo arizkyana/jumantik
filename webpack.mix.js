@@ -15,6 +15,8 @@ let mix = require('laravel-mix');
 mix
 // themes assset js
 
+    .js(['resources/assets/js/app.js'], 'public/js')
+
     .js([
         'resources/assets/js/users/create.js',
         'resources/assets/js/users/edit.js',

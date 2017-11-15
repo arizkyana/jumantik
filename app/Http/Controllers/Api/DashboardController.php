@@ -3,34 +3,86 @@
 namespace App\Http\Controllers\Api;
 
 use App\AreaKecamatan;
+use App\Http\Controllers\Controller;
 use App\Kecamatan;
+use App\Laporan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function __construct()
+
+    public function jumantik(Request $request)
     {
-        $this->middleware('auth');
+
+        $bulan = $request->query('bulan');
+
+        $laporan_mapped = [];
+
+
+        if (isset($bulan) and !empty($bulan)) {
+            $month = date('m', strtotime($bulan));
+            $year = date('Y', strtotime($bulan));
+
+            $laporan = DB::table('laporan')
+                ->select(DB::raw('count(laporan.id) as jumlah, date(laporan.created_at) as created_at'))
+                ->where(DB::raw("MONTH(laporan.created_at) = '" . $month . "' AND YEAR(laporan.created_at) ='" . $year . "'"))
+                ->groupBy(DB::raw('date(laporan.created_at)'))
+                ->get();
+
+        } else {
+            $laporan = DB::table('laporan')
+                ->select(DB::raw('count(laporan.id) as jumlah, date(laporan.created_at) as created_at'))
+                ->groupBy(DB::raw('date(laporan.created_at)'))
+                ->get();
+        }
+
+
+        return $laporan;
+
     }
 
-    public function index(){
-        $this->authorize('dashboard');
-        return view('dashboard')->with([
-            'js' => 'dashboard.js',
-            'title' => 'Dashboard',
-            'gmaps' => true
-        ]);
-    }
+    public function penyakit_nyamuk_menular(Request $request)
+    {
 
-    public function get_all_kecamatan(){
-        return Kecamatan::where('is_active', TRUE)->get();
-    }
+        $bulan = $request->query('bulan');
 
-    public function get_area_by_kecamatan(Request $request){
-        $nama_kecamatan = $request->input('nama_kecamatan');
-        return AreaKecamatan::where('nama_kecamatan', $nama_kecamatan)->get();
-    }
+        if (isset($bulan) and !empty($bulan)) {
+            $month = date('m', strtotime($bulan));
+            $year = date('Y', strtotime($bulan));
 
+            $laporan = DB::table('laporan')
+                ->select(DB::raw('count(laporan.id) as jumlah, penyakit.nama_penyakit'))
+                ->leftJoin('penyakit', 'laporan.penyakit', '=', 'penyakit.id')
+                ->where(DB::raw("MONTH(laporan.created_at) = '" . $month . "' AND YEAR(laporan.created_at) ='" . $year . "'"))
+                ->groupBy(DB::raw('penyakit.nama_penyakit'))
+                ->get();
+
+        } else {
+            $laporan = DB::table('laporan')
+                ->select(DB::raw('count(laporan.id) as jumlah, penyakit.nama_penyakit'))
+                ->leftJoin('penyakit', 'laporan.penyakit', '=', 'penyakit.id')
+                ->groupBy(DB::raw('penyakit.nama_penyakit'))
+                ->get();
+        }
+
+
+        $laporan_mapped = [];
+        $total = 0;
+        foreach ($laporan as $item) {
+            $total += $item->jumlah;
+        }
+
+        foreach ($laporan as $item) {
+            array_push($laporan_mapped, [
+                'name' => $item->nama_penyakit,
+                'y' => ($item->jumlah / $total) * 100
+            ]);
+        }
+
+
+        return $laporan_mapped;
+    }
 
 
 }

@@ -60,21 +60,21 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 54);
+/******/ 	return __webpack_require__(__webpack_require__.s = 56);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 54:
+/***/ 56:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(55);
-module.exports = __webpack_require__(56);
+__webpack_require__(57);
+module.exports = __webpack_require__(58);
 
 
 /***/ }),
 
-/***/ 55:
+/***/ 57:
 /***/ (function(module, exports) {
 
 var _dataTable;
@@ -110,7 +110,7 @@ $(document).ready(function () {
 
 /***/ }),
 
-/***/ 56:
+/***/ 58:
 /***/ (function(module, exports) {
 
 var kecamatan,

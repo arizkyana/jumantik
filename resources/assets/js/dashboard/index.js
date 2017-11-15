@@ -154,7 +154,7 @@ window.dashboard = (function () {
 
     function loadFaskes(map, isShow) {
 
-        if(!isShow){
+        if (!isShow) {
             clearMarker(markers.faskes);
             markers.faskes = [];
         } else {
@@ -189,7 +189,7 @@ window.dashboard = (function () {
 
     function loadPerkimtan(map, isShow) {
 
-        if(!isShow){
+        if (!isShow) {
             clearMarker(markers.perkimtan);
             markers.perkimtan = [];
         } else {
@@ -226,7 +226,7 @@ window.dashboard = (function () {
     }
 
     function loadSekolah(map, isShow) {
-        if (!isShow){
+        if (!isShow) {
             clearMarker(markers.sekolah);
             markers.sekolah = [];
         } else {
@@ -359,9 +359,9 @@ window.dashboard = (function () {
         }
     }
 
-    function addMarker(markers){
+    function addMarker(markers) {
 
-        $.each(markers, function(i, marker){
+        $.each(markers, function (i, marker) {
 
             marker.setMap(map);
         });
@@ -371,9 +371,9 @@ window.dashboard = (function () {
         //     {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
     }
 
-    function clearMarker(markers){
+    function clearMarker(markers) {
         console.log("masuk clear marker");
-        $.each(markers, function(i, marker){
+        $.each(markers, function (i, marker) {
             marker.setMap(null);
         });
 
@@ -396,4 +396,179 @@ $(document).ready(function () {
         minViewMode: "months",
         autoclose: true
     });
+
+    Highcharts.setOptions({
+        chart: {
+            style: {
+                fontFamily: 'Open Sans'
+            }
+        }
+    });
+
+
+    loadChart();
+
+    $("#bulan").change(function(){
+        let _bulan = $(this).val();
+        loadChart();
+    })
+
 });
+
+function loadChart(){
+    loadStatistikJumantik()
+        .then(buildCartJumantik)
+        .then(loadStatistikPenyakitMenularNyamuk)
+        .then(buildChartPenyakitNyamukMenular)
+        .catch(logError);
+}
+
+function loadStatistikJumantik() {
+
+    let _promise = new Promise(function (resolve, reject) {
+        $.ajax({
+            url: base_url + '/api/dashboard/jumantik?' + $("#form-filter").serialize(),
+            method: 'get'
+        }).then(function (result) {
+            console.log(result);
+
+            let data = [];
+            $.each(result, function (i, o) {
+                let _date = {
+                    year: Number(moment(o.created_at, 'YYYY-MM-DD').format('YYYY')),
+                    month: Number(moment(o.created_at, 'YYYY-MM-DD').format('MM')),
+                    day: Number(moment(o.created_at, 'YYYY-MM-DD').format('DD'))
+                };
+                console.log(_date);
+                data.push([Date.UTC(Number(_date.year), Number(_date.month) - 1, Number(_date.day)) - 1, o.jumlah]);
+            });
+
+            resolve(data);
+
+        }, function (err) {
+            reject(err);
+        });
+    });
+
+    return _promise;
+
+
+}
+function buildCartJumantik(data) {
+    Highcharts.chart('ct-jumantik', {
+        credits: false,
+        chart: {
+            zoomType: 'x'
+        },
+        title: {
+            text: 'Laporan Jumantik'
+        },
+        // subtitle: {
+        //     text: document.ontouchstart === undefined ?
+        //         'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+        // },
+        xAxis: {
+            type: 'datetime'
+        },
+        yAxis: {
+            title: {
+                text: 'Jumlah Laporan'
+            }
+        },
+        legend: {
+            enabled: true
+        },
+        tooltip: {
+
+            xDateFormat: '%d/%m/%Y'
+
+        },
+        plotOptions: {
+            area: {
+                fillColor: {
+                    linearGradient: {
+                        x1: 0,
+                        y1: 0,
+                        x2: 0,
+                        y2: 1
+                    },
+                    stops: [
+                        [0, Highcharts.getOptions().colors[0]],
+                        [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                    ]
+                },
+                marker: {
+                    radius: 2
+                },
+                lineWidth: 1,
+                states: {
+                    hover: {
+                        lineWidth: 1
+                    }
+                },
+                threshold: null
+            }
+        },
+
+        series: [
+            {
+                type: 'area',
+                name: 'Laporan',
+                data: data
+            },
+
+        ]
+    });
+}
+
+function loadStatistikPenyakitMenularNyamuk() {
+
+    let _promise = new Promise(function (resolve, reject) {
+        $.ajax({
+            url: base_url + '/api/dashboard/penyakit_nyamuk_menular?' + $("#form-filter").serialize(),
+            method: 'get'
+        }).then(function (result) {
+            console.log(result);
+
+            resolve(result);
+        }, function (err) {
+            reject(err);
+        });
+    });
+
+    return _promise;
+
+
+}
+function buildChartPenyakitNyamukMenular(data) {
+    Highcharts.chart('ct-penyakit-menular-nyamuk', {
+        credits: false,
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Sebaran Penyakit Nyamuk Menular'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true
+            }
+        },
+        series: [{
+            name: 'Intensitas',
+            colorByPoint: true,
+            data: data
+        }]
+    });
+}

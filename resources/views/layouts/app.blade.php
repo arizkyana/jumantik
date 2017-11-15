@@ -32,7 +32,8 @@
                     <ul class="nav metismenu" id="side-menu">
                         <li class="nav-header">
                             <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" style="height: 48px; width: 48px;" src="{{ asset('images/logo-bekasi.jpg') }}"/>
+                            <img alt="image" class="img-circle" style="height: 48px; width: 48px;"
+                                 src="{{ asset('images/logo-bekasi.jpg') }}"/>
                              </span>
                                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong
@@ -165,9 +166,6 @@
         <script src="{{ asset('js/themes/plugins/sparkline/jquery.sparkline.min.js') }}"></script>
 
 
-        <!-- ChartJS-->
-        <script src="{{ asset('js/themes/plugins/chartJs/Chart.min.js') }}"></script>
-
         <!-- Toastr -->
         <script src="{{ asset('js/themes/plugins/toastr/toastr.min.js') }}"></script>
 
@@ -191,6 +189,9 @@
 
         {{--<script src="{{ mix('js/app.js') }}"></script>--}}
 
+
+        <script src="{{ mix('js/app.js') }}"></script>
+
         {{--plugins themes js--}}
         @if (isset($plugins_js))
             @foreach ($plugins_js as $js)
@@ -199,7 +200,7 @@
         @endif
 
         {{--gmaps required--}}
-        @if (isset($gmaps) && $gmaps)
+        @if (isset($gmaps) and $gmaps)
             <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
             </script>
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACK1BU_M2kIo8xohz0dx5RjNOqDwwUKSE" async
@@ -207,9 +208,12 @@
         @endif
 
         <script type="text/javascript">
-            var base_url = {!! json_encode(url('/')) !!}
+            var base_url =
+                    {!! json_encode(url('/')) !!}
 
-            var logError = (e) => {console.log(e);}
+            var logError = (e) => {
+                    console.log(e);
+                }
         </script>
 
         @if (isset($js))

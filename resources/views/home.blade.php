@@ -80,6 +80,42 @@
         <div class="col-lg-12">
             <div class="ibox">
                 <div class="ibox-title">
+                    <h5>Statistik Jumantik</h5>
+                    <div class="ibox-tools">
+                        <form class="form-inline" id="form-filter">
+                            <div class="form-group">
+
+
+                                <div class="input-group">
+                                   <span class="input-group-addon">
+                                       <i class="fa fa-calendar"></i>
+
+                                   </span>
+                                    <input name="bulan" id="bulan" class="form-control" placeholder="Pilih Bulan" />
+                                </div>
+
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div id="ct-jumantik" class="ct-perfect-fourth"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <div id="ct-penyakit-menular-nyamuk" class="ct-perfect-fourth"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="ibox">
+                <div class="ibox-title">
                     <h5>Jadwal Monitoring</h5>
                 </div>
                 <div class="ibox-content no-padding">
@@ -101,8 +137,10 @@
                             @foreach ($jadwal as $index => $item)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ date('d M Y', strtotime($item->mulai)) }} s/d {{ date('d M Y', strtotime($item->akhir)) }}</td>
-                                    <td>{{ $item->alamat }} , {{ $item->nama_kelurahan }} , {{ $item->nama_kecamatan }}</td>
+                                    <td>{{ date('d M Y', strtotime($item->mulai)) }}
+                                        s/d {{ date('d M Y', strtotime($item->akhir)) }}</td>
+                                    <td>{{ $item->alamat }} , {{ $item->nama_kelurahan }}
+                                        , {{ $item->nama_kecamatan }}</td>
                                     <td>{{ $item->pic }}</td>
                                 </tr>
                             @endforeach
@@ -112,44 +150,15 @@
                 </div>
                 <div class="ibox-footer">
                     <div class="text-right">
-                        <a href="{{ route('jadwal') }}" class="btn btn-sm btn-link">Lihat Jadwal <i class="fa fa-chevron-right"></i></a>
+                        <a href="{{ route('jadwal') }}" class="btn btn-sm btn-link">Lihat Jadwal <i
+                                    class="fa fa-chevron-right"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
 
-        <div class="col-lg-12">
-            <div class="ibox">
-                <div class="ibox-title">
-                    <h5>Statistik Jumantik</h5>
-                    <div class="ibox-tools">
-                        <form class="form-inline">
-                            <div class="form-group">
-
-
-                                <div class="input-group">
-                                   <span class="input-group-addon">
-                                       <i class="fa fa-calendar"></i>
-
-                                   </span>
-                                    <input name="bulan" id="bulan" class="form-control" placeholder="Pilih Bulan" />
-                                </div>
-
-
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="ibox-content">
-
-                </div>
-            </div>
-        </div>
-
-    </div>
 
 
 @endsection

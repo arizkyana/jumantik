@@ -47,6 +47,12 @@ Route::prefix('jadwal')->middleware('simple.token')->group(function(){
     Route::get('/wilayah/{user}', 'Api\JadwalController@wilayah');
 });
 
+// Dashboard
+Route::prefix('dashboard')->group(function(){
+   Route::get('/jumantik', 'Api\DashboardController@jumantik');
+   Route::get('/penyakit_nyamuk_menular', 'Api\DashboardController@penyakit_nyamuk_menular');
+});
+
 // Laporan
 Route::prefix('penyakit')->middleware('simple.token')->group(function () {
     Route::prefix('laporan')->group(function(){
