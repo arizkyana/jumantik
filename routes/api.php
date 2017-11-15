@@ -48,7 +48,7 @@ Route::prefix('jadwal')->middleware('simple.token')->group(function(){
 });
 
 // Dashboard
-Route::prefix('dashboard')->group(function(){
+Route::prefix('dashboard')->middleware('simple.token')->group(function(){
    Route::get('/jumantik', 'Api\DashboardController@jumantik');
    Route::get('/penyakit_nyamuk_menular', 'Api\DashboardController@penyakit_nyamuk_menular');
 });

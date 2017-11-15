@@ -26,7 +26,8 @@ class DashboardController extends Controller
 
             $laporan = DB::table('laporan')
                 ->select(DB::raw('count(laporan.id) as jumlah, date(laporan.created_at) as created_at'))
-                ->where(DB::raw("MONTH(laporan.created_at) = '" . $month . "' AND YEAR(laporan.created_at) ='" . $year . "'"))
+                ->where(DB::raw("MONTH(laporan.created_at)"), '=' , $month )
+                ->where(DB::raw("YEAR(laporan.created_at)"), '=' , $year )
                 ->groupBy(DB::raw('date(laporan.created_at)'))
                 ->get();
 
@@ -54,10 +55,13 @@ class DashboardController extends Controller
             $laporan = DB::table('laporan')
                 ->select(DB::raw('count(laporan.id) as jumlah, penyakit.nama_penyakit'))
                 ->leftJoin('penyakit', 'laporan.penyakit', '=', 'penyakit.id')
-                ->where(DB::raw("MONTH(laporan.created_at) = '" . $month . "' AND YEAR(laporan.created_at) ='" . $year . "'"))
-                ->groupBy(DB::raw('penyakit.nama_penyakit'))
+//                ->where("MONTH(laporan.created_at) = '?' AND YEAR(laporan.created_at) = '?' ")
+                ->where(DB::raw("MONTH(laporan.created_at)"), '=' , $month )
+                ->where(DB::raw("YEAR(laporan.created_at)"), '=' , $year )
+                ->groupBy('penyakit.nama_penyakit')
                 ->get();
 
+            return $laporan;
         } else {
             $laporan = DB::table('laporan')
                 ->select(DB::raw('count(laporan.id) as jumlah, penyakit.nama_penyakit'))
