@@ -41,7 +41,8 @@ class PuskesmasController extends Controller
 
         return view('master/puskesmas/index')->with([
             'js' => $this->js,
-            'puskesmas' => $puskesmas
+            'puskesmas' => $puskesmas,
+            'title' => 'Puskesmas'
         ]);
     }
 
@@ -59,7 +60,8 @@ class PuskesmasController extends Controller
             ->with([
                 'kecamatan' => $kecamatan,
                 'js' => $this->js,
-                'roles' => $roles
+                'roles' => $roles,
+                'title' => 'Daftar Petugas'
             ]);
     }
 
@@ -157,7 +159,8 @@ class PuskesmasController extends Controller
             'kecamatan' => $kecamatan,
             'roles' => $roles,
             'pic' => $pic,
-            'kelurahan' => $kelurahan
+            'kelurahan' => $kelurahan,
+            'title' => 'Edit Petugas'
         ]);
     }
 

@@ -42,7 +42,8 @@ class KetuaWargaController extends Controller
 
         return view('master/ketua_warga/index')->with([
             'js' => $this->js,
-            'ketua_warga' => $ketua_warga
+            'ketua_warga' => $ketua_warga,
+            'title' => 'Ketua Warga'
         ]);
     }
 
@@ -60,7 +61,8 @@ class KetuaWargaController extends Controller
             ->with([
                 'kecamatan' => $kecamatan,
                 'js' => $this->js,
-                'roles' => $roles
+                'roles' => $roles,
+                'title' => 'Daftar Ketua Warga'
             ]);
     }
 
@@ -88,7 +90,8 @@ class KetuaWargaController extends Controller
             'masa_bakti_mulai' => 'required',
             'masa_bakti_akhir' => 'required',
             'rt' => 'required',
-            'rw' => 'required'
+            'rw' => 'required',
+            'ketua' => 'required'
         ]);
 
 
@@ -109,6 +112,7 @@ class KetuaWargaController extends Controller
         $petugas->rw = $request->input('rw');
         $petugas->masa_bakti_mulai = date('Y-m-d', strtotime($request->input('masa_bakti_mulai')));
         $petugas->masa_bakti_akhir = date('Y-m-d', strtotime($request->input('masa_bakti_akhir')));
+        $petugas->ketua = $request->input('ketua');
 
         $petugas->is_visible = true;
 
@@ -166,7 +170,8 @@ class KetuaWargaController extends Controller
             'kecamatan' => $kecamatan,
             'roles' => $roles,
             'pic' => $pic,
-            'kelurahan' => $kelurahan
+            'kelurahan' => $kelurahan,
+            'title' => 'Edit Ketua Warga'
         ]);
     }
 
@@ -195,7 +200,8 @@ class KetuaWargaController extends Controller
             'masa_bakti_mulai' => 'required',
             'masa_bakti_akhir' => 'required',
             'rt' => 'required',
-            'rw' => 'required'
+            'rw' => 'required',
+            'ketua' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -214,6 +220,7 @@ class KetuaWargaController extends Controller
         $petugas->rw = $request->input('rw');
         $petugas->masa_bakti_mulai = date('Y-m-d', strtotime($request->input('masa_bakti_mulai')));
         $petugas->masa_bakti_akhir = date('Y-m-d', strtotime($request->input('masa_bakti_akhir')));
+        $petugas->ketua = $request->input('ketua');
 
         $petugas->is_visible = true;
 

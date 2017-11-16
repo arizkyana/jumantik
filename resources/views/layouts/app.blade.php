@@ -108,10 +108,10 @@
 
                         <ol class="breadcrumb">
                             <li>
-                                <a href="index.html">This is</a>
+                                <a href="{{ url('/') }}">Home</a>
                             </li>
                             <li class="active">
-                                <strong>Breadcrumb</strong>
+                                <strong>{{ isset($title) ? $title : config('app.name', 'Laravel') }}</strong>
                             </li>
                         </ol>
                     </div>
@@ -208,12 +208,11 @@
         @endif
 
         <script type="text/javascript">
-            var base_url =
-                    {!! json_encode(url('/')) !!}
+            var base_url = {!! json_encode(url('/')) !!};
 
             var logError = (e) => {
-                    console.log(e);
-                }
+                console.log(e);
+            };
         </script>
 
         @if (isset($js))

@@ -46,7 +46,8 @@ class HistoryController extends Controller
         return view('notifikasi/history/index')
             ->with([
                 'js' => $this->js,
-                'histories' => $histories
+                'histories' => $histories,
+                'title' => 'Riwayat Notifikasi'
             ]);
     }
 

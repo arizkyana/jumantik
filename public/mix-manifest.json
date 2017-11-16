@@ -1,4 +1,6 @@
 {
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
     "/js/users.js": "/js/users.js",
     "/js/notification/setup.js": "/js/notification/setup.js",
     "/js/apiClient.js": "/js/apiClient.js",
@@ -11,7 +13,6 @@
     "/js/master/dinkes.js": "/js/master/dinkes.js",
     "/js/jumantik/laporan.js": "/js/jumantik/laporan.js",
     "/js/jadwal.js": "/js/jadwal.js",
-    "/js/app.js": "/js/app.js",
     "/js/setting/tindakan.js": "/js/setting/tindakan.js",
     "/js/setting/status.js": "/js/setting/status.js",
     "/js/setting/penyakit.js": "/js/setting/penyakit.js",

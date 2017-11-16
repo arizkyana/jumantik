@@ -29,11 +29,12 @@
                     <th rowspan="2">Nama</th>
                     <th rowspan="2">Alamat</th>
                     <th rowspan="2">PIC</th>
-                    <th class="text-center" colspan="2">Masa Bakti</th>
+                    <th class="text-center" colspan="3">Masa Bakti</th>
                     <th rowspan="2" class="text-center">Telepon</th>
                     <th class="text-center" rowspan="2">Action</th>
                 </tr>
                 <tr>
+                    <th class="text-center">Ketua</th>
                     <th class="text-center">Mulai</th>
                     <th class="text-center">Akhir</th>
                 </tr>
@@ -49,6 +50,7 @@
                         </td>
                         <td>{{ $petugas->alamat }}</td>
                         <td>{{ $petugas->pic_name }}</td>
+                        <td class="text-center">{{ $petugas->ketua == 1 ? 'RT' : 'RW' }}</td>
                         <td>{{ $petugas->masa_bakti_mulai }}</td>
                         <td>{{ $petugas->masa_bakti_akhir }}</td>
                         <td>{{ $petugas->phone }}</td>

@@ -122,6 +122,30 @@
 
                 <fieldset>
                     <legend>Masa Bakti</legend>
+
+                    <div class="form-group {{ $errors->has('ketua') ? ' has-error' : '' }}">
+                        <div class="row">
+                            <label for="ketua" class="col-md-3">Ketua <smal class="text-danger">*</smal></label>
+                            <div class="col-md-9">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="1" name="ketua" {{ $petugas->ketua == 1 ? 'checked' : '' }}/> RT
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="2" name="ketua" {{ $petugas->ketua == 2 ? 'checked' : '' }}/> RW
+                                    </label>
+                                </div>
+                                @if ($errors->has('ketua'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('ketua') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group {{ $errors->has('masa_bakti_mulai') ? ' has-error' : '' }}">
                         <div class="row">
                             <label for="masa_bakti_mulai" class="col-md-3">Mulai</label>

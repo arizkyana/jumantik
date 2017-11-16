@@ -36,7 +36,8 @@ class TindakanController extends MyController
         $tindakan = Tindakan::all();
         return view('setting/tindakan/index')->with([
             'js' => $this->js,
-            'tindakan' => $tindakan
+            'tindakan' => $tindakan,
+            'title' => 'Tindakan'
         ]);
     }
 
@@ -47,7 +48,10 @@ class TindakanController extends MyController
      */
     public function create()
     {
-        return view('setting/tindakan/create');
+        return view('setting/tindakan/create')
+            ->with([
+                'title' => 'Daftar Tindakan'
+            ]);
     }
 
     /**
@@ -105,7 +109,8 @@ class TindakanController extends MyController
 
         return view('setting/tindakan/edit')->with([
             'js' => $this->js,
-            'tindakan' => $tindakan
+            'tindakan' => $tindakan,
+            'title' => 'Edit Tindakan'
         ]);
     }
 

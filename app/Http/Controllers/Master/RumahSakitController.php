@@ -41,7 +41,8 @@ class RumahSakitController extends Controller
 
         return view('master/rumah_sakit/index')->with([
             'js' => $this->js,
-            'rumah_sakit' => $rumah_sakit
+            'rumah_sakit' => $rumah_sakit,
+            'title' => 'Rumah Sakit'
         ]);
     }
 
@@ -59,7 +60,8 @@ class RumahSakitController extends Controller
             ->with([
                 'kecamatan' => $kecamatan,
                 'js' => $this->js,
-                'roles' => $roles
+                'roles' => $roles,
+                'title' => 'Daftar Rumah Sakit'
             ]);
     }
 
@@ -157,7 +159,8 @@ class RumahSakitController extends Controller
             'kecamatan' => $kecamatan,
             'roles' => $roles,
             'pic' => $pic,
-            'kelurahan' => $kelurahan
+            'kelurahan' => $kelurahan,
+            'title' => 'Edit Rumah Sakit'
         ]);
     }
 

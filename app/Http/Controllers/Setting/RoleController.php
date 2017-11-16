@@ -34,7 +34,8 @@ class RoleController extends MyController
 
         return view('setting/role/index')->with([
             'roles' => $roles,
-            'js' => 'role.js'
+            'js' => 'role.js',
+            'title' => 'Role'
         ]);
     }
 
@@ -48,7 +49,10 @@ class RoleController extends MyController
 
         $menus = $this->build_tree_role_menu(Menu::all());
 
-        return view('setting/role/create')->with('menus', $menus);
+        return view('setting/role/create')->with([
+            'menus' => $menus,
+            'title' => 'Buat Menu'
+        ]);
     }
 
 

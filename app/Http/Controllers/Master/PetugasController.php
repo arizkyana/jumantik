@@ -41,7 +41,8 @@ class PetugasController extends Controller
 
         return view('master/petugas/index')->with([
             'js' => $this->js,
-            'petugas' => $petugas
+            'petugas' => $petugas,
+            'title' => 'Petugas Jumantik'
         ]);
     }
 
@@ -59,7 +60,8 @@ class PetugasController extends Controller
             ->with([
                 'kecamatan' => $kecamatan,
                 'js' => $this->js,
-                'roles' => $roles
+                'roles' => $roles,
+                'title' => 'Daftar Petugas Jumantik'
             ]);
     }
 
@@ -157,7 +159,8 @@ class PetugasController extends Controller
             'kecamatan' => $kecamatan,
             'roles' => $roles,
             'pic' => $pic,
-            'kelurahan' => $kelurahan
+            'kelurahan' => $kelurahan,
+            'title' => 'Edit Petugas Jumantik'
         ]);
     }
 

@@ -41,7 +41,10 @@ class MenuController extends Controller
     public function create()
     {
         $parents = Menu::all();
-        return view('setting/menu/create')->with('parents', $parents);
+        return view('setting/menu/create')->with([
+            'parents' => $parents,
+            'title' => 'Buat Menu'
+        ]);
     }
 
     /**
@@ -106,7 +109,8 @@ class MenuController extends Controller
 
         return view('setting/menu/edit')->with([
             'parents' => $parents,
-            'menu' => $menu
+            'menu' => $menu,
+            'title' => 'Edit Menu'
         ]);
     }
 

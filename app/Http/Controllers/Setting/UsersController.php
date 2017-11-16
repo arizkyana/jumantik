@@ -36,7 +36,8 @@ class UsersController extends MyController
 
         return view('setting/users/index')->with([
             'users' => $users,
-            'js' => $this->js
+            'js' => $this->js,
+            'title' => 'Users'
         ]);
     }
 
@@ -49,7 +50,10 @@ class UsersController extends MyController
     {
 
         $roles = Role::all();
-        return view('setting/users/create')->with('roles', $roles);
+        return view('setting/users/create')->with([
+            'roles' => $roles,
+            'title' => 'Buat Users'
+        ]);
     }
 
     /**
@@ -134,7 +138,8 @@ class UsersController extends MyController
             'users' => $users,
             'roles' => $roles,
             'js' => $this->js,
-            'apiClient' => $apiClient
+            'apiClient' => $apiClient,
+            'title' => 'Edit User'
         ]);
     }
 

@@ -41,7 +41,8 @@ class SetupController extends Controller
 
         return view('notifikasi/setup/index')->with([
             'js' => $this->js,
-            'notifications' => $notifications
+            'notifications' => $notifications,
+            'title' => 'Setup Notifikasi'
         ]);
     }
 
@@ -59,7 +60,8 @@ class SetupController extends Controller
             ->with([
                 'users' => $users,
                 'js' => $this->js,
-                'roles' => $roles
+                'roles' => $roles,
+                'title' => 'Buat Notifikasi'
             ]);
     }
 
@@ -117,7 +119,8 @@ class SetupController extends Controller
                 'js' => $this->js,
                 'setup' => $setup,
                 'roles' => $roles,
-                'users' => $users
+                'users' => $users,
+                'title' => 'Detail Notifikasi'
             ]);
     }
 
@@ -139,7 +142,8 @@ class SetupController extends Controller
             'js' => $this->js,
             'setup' => $notification_setup,
             'roles' => $roles,
-            'users' => $users
+            'users' => $users,
+            'title' => 'Edit Notifikasi'
         ]);
     }
 

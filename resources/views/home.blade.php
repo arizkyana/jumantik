@@ -91,7 +91,7 @@
                                        <i class="fa fa-calendar"></i>
 
                                    </span>
-                                    <input name="bulan" id="bulan" class="form-control" placeholder="Pilih Bulan" />
+                                    <input name="bulan" id="bulan" class="form-control" placeholder="Pilih Bulan" value="{{ date('Y-m') }}"/>
                                 </div>
 
 
@@ -101,10 +101,10 @@
                 </div>
                 <div class="ibox-content">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <div id="ct-jumantik" class="ct-perfect-fourth"></div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div id="ct-penyakit-menular-nyamuk" class="ct-perfect-fourth"></div>
                         </div>
                     </div>

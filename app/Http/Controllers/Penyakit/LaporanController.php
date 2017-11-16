@@ -34,6 +34,7 @@ class LaporanController extends Controller
     {
         return view('penyakit/laporan/index')->with([
             'js' => 'penyakit/laporan.js',
+            'title' => 'Laporan'
 
         ]);
     }
@@ -53,7 +54,8 @@ class LaporanController extends Controller
             'kecamatan' => $kecamatan,
             'kelurahan' => $kelurahan,
             'penyakit' => $penyakit,
-            'js' => 'penyakit/laporan.js'
+            'js' => 'penyakit/laporan.js',
+            'title' => 'Buat Laporan'
         ]);
     }
 
@@ -147,7 +149,8 @@ class LaporanController extends Controller
 
         return view('menu/edit')->with([
             'parents' => $parents,
-            'menu' => $menu
+            'menu' => $menu,
+            'title' => 'Edit Laporan'
         ]);
     }
 

@@ -36,7 +36,8 @@ class PenyakitController extends MyController
         $penyakit = Penyakit::where('is_visible', TRUE)->get();
         return view('setting/penyakit/index')->with([
             'js' => $this->js,
-            'penyakit' => $penyakit
+            'penyakit' => $penyakit,
+            'title' => 'Profile Penyakit'
         ]);
     }
 
@@ -47,7 +48,9 @@ class PenyakitController extends MyController
      */
     public function create()
     {
-        return view('setting/penyakit/create');
+        return view('setting/penyakit/create')->with([
+            'title' => 'Daftar Profile Penyakit'
+        ]);
     }
 
     /**
@@ -104,7 +107,8 @@ class PenyakitController extends MyController
         $penyakit = Penyakit::find($id);
         return view('setting/penyakit/edit')->with([
             'js' => $this->js,
-            'penyakit' => $penyakit
+            'penyakit' => $penyakit,
+            'title' => 'Edit Profile Penyakit'
         ]);
     }
 

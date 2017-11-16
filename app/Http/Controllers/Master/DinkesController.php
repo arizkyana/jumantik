@@ -41,7 +41,8 @@ class DinkesController extends Controller
 
         return view('master/dinkes/index')->with([
             'js' => $this->js,
-            'dinkes' => $dinkes
+            'dinkes' => $dinkes,
+            'title' => 'Dinkes'
         ]);
     }
 
@@ -59,7 +60,8 @@ class DinkesController extends Controller
             ->with([
                 'kecamatan' => $kecamatan,
                 'js' => $this->js,
-                'roles' => $roles
+                'roles' => $roles,
+                'title' => 'Daftar Dinkes'
             ]);
     }
 
@@ -157,7 +159,8 @@ class DinkesController extends Controller
             'kecamatan' => $kecamatan,
             'roles' => $roles,
             'pic' => $pic,
-            'kelurahan' => $kelurahan
+            'kelurahan' => $kelurahan,
+            'title' => 'Edit Dinkes'
         ]);
     }
 

@@ -54,7 +54,8 @@ class JadwalController extends Controller
 
         return view('jadwal/index')->with([
             'js' => $this->js,
-            'jadwal' => $jadwal
+            'jadwal' => $jadwal,
+            'title' => 'Jadwa Monitoring'
         ]);
     }
 
@@ -83,7 +84,8 @@ class JadwalController extends Controller
             ->with([
                 'js' => $this->js,
                 'pic' => $pic,
-                'supervisor' => $supervisor
+                'supervisor' => $supervisor,
+                'title' => 'Buat Jadwal Monitoring'
             ]);
     }
 
@@ -182,7 +184,8 @@ class JadwalController extends Controller
             'js' => $this->js,
             'jadwal' => $jadwal,
             'pic' => $pic,
-            'supervisor' => $supervisor
+            'supervisor' => $supervisor,
+            'title' => 'Edit Jadwal Monitoring'
         ]);
     }
 
