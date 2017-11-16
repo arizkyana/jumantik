@@ -44,11 +44,7 @@
                         <td>{{ $rumah_sakit->alamat }}</td>
                         <td>{{ $rumah_sakit->pic_name }}</td>
                         <td class="text-right">
-                            <a class="btn btn-sm btn-danger"
-                               onclick="event.preventDefault();
-                                       document.getElementById('delete-{{$rumah_sakit->id}}').submit();">
-                                <i class="glyphicon glyphicon-trash"></i>
-                            </a>
+
 
                             <form id="delete-{{$rumah_sakit->id}}"
                                   action="{{ action('Master\RumahSakitController@destroy', ['id' => $rumah_sakit->id]) }}"
@@ -57,6 +53,11 @@
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
                             </form>
+
+                            <a class="btn btn-sm btn-danger"
+                               onclick="remove({{$rumah_sakit->id}})">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
                         </td>
                     </tr>
                 @endforeach

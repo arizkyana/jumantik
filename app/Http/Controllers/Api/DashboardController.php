@@ -61,7 +61,7 @@ class DashboardController extends Controller
                 ->groupBy('penyakit.nama_penyakit')
                 ->get();
 
-            return $laporan;
+
         } else {
             $laporan = DB::table('laporan')
                 ->select(DB::raw('count(laporan.id) as jumlah, penyakit.nama_penyakit'))

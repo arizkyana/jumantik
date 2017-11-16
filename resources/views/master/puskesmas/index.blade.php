@@ -44,11 +44,7 @@
                         <td>{{ $puskesmas->alamat }}</td>
                         <td>{{ $puskesmas->pic_name }}</td>
                         <td class="text-right">
-                            <a class="btn btn-sm btn-danger"
-                               onclick="event.preventDefault();
-                                       document.getElementById('delete-{{$puskesmas->id}}').submit();">
-                                <i class="glyphicon glyphicon-trash"></i>
-                            </a>
+
 
                             <form id="delete-{{$puskesmas->id}}"
                                   action="{{ action('Master\PuskesmasController@destroy', ['id' => $puskesmas->id]) }}"
@@ -57,6 +53,11 @@
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
                             </form>
+
+                            <a class="btn btn-sm btn-danger"
+                               onclick="remove({{$puskesmas->id}})">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
                         </td>
                     </tr>
                 @endforeach

@@ -230,11 +230,7 @@
         </div>
         <div class="ibox-footer no-overflow">
             <div class="pull-left">
-                <button type="button" class="btn btn-danger"
-                   onclick="event.preventDefault();
-                           document.getElementById('delete-{{$laporan['isi']->id}}').submit();">
-                    <i class="fa fa-trash-o"></i>
-                </button>
+
 
                 <form id="delete-{{$laporan['isi']->id}}"
                       action="{{ action('Penyakit\LaporanController@destroy', ['id' => $laporan['isi']->id]) }}" method="POST"
@@ -243,11 +239,18 @@
                     {{ method_field('DELETE') }}
                 </form>
 
+                <a class="btn btn-sm btn-danger"
+                   onclick="remove({{$laporan['isi']->id}})">
+                    <i class="glyphicon glyphicon-trash"></i>
+                </a>
+
                 <button type="button" class="btn btn-primary"
                         onclick="event.preventDefault();
                                 document.getElementById('selesai-{{$laporan['isi']->id}}').submit();">
                     <i class="fa fa-check"></i> Selesai
                 </button>
+
+
 
                 <form id="selesai-{{$laporan['isi']->id}}"
                       action="{{ action('Penyakit\LaporanController@selesai', ['id' => $laporan['isi']->id]) }}" method="POST"

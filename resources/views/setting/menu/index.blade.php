@@ -50,18 +50,17 @@
                         <td>{{ $menu->parent }}</td>
                         <td>
 
-                            <a class="btn btn-sm btn-danger"
-                               onclick="event.preventDefault();
-                                       document.getElementById('delete-{{$menu->id}}').submit();">
-                                <i class="glyphicon glyphicon-trash"></i>
-                            </a>
-
                             <form id="delete-{{$menu->id}}"
                                   action="{{ action('Setting\MenuController@destroy', ['id' => $menu->id]) }}" method="POST"
                                   style="display: none;">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
                             </form>
+
+                            <a class="btn btn-sm btn-danger"
+                               onclick="remove({{$menu->id}})">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
                         </td>
                     </tr>
                 @endforeach

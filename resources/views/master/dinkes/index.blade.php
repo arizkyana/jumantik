@@ -44,11 +44,7 @@
                         <td>{{ $dinkes->alamat }}</td>
                         <td>{{ $dinkes->pic_name }}</td>
                         <td class="text-right">
-                            <a class="btn btn-sm btn-danger"
-                               onclick="event.preventDefault();
-                                       document.getElementById('delete-{{$dinkes->id}}').submit();">
-                                <i class="glyphicon glyphicon-trash"></i>
-                            </a>
+
 
                             <form id="delete-{{$dinkes->id}}"
                                   action="{{ action('Master\DinkesController@destroy', ['id' => $dinkes->id]) }}"
@@ -57,6 +53,11 @@
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
                             </form>
+
+                            <a class="btn btn-sm btn-danger"
+                               onclick="remove({{$dinkes->id}})">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
                         </td>
                     </tr>
                 @endforeach

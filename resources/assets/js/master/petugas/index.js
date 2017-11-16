@@ -30,3 +30,24 @@ window.dinkes = (function () {
 $(document).ready(function () {
     window.dinkes.init();
 });
+
+window.remove = function (id) {
+    event.preventDefault();
+
+    swal({
+        title: "Apakah Anda Yakin?",
+        text: "Petugas yang sudah di hapus tidak dapat di kembalikan!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya, Hapus!",
+        cancelButtonText: 'Batal',
+        closeOnConfirm: false,
+        html: false
+    }, function () {
+        document.getElementById('delete-' + id).submit();
+        swal("Berhasil!",
+            "Petugas sudah dihapus.",
+            "success");
+    });
+};

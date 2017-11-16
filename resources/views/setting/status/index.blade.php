@@ -42,11 +42,7 @@
                         </td>
                         <td>{{ $penyakit->keterangan_status}}</td>
                         <td>
-                            <a class="btn btn-sm btn-danger"
-                               onclick="event.preventDefault();
-                                       document.getElementById('delete-{{$penyakit->id}}').submit();">
-                                <i class="glyphicon glyphicon-trash"></i>
-                            </a>
+
 
                             <form id="delete-{{$penyakit->id}}"
                                   action="{{ action('Setting\StatusController@destroy', ['id' => $penyakit->id]) }}"
@@ -55,6 +51,11 @@
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
                             </form>
+
+                            <a class="btn btn-sm btn-danger"
+                               onclick="remove({{$penyakit->id}})">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
                         </td>
                     </tr>
                 @endforeach

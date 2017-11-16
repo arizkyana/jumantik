@@ -53,11 +53,7 @@
                         <td>{{ $petugas->masa_bakti_akhir }}</td>
                         <td>{{ $petugas->phone }}</td>
                         <td class="text-right">
-                            <a class="btn btn-sm btn-danger"
-                               onclick="event.preventDefault();
-                                       document.getElementById('delete-{{$petugas->id}}').submit();">
-                                <i class="glyphicon glyphicon-trash"></i>
-                            </a>
+
 
                             <form id="delete-{{$petugas->id}}"
                                   action="{{ action('Master\KetuaWargaController@destroy', ['id' => $petugas->id]) }}"
@@ -66,6 +62,11 @@
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
                             </form>
+
+                            <a class="btn btn-sm btn-danger"
+                               onclick="remove({{$petugas->id}})">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
                         </td>
                     </tr>
                 @endforeach

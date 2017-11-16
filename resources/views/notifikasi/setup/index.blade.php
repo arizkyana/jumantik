@@ -53,11 +53,7 @@
                                 <a href="{{ route('notifikasi/setup/show' , $item) }}" class="btn btn-sm btn-primary">
                                     <i class="fa fa-paper-plane"></i>
                                 </a>
-                                <button type="button" class="btn btn-sm btn-danger"
-                                        onclick="event.preventDefault();
-                                                document.getElementById('delete-{{$item->id}}').submit();">
-                                    <i class="glyphicon glyphicon-trash"></i>
-                                </button>
+
 
                                 <form id="delete-{{$item->id}}"
                                       action="{{ action('Notifikasi\SetupController@destroy', ['id' => $item->id]) }}"
@@ -66,6 +62,11 @@
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
                                 </form>
+
+                                <a class="btn btn-sm btn-danger"
+                                   onclick="remove({{$item->id}})">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                </a>
                             </div>
                         </td>
                     </tr>

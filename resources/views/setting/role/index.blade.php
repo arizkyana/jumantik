@@ -43,11 +43,7 @@
                                 <a href="{{ route('role/edit', $role) }}" class="text-primary">{{ $role->name }}</a>
                             </td>
                             <td>
-                                <a class="btn btn-sm btn-danger"
-                                   onclick="event.preventDefault();
-                                           document.getElementById('delete-{{$role->id}}').submit();">
-                                    <i class="glyphicon glyphicon-trash"></i>
-                                </a>
+
 
                                 <form id="delete-{{$role->id}}"
                                       action="{{ action('Setting\RoleController@destroy', ['id' => $role->id]) }}" method="POST"
@@ -55,6 +51,11 @@
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
                                 </form>
+
+                                <a class="btn btn-sm btn-danger"
+                                   onclick="remove({{$role->id}})">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                </a>
                             </td>
                         </tr>
                     @endforeach
