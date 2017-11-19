@@ -19,6 +19,8 @@ class Laporan extends Model
          * Setelah simpan laporan via api, kirim notifikasi ke puskesmas
          */
 
+        Log::info($notify['laporan']);
+
         $notifikasi = new NotificationSetup();
         $notifikasi->title = 'Laporan Jentik Terbaru!';
         $notifikasi->body = $notify['body']['keterangan'] . ' ' . $notify['body']['alamat'] . ' ' . $notify['body']['kecamatan'] . ' ' . $notify['body']['kelurahan'];
@@ -42,15 +44,16 @@ class Laporan extends Model
             ->leftJoin('role', 'users.role_id', '=', 'role.id');
 
         if ($sender->name == 'rs') {
-            $users->where('role.name', '=', 'jumantik')
+            $users = $users->where('role.name', '=', 'jumantik')
                 ->orWhere('role.name', '=', 'puskesmas')
                 ->get();
         } else if ($sender->name == 'warga' || $sender->name == 'ketua_warga'){
-            $users->where('role.name', '=', 'puskesmas')
+            $users = $users->where('role.name', '=', 'puskesmas')
                 ->get();
         } else {
-            $users->get();
+            $users = $users->get();
         }
+
 
 
         $receivers = [];
