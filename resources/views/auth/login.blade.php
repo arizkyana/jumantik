@@ -5,9 +5,7 @@
         <div>
             <div>
 
-                <h1 class="logo-name" style="letter-spacing: 0px !important;">
-                    <i class="fa fa-lock"></i>
-                </h1>
+                <img src="{{ asset('images/logo-bekasi.png') }}" alt="logo-bekasi" />
 
             </div>
 

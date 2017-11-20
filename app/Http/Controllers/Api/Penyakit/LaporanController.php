@@ -6,6 +6,7 @@ use App\DetailLaporan;
 use App\Http\Controllers\Controller;
 use App\Kecamatan;
 use App\Kelurahan;
+use App\NotificationSetup;
 use App\Penyakit;
 use App\Puskesmas\Laporan;
 use App\Utils\Datatables;
@@ -13,6 +14,7 @@ use App\Utils\ResponseMod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Validator;
 
 class LaporanController extends Controller
@@ -25,6 +27,89 @@ class LaporanController extends Controller
     public function index()
     {
         return Laporan::all();
+    }
+
+
+    // encapsulated api
+    public function warga(Request $request){
+        $validator = Validator::make($request->all(), [
+            'jumlah_suspect' => 'required',
+            'penyakit' => 'required',
+            'intensitas_jentik' => 'required',
+            'keterangan' => 'required',
+            'tindakan' => 'required',
+            'kecamatan' => 'required',
+            'kelurahan' => 'required',
+            'lat' => 'required',
+            'lon' => 'required',
+            'alamat' => 'required',
+            'is_pekdrs' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return ResponseMod::failed($validator->messages()->all());
+        }
+
+        $pelapor = isset($request->auth_user) ? $request->auth_user->id : $request->input('pelapor');
+
+        $laporan = new \App\Laporan();
+
+        $laporan->pelapor = $pelapor;
+        $laporan->jumlah_suspect = $request->input('jumlah_suspect');
+        $laporan->penyakit = $request->input('penyakit'); // demam berdarah
+        $laporan->intensitas_jentik = $request->input('intensitas_jentik');
+        $laporan->keterangan = $request->input('keterangan');
+        $laporan->tindakan = $request->input('tindakan'); // Evakuasi
+        $laporan->kecamatan = $request->input('kecamatan');
+        $laporan->kelurahan = $request->input('kelurahan');
+        $laporan->lat = $request->input('lat');
+        $laporan->lon = $request->input('lon');
+        $laporan->alamat = $request->input('alamat');
+        $laporan->status = 1; // Open
+        $laporan->is_pekdrs = $request->input('is_pekdrs');
+        $laporan->update_by = $pelapor;
+
+        $laporan->save();
+
+        // kirim notif ke dinkes
+        $dinkes = DB::table('users')
+            ->select('users.id')
+            ->leftJoin('role', 'users.role_id', '=', 'role.id')
+            ->where('role.name', 'like', '%dinkes%')
+            ->first();
+
+        Log::info($laporan->keterangan);
+
+        $notifikasi = new NotificationSetup();
+        $notifikasi->title = 'Laporan Jentik Terbaru!';
+        $notifikasi->body = $laporan->keterangan . ' ' . $laporan->alamat . ' ' . $laporan->kecamatan . ' ' . $laporan->kelurahan;
+        $notifikasi->type = 2;
+        $notifikasi->created_by = $laporan->pelapor;
+        $notifikasi->is_visible = true;
+
+        $notifikasi->save();
+
+        $receivers = [];
+        foreach ($dinkes as $user) {
+
+            $notifikasi_history = new NotificationHistory();
+
+            $notifikasi_history->id_notification_setup = $notifikasi->id;
+            $notifikasi_history->status = 1;
+            $notifikasi_history->receiver = $user->id;
+            $notifikasi_history->id_laporan = $laporan->id;
+            $notifikasi_history->is_visible = true;
+            $notifikasi_history->save();
+
+            array_push($receivers, $user->fcm_token);
+
+        }
+
+        $fcm = new FCM();
+
+        $sent = $fcm->send_messages($receivers, $notifikasi->title, $notifikasi->body);
+
+        Log::info($sent);
     }
 
     public function store(Request $request)

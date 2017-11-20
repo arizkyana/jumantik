@@ -64,6 +64,15 @@ Route::prefix('penyakit')->middleware('simple.token')->group(function () {
         Route::get('/delete/{laporan}', 'Api\Penyakit\LaporanController@delete');
         Route::put('/edit/{laporan}', 'Api\Penyakit\LaporanController@edit');
 
+
+        // encapsulated api
+        Route::post('/warga', 'Api\Penyakit\LaporanController@warga');
+        Route::post('/tindakan', 'Api\Penyakit\LaporanController@tindakan');
+        Route::post('/petugas', 'Api\Penyakit\LaporanController@petugas');
+        Route::post('/rumah_sakit', 'Api\Penyakit\LaporanController@rumah_sakit');
+        Route::post('/survey', 'Api\Penyakit\LaporanController@survey'); // Puskesmas
+
+
     });
 
     Route::prefix('detail_laporan')->group(function(){
@@ -71,6 +80,8 @@ Route::prefix('penyakit')->middleware('simple.token')->group(function () {
         Route::post('/approval/{detail_laporan}', 'Api\Penyakit\DetailLaporanController@approval');
     });
 });
+
+
 
 // Master
 Route::prefix('master')->middleware('simple.token')->group(function(){
@@ -80,6 +91,7 @@ Route::prefix('master')->middleware('simple.token')->group(function(){
    Route::get('/sekolah', 'Api\Master\SekolahController@index');
    Route::get('/perumahan', 'Api\Master\PerumahanController@index');
    Route::get('/tindakan', 'Api\Master\TindakanController@index');
+   Route::get('/penyakit', 'Api\Master\PenyakitController@index');
    Route::get('/status', function(){
       $status = [
           'deleted' => [
@@ -123,4 +135,8 @@ Route::get('/403', function () {
 
 Route::post('/test_fcm', function(Request $request){
    return 'ini test fcm';
+});
+
+Route::get('current_user', function(Request $request){
+   return \Illuminate\Support\Facades\Auth::user();
 });

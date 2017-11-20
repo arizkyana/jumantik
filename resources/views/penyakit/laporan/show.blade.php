@@ -15,7 +15,7 @@
 
     <div class="ibox">
         <div class="ibox-title">
-            <h5>Detail Laporan</h5>
+            <h5>Laporan</h5>
             <div class="ibox-tools">
                 <strong>{{ $laporan['isi']->created_at }}</strong>
             </div>
@@ -59,7 +59,14 @@
                             <div style="width: 500px; padding: 10px;" class="center-block border-left-right">
                                 <h3>Laporan PE</h3>
                                 <p>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
+                                    unknown printer took a galley of type and scrambled it to make a type specimen book.
+                                    It has survived not only five centuries, but also the leap into electronic
+                                    typesetting, remaining essentially unchanged. It was popularised in the 1960s with
+                                    the release of Letraset sheets containing Lorem Ipsum passages, and more recently
+                                    with desktop publishing software like Aldus PageMaker including versions of Lorem
+                                    Ipsum
                                 </p>
                             </div>
                         </div>
@@ -71,6 +78,85 @@
                 </div>
             </div>
             {{--/modal laporan pe--}}
+
+            {{--modal add detail laporan pe--}}
+            <div class="modal inmodal fade" id="modal_add_detail_laporan" tabindex="-1" role="dialog"
+                 aria-hidden="true">
+                <form id="form-add-detail-laporan" name="form-add-detail-laporan" action="{{ action('Penyakit\LaporanController@detail', ['id' => $laporan['isi']->id]) }}">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span
+                                            aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title">Detail Laporan</h4>
+
+                            </div>
+                            <div class="modal-body">
+
+                                <input type="hidden" name="id_laporan" value="{{ $laporan['isi']->id }}" />
+
+                                {{--tindakan--}}
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label for="detail_tindakan" class="col-md-3">Tindakan</label>
+                                        <div class="col-md-9">
+                                            <select name="detail_tindakan" id="detail_tindakan" class="form-control">
+                                                <option value=""></option>
+                                                @foreach ($detail_tindakan as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->nama_tindakan }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label for="detail_status" class="col-md-3">Status</label>
+                                        <div class="col-md-9">
+                                            <select name="detail_status" id="detail_status" class="form-control">
+                                                <option value=""></option>
+                                                @foreach ($detail_status as $item)
+                                                    <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{--keterangan--}}
+                                <div class="form-group">
+
+                                    <div class="row">
+                                        <label class="col-md-3" for="detail_keterangan">Keterangan</label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" name="detail_keterangan"
+                                                      id="detail_keterangan" cols="30" rows="10"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{--foto--}}
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label for="detail_foto" class="col-md-3">Foto</label>
+                                        <div class="col-md-9">
+                                            <input type="file" name="detail_foto" id="detail_foto" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {{--/modal add detail laporan pe--}}
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -166,7 +252,7 @@
                                     <div class="row">
                                         <label for="penyakit" class="col-md-4">KDRS</label>
                                         <div class="col-md-8">
-                                           -
+                                            -
                                         </div>
                                     </div>
                                 </div>
@@ -174,7 +260,8 @@
                                     <div class="row">
                                         <label for="suspect" class="col-md-4">PE</label>
                                         <div class="col-md-8">
-                                            <button type="button" data-toggle="modal" data-target="#modal_laporan_pe" class="btn btn-primary btn-sm btn-block">
+                                            <button type="button" data-toggle="modal" data-target="#modal_laporan_pe"
+                                                    class="btn btn-primary btn-sm btn-block">
                                                 <i class="fa fa-eye"></i> Lihat Laporan
                                             </button>
                                         </div>
@@ -188,7 +275,15 @@
                 </div>
             </div>
             <fieldset>
-                <legend>Detail Laporan</legend>
+                <legend style="line-height: 3;">
+                    Detail Laporan
+                    <span class="pull-right" style="line-height: 3">
+                        <button type="button" class="btn btn-sm btn-warning" data-toggle="modal"
+                                data-target="#modal_add_detail_laporan">
+                            <i class="fa fa-plus-circle"></i> Tambah Detail Laporan
+                        </button>
+                    </span>
+                </legend>
                 <table id="table-detail-laporan" class="table table-striped table-hover table-condensed">
                     <thead>
                     <tr>
@@ -220,8 +315,8 @@
             </fieldset>
             <fieldset>
                 <legend>Lokasi</legend>
-                <input type="hidden" id="lat" name="lat" value="{{ $laporan['isi']->lat }}" />
-                <input type="hidden" id="lon" name="lon" value="{{ $laporan['isi']->lon }}" />
+                <input type="hidden" id="lat" name="lat" value="{{ $laporan['isi']->lat }}"/>
+                <input type="hidden" id="lon" name="lon" value="{{ $laporan['isi']->lon }}"/>
                 <div id="map" class="google-map" style=" height: 500px !important;">
 
                 </div>
@@ -233,7 +328,8 @@
 
 
                 <form id="delete-{{$laporan['isi']->id}}"
-                      action="{{ action('Penyakit\LaporanController@destroy', ['id' => $laporan['isi']->id]) }}" method="POST"
+                      action="{{ action('Penyakit\LaporanController@destroy', ['id' => $laporan['isi']->id]) }}"
+                      method="POST"
                       style="display: none;">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
@@ -251,9 +347,9 @@
                 </button>
 
 
-
                 <form id="selesai-{{$laporan['isi']->id}}"
-                      action="{{ action('Penyakit\LaporanController@selesai', ['id' => $laporan['isi']->id]) }}" method="POST"
+                      action="{{ action('Penyakit\LaporanController@selesai', ['id' => $laporan['isi']->id]) }}"
+                      method="POST"
                       style="display: none;">
                     {{ csrf_field() }}
                     {{ method_field('PUT') }}

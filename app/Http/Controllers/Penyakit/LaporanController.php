@@ -112,6 +112,31 @@ class LaporanController extends Controller
             ->orderByDesc('detail_laporan.created_at')
             ->get();
 
+        $detail_status  = [
+            'deleted' => [
+                'id' => 0,
+                'name' => 'Deleted'
+            ],
+            'open' => [
+                'id' => 1,
+                'name' => 'Open'
+            ],
+            'finish' => [
+                'id' => 2,
+                'name' => 'Finish'
+            ],
+            'on_going' => [
+                'id' => 3,
+                'name' => 'On Going'
+            ],
+            'surveyed' => [
+                'id' => 4,
+                'name' => 'Surveyed'
+            ]
+        ];
+
+        $detail_tindakan = Tindakan::all();
+
 
         return view('penyakit/laporan/show')->with([
             'js' => 'penyakit/detail.js',
@@ -130,6 +155,8 @@ class LaporanController extends Controller
                 ]
             ],
             'detail_laporan' => $detail_laporan,
+            'detail_status' => $detail_status,
+            'detail_tindakan' => $detail_tindakan
 
         ]);
     }
@@ -218,6 +245,9 @@ class LaporanController extends Controller
         return redirect('penyakit/laporan')->with('success', 'Berhasil Selesaikan Laporan ' . $id);
     }
 
+    public function detail(){
+        return 'ook';
+    }
 
 }
 
