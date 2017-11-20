@@ -82,7 +82,8 @@
             {{--modal add detail laporan pe--}}
             <div class="modal inmodal fade" id="modal_add_detail_laporan" tabindex="-1" role="dialog"
                  aria-hidden="true">
-                <form id="form-add-detail-laporan" name="form-add-detail-laporan" action="{{ action('Penyakit\LaporanController@detail', ['id' => $laporan['isi']->id]) }}">
+                <form method="post" id="form-add-detail-laporan" name="form-add-detail-laporan" action="{{ action('Penyakit\DetailLaporanController@store') }}">
+                    {{ csrf_field() }}
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">

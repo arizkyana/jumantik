@@ -47,6 +47,8 @@ Route::namespace('Penyakit')->group(function () {
 //        Route::get('/laporan/{laporan}/edit', 'LaporanController@edit')->name('penyakit/laporan/edit')->middleware('can:penyakit-laporan-edit');
         Route::get('/laporan/{laporan}/show', 'LaporanController@show')->name('penyakit/laporan/show')->middleware('can:penyakit-laporan-show');
         Route::put('/laporan/selesai/{laporan}', 'LaporanController@selesai')->name('penyakit/laporan/selesai')->middleware('can:penyakit-laporan-selesai');
+
+        Route::resource('detaillaporan', 'DetailLaporanController');
     });
 });
 
