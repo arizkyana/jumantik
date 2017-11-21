@@ -31,7 +31,8 @@ class LaporanController extends Controller
 
 
     // encapsulated api
-    public function warga(Request $request){
+    public function warga(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'jumlah_suspect' => 'required',
             'penyakit' => 'required',
@@ -110,6 +111,177 @@ class LaporanController extends Controller
         $sent = $fcm->send_messages($receivers, $notifikasi->title, $notifikasi->body);
 
         Log::info($sent);
+
+        return ResponseMod::success($laporan);
+    }
+
+    public function petugas(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'jumlah_suspect' => 'required',
+            'penyakit' => 'required',
+            'intensitas_jentik' => 'required',
+            'keterangan' => 'required',
+            'tindakan' => 'required',
+            'kecamatan' => 'required',
+            'kelurahan' => 'required',
+            'lat' => 'required',
+            'lon' => 'required',
+            'alamat' => 'required',
+            'is_pekdrs' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return ResponseMod::failed($validator->messages()->all());
+        }
+
+        $pelapor = isset($request->auth_user) ? $request->auth_user->id : $request->input('pelapor');
+
+        $laporan = new \App\Laporan();
+
+        $laporan->pelapor = $pelapor;
+        $laporan->jumlah_suspect = $request->input('jumlah_suspect');
+        $laporan->penyakit = $request->input('penyakit'); // demam berdarah
+        $laporan->intensitas_jentik = $request->input('intensitas_jentik');
+        $laporan->keterangan = $request->input('keterangan');
+        $laporan->tindakan = $request->input('tindakan'); // Evakuasi
+        $laporan->kecamatan = $request->input('kecamatan');
+        $laporan->kelurahan = $request->input('kelurahan');
+        $laporan->lat = $request->input('lat');
+        $laporan->lon = $request->input('lon');
+        $laporan->alamat = $request->input('alamat');
+        $laporan->status = 1; // Open
+        $laporan->is_pekdrs = $request->input('is_pekdrs');
+        $laporan->update_by = $pelapor;
+
+        $laporan->save();
+
+        if ($laporan->intensitas_jentik == '> 10 %' || $laporan->intensitas_jentik == 1) {
+
+            // kirim notif ke dinkes
+            $dinkes = DB::table('users')
+                ->select('users.id')
+                ->leftJoin('role', 'users.role_id', '=', 'role.id')
+                ->where('role.name', 'like', '%warga%')
+                ->first();
+
+            Log::info($laporan->keterangan);
+
+            $notifikasi = new NotificationSetup();
+            $notifikasi->title = 'Laporan Jentik Terbaru!';
+            $notifikasi->body = $laporan->keterangan . ' ' . $laporan->alamat . ' ' . $laporan->kecamatan . ' ' . $laporan->kelurahan;
+            $notifikasi->type = 2;
+            $notifikasi->created_by = $laporan->pelapor;
+            $notifikasi->is_visible = true;
+
+            $notifikasi->save();
+
+            $receivers = [];
+            foreach ($dinkes as $user) {
+
+                $notifikasi_history = new NotificationHistory();
+
+                $notifikasi_history->id_notification_setup = $notifikasi->id;
+                $notifikasi_history->status = 1;
+                $notifikasi_history->receiver = $user->id;
+                $notifikasi_history->id_laporan = $laporan->id;
+                $notifikasi_history->is_visible = true;
+                $notifikasi_history->save();
+
+                array_push($receivers, $user->fcm_token);
+
+            }
+
+            $fcm = new FCM();
+
+            $sent = $fcm->send_messages($receivers, $notifikasi->title, $notifikasi->body);
+
+            Log::info($sent);
+        }
+
+        return ResponseMod::success($laporan);
+    }
+
+    public function tindakan(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'tindakan' => 'required',
+            'status' => 'required',
+            'keterangan' => 'required',
+            'id_laporan' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return ResponseMod::failed($validator->messages()->all());
+        }
+
+        $detail = new DetailLaporan();
+
+        $detail->id_laporan = $request->input('id_laporan');
+        $detail->pelapor = Auth::user()->id;
+
+        $detail->keterangan = $request->input('keterangan');
+        $detail->tindakan = $request->input('tindakan');
+        $detail->status = $request->input('status');
+        $detail->is_visible = true;
+
+        // if has file
+        if ($request->hasFile('foto')) {
+//            $path = strtolower(trim(str_replace(" ", "_", $request->input('nama'))));
+            $foto = $request->file('foto')->store('uploads/');
+            $detail->foto = $foto;
+        }
+
+        $detail->save();
+
+        $laporan = \App\Laporan::find($request->input('id_laporan'));
+        $laporan->tindakan = $detail->tindakan;
+        $laporan->status = $detail->status;
+        $laporan->update_by = $request->auth_user->id;
+
+        $laporan->save();
+
+        // kirim notif ke dinkes
+        $dinkes = DB::table('users')
+            ->select('users.id')
+            ->leftJoin('role', 'users.role_id', '=', 'role.id')
+            ->where('role.name', 'like', '%dinkes%')
+            ->first();
+
+        Log::info($laporan->keterangan);
+
+        $notifikasi = new NotificationSetup();
+        $notifikasi->title = 'Sudah Melakukan Fogging';
+        $notifikasi->body = 'Tim Jumantik sudah melakukan fogging untuk alamat ' . $laporan->alamat;
+        $notifikasi->type = 2;
+        $notifikasi->created_by = $laporan->pelapor;
+        $notifikasi->is_visible = true;
+
+        $notifikasi->save();
+
+        $receivers = [];
+        foreach ($dinkes as $user) {
+
+            $notifikasi_history = new NotificationHistory();
+
+            $notifikasi_history->id_notification_setup = $notifikasi->id;
+            $notifikasi_history->status = 1;
+            $notifikasi_history->receiver = $user->id;
+            $notifikasi_history->id_laporan = $laporan->id;
+            $notifikasi_history->is_visible = true;
+            $notifikasi_history->save();
+
+            array_push($receivers, $user->fcm_token);
+
+        }
+
+        $fcm = new FCM();
+
+        $sent = $fcm->send_messages($receivers, $notifikasi->title, $notifikasi->body);
+
+        Log::info($sent);
+
+        return ResponseMod::success($laporan);
     }
 
     public function store(Request $request)
@@ -175,7 +347,6 @@ class LaporanController extends Controller
     {
 
 
-
         $validator = Validator::make($request->all(), [
             'jumlah_suspect' => 'required',
             'penyakit' => 'required',
@@ -195,7 +366,6 @@ class LaporanController extends Controller
         }
 
         $pelapor = isset($request->auth_user) ? $request->auth_user->id : $request->input('pelapor');
-
 
 
         $laporan->pelapor = $pelapor;

@@ -82,7 +82,7 @@
             {{--modal add detail laporan pe--}}
             <div class="modal inmodal fade" id="modal_add_detail_laporan" tabindex="-1" role="dialog"
                  aria-hidden="true">
-                <form method="post" id="form-add-detail-laporan" name="form-add-detail-laporan" action="{{ action('Penyakit\DetailLaporanController@store') }}">
+                <form method="post" id="form-add-detail-laporan" name="form-add-detail-laporan" action="{{ action('Penyakit\DetailLaporanController@store') }}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -359,7 +359,7 @@
             </div>
             <div class="pull-right">
 
-                <a href="{{ url()->previous() }}" class="btn btn-default">Kembali</a>
+                <a href="{{ route('penyakit/laporan') }}" class="btn btn-default">Kembali</a>
 
             </div>
         </div>

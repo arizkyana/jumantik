@@ -7,6 +7,8 @@ use App\DetailLaporan;
 use App\Http\Controllers\Controller;
 use App\Kecamatan;
 use App\Kelurahan;
+use App\NotificationHistory;
+use App\NotificationSetup;
 use App\Penyakit;
 use App\Puskesmas\Laporan;
 use App\Role;
@@ -14,10 +16,12 @@ use App\Status;
 use App\Tindakan;
 use App\User;
 use App\Utils\Datatables;
+use App\Utils\FCM;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Log;
 use Validator;
 
 class DetailLaporanController extends Controller
@@ -70,7 +74,12 @@ class DetailLaporanController extends Controller
      */
     public function store(Request $request)
     {
+
         $laporan = Laporan::find($request->input('id_laporan'));
+
+
+        $kecamatan = Kecamatan::where('kecamatan_id', $laporan->kecamatan)->first();
+        $kelurahan = Kelurahan::where('kelurahan_id', $laporan->kelurahan)->first();
 
         $validator = Validator::make($request->all(), [
             'id_laporan' => 'required',
@@ -106,8 +115,55 @@ class DetailLaporanController extends Controller
         // update laporan
         $laporan->status = $detail->status;
         $laporan->tindakan = $detail->tindakan;
+        $laporan->update_by = $detail->pelapor;
 
         $laporan->save();
+
+        // if tindakan fogging
+        $tindakan = Tindakan::find($detail->tindakan);
+
+        if ($tindakan->nama == 'Perintah Fogging') {
+
+            $notifikasi = new NotificationSetup();
+            $notifikasi->title = 'Fogging Untuk Wilayah ' . $laporan->alamat;
+            $notifikasi->body = $laporan->keterangan . ' ' . $laporan->alamat . ' ' . $kecamatan->nama_kecamatan . ' ' . $kelurahan->nama_kelurahan;
+            $notifikasi->type = 2;
+            $notifikasi->created_by = $detail->pelapor;
+            $notifikasi->is_visible = true;
+
+            $notifikasi->save();
+
+            $users = DB::table('users')
+                ->select('users.fcm_token', 'users.id')
+                ->leftJoin('role', 'users.role_id', '=', 'role.id')
+                ->where('role.name', 'like', '%jumantik%')
+                ->orWhere('role.name', 'like', '%dinkes%')
+                ->orWhere('role.name', 'like', '%warga%')
+                ->get();
+
+            $receivers = [];
+            foreach ($users as $user) {
+
+                $notifikasi_history = new NotificationHistory();
+
+                $notifikasi_history->id_notification_setup = $notifikasi->id;
+                $notifikasi_history->status = 1;
+                $notifikasi_history->receiver = $user->id;
+                $notifikasi_history->id_laporan = $laporan->id;
+                $notifikasi_history->is_visible = true;
+                $notifikasi_history->save();
+
+                array_push($receivers, $user->fcm_token);
+
+            }
+
+            $fcm = new FCM();
+
+            $sent = $fcm->send_messages($receivers, $notifikasi->title, $notifikasi->body);
+
+            Log::info($sent);
+
+        }
 
         return redirect('penyakit/laporan/' . $laporan->id . '/show')->with(['success', 'Berhasil Menambahkan Detail Laporan']);
 
