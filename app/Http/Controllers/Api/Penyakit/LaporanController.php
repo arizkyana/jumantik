@@ -6,10 +6,12 @@ use App\DetailLaporan;
 use App\Http\Controllers\Controller;
 use App\Kecamatan;
 use App\Kelurahan;
+use App\NotificationHistory;
 use App\NotificationSetup;
 use App\Penyakit;
 use App\Puskesmas\Laporan;
 use App\Utils\Datatables;
+use App\Utils\FCM;
 use App\Utils\ResponseMod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -77,12 +79,12 @@ class LaporanController extends Controller
             ->select('users.id')
             ->leftJoin('role', 'users.role_id', '=', 'role.id')
             ->where('role.name', 'like', '%dinkes%')
-            ->first();
+            ->get();
 
         Log::info($laporan->keterangan);
 
         $notifikasi = new NotificationSetup();
-        $notifikasi->title = 'Laporan Jentik Terbaru!';
+        $notifikasi->title = 'Laporan Jentik Terbaru dari Warga!';
         $notifikasi->body = $laporan->keterangan . ' ' . $laporan->alamat . ' ' . $laporan->kecamatan . ' ' . $laporan->kelurahan;
         $notifikasi->type = 2;
         $notifikasi->created_by = $laporan->pelapor;
@@ -282,6 +284,190 @@ class LaporanController extends Controller
         Log::info($sent);
 
         return ResponseMod::success($laporan);
+    }
+
+    public function rumah_sakit(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'jumlah_suspect' => 'required',
+            'penyakit' => 'required',
+
+            'keterangan' => 'required',
+            'tindakan' => 'required',
+            'kecamatan' => 'required',
+            'kelurahan' => 'required',
+            'lat' => 'required',
+            'lon' => 'required',
+            'alamat' => 'required',
+            'is_pekdrs' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return ResponseMod::failed($validator->messages()->all());
+        }
+
+
+        $arr_kecamatan = $request->input('kecamatan');
+        $arr_kelurahan = $request->input('kelurahan');
+        $arr_alamat = $request->input('kecamatan');
+        $arr_lat = $request->input('lat');
+        $arr_lon = $request->input('lon');
+
+        if (!is_array($arr_kecamatan) || !is_array($arr_kelurahan) || !is_array($arr_alamat) || !is_array($arr_lat) || !is_array($arr_lon)) {
+            return ResponseMod::failed('wilayah harus array');
+        }
+
+        $arr_laporan = [];
+        foreach ($arr_alamat as $key => $alamat) {
+            $kecamatan = $arr_kecamatan[$key];
+            $kelurahan = $arr_kelurahan[$key];
+            $lat = $arr_lat[$key];
+            $lon = $arr_lon[$key];
+
+            $pelapor = isset($request->auth_user) ? $request->auth_user->id : $request->input('pelapor');
+
+            $laporan = new \App\Laporan();
+
+            $laporan->pelapor = $pelapor;
+            $laporan->jumlah_suspect = $request->input('jumlah_suspect');
+            $laporan->penyakit = $request->input('penyakit'); // demam berdarah
+            $laporan->intensitas_jentik = 0;
+            $laporan->keterangan = $request->input('keterangan');
+            $laporan->tindakan = $request->input('tindakan'); // Evakuasi
+            $laporan->kecamatan = $kecamatan;
+            $laporan->kelurahan = $kelurahan;
+            $laporan->lat = $lat;
+            $laporan->lon = $lon;
+            $laporan->alamat = $alamat;
+            $laporan->status = 1; // Open
+            $laporan->is_pekdrs = $request->input('is_pekdrs');
+            $laporan->update_by = $pelapor;
+
+            $laporan->save();
+
+            // kirim notif ke dinkes
+            $dinkes = DB::table('users')
+                ->select('users.id', 'users.fcm_token')
+                ->leftJoin('role', 'users.role_id', '=', 'role.id')
+                ->where('role.name', 'like', '%puskesmas%')
+                ->get();
+
+
+            Log::info($laporan->keterangan);
+
+            $notifikasi = new NotificationSetup();
+            $notifikasi->title = 'Laporan Suspect Penyakit Nyamuk Menular dari Rumah Sakit!';
+            $notifikasi->body = $laporan->keterangan . ' ' . $laporan->alamat . ' ' . $laporan->kecamatan . ' ' . $laporan->kelurahan;
+            $notifikasi->type = 2;
+            $notifikasi->created_by = $laporan->pelapor;
+            $notifikasi->is_visible = true;
+
+            $notifikasi->save();
+
+            $receivers = [];
+            foreach ($dinkes as $user) {
+
+                $notifikasi_history = new NotificationHistory();
+
+                $notifikasi_history->id_notification_setup = $notifikasi->id;
+                $notifikasi_history->status = 1;
+                $notifikasi_history->receiver = $user->id;
+                $notifikasi_history->id_laporan = $laporan->id;
+                $notifikasi_history->is_visible = true;
+                $notifikasi_history->save();
+
+                array_push($receivers, $user->fcm_token);
+
+            }
+
+            $fcm = new FCM();
+
+            $sent = $fcm->send_messages($receivers, $notifikasi->title, $notifikasi->body);
+
+            Log::info($sent);
+
+            array_push($arr_laporan, $laporan);
+        }
+
+        return ResponseMod::success($arr_laporan);
+    }
+
+    public function survey(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+
+            'intensitas_jentik' => 'required',
+            'keterangan' => 'required',
+            'tindakan' => 'required',
+            'status' => 'required',
+            'is_pekdrs' => 'required',
+            'id_laporan' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return ResponseMod::failed($validator->messages()->all());
+        }
+
+        $laporan = \App\Laporan::find($request->input('id_laporan'));
+
+        $laporan->intensitas_jentik = $request->input('intensitas_jentik');
+        $laporan->tindakan = $request->input('tindakan');
+        $laporan->status = $request->input('status');
+        $laporan->is_pekdrs = $request->input('is_pekdrs');
+
+        $laporan->save();
+
+        $detail = new DetailLaporan();
+        $detail->id_laporan = $laporan->id;
+        $detail->pelapor = $request->auth_user->id;
+        $detail->tindakan = $laporan->tindakan;
+        $detail->status = $laporan->status;
+        $detail->keterangan = $laporan->keterangan;
+
+        $detail->save();
+
+        if ($laporan->intensitas_jentik == '> 10 %' || $laporan->intensitas_jentik == 1) {
+
+            // kirim notif ke dinkes
+            $dinkes = DB::table('users')
+                ->select('users.id')
+                ->leftJoin('role', 'users.role_id', '=', 'role.id')
+                ->where('role.name', 'like', '%dinkes%')
+                ->first();
+
+            Log::info($laporan->keterangan);
+
+            $notifikasi = new NotificationSetup();
+            $notifikasi->title = 'Suspect Penyakit Nyamuk Menular dari Rumah Sakit';
+            $notifikasi->body = $laporan->keterangan . ' ' . $laporan->alamat . ' ' . $laporan->kecamatan . ' ' . $laporan->kelurahan;
+            $notifikasi->type = 2;
+            $notifikasi->created_by = $laporan->pelapor;
+            $notifikasi->is_visible = true;
+
+            $notifikasi->save();
+
+            $receivers = [];
+            foreach ($dinkes as $user) {
+
+                $notifikasi_history = new NotificationHistory();
+
+                $notifikasi_history->id_notification_setup = $notifikasi->id;
+                $notifikasi_history->status = 1;
+                $notifikasi_history->receiver = $user->id;
+                $notifikasi_history->id_laporan = $laporan->id;
+                $notifikasi_history->is_visible = true;
+                $notifikasi_history->save();
+
+                array_push($receivers, $user->fcm_token);
+
+            }
+
+            $fcm = new FCM();
+
+            $sent = $fcm->send_messages($receivers, $notifikasi->title, $notifikasi->body);
+
+            Log::info($sent);
+        }
     }
 
     public function store(Request $request)
