@@ -33,7 +33,7 @@ class LaporanController extends Controller
 
 
     // encapsulated api
-    public function warga(Request $request)
+    public function jumantik(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'jumlah_suspect' => 'required',
@@ -76,7 +76,7 @@ class LaporanController extends Controller
 
         // kirim notif ke dinkes
         $dinkes = DB::table('users')
-            ->select('users.id')
+            ->select('users.id', 'users.fcm_token')
             ->leftJoin('role', 'users.role_id', '=', 'role.id')
             ->where('role.name', 'like', '%dinkes%')
             ->get();
@@ -84,7 +84,7 @@ class LaporanController extends Controller
         Log::info($laporan->keterangan);
 
         $notifikasi = new NotificationSetup();
-        $notifikasi->title = 'Laporan Jentik Terbaru dari Warga!';
+        $notifikasi->title = $laporan->intensitas_jentik == 1 ? 'Bahaya Jentik!' : 'Laporan Jentik Terbaru dari Jumantik!';
         $notifikasi->body = $laporan->keterangan . ' ' . $laporan->alamat . ' ' . $laporan->kecamatan . ' ' . $laporan->kelurahan;
         $notifikasi->type = 2;
         $notifikasi->created_by = $laporan->pelapor;
@@ -117,7 +117,7 @@ class LaporanController extends Controller
         return ResponseMod::success($laporan);
     }
 
-    public function petugas(Request $request)
+    public function dinkes(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'jumlah_suspect' => 'required',
@@ -204,7 +204,7 @@ class LaporanController extends Controller
         return ResponseMod::success($laporan);
     }
 
-    public function tindakan(Request $request)
+    public function fogging(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'tindakan' => 'required',
@@ -220,7 +220,7 @@ class LaporanController extends Controller
         $detail = new DetailLaporan();
 
         $detail->id_laporan = $request->input('id_laporan');
-        $detail->pelapor = Auth::user()->id;
+        $detail->pelapor = $request->auth_user->id;
 
         $detail->keterangan = $request->input('keterangan');
         $detail->tindakan = $request->input('tindakan');
@@ -245,16 +245,16 @@ class LaporanController extends Controller
 
         // kirim notif ke dinkes
         $dinkes = DB::table('users')
-            ->select('users.id')
+            ->select('users.id', 'users.fcm_token')
             ->leftJoin('role', 'users.role_id', '=', 'role.id')
             ->where('role.name', 'like', '%dinkes%')
-            ->first();
+            ->get();
 
         Log::info($laporan->keterangan);
 
         $notifikasi = new NotificationSetup();
         $notifikasi->title = 'Sudah Melakukan Fogging';
-        $notifikasi->body = 'Tim Jumantik sudah melakukan fogging untuk alamat ' . $laporan->alamat;
+        $notifikasi->body = 'Tim Petugas Dinkes sudah melakukan fogging untuk alamat ' . $laporan->alamat;
         $notifikasi->type = 2;
         $notifikasi->created_by = $laporan->pelapor;
         $notifikasi->is_visible = true;

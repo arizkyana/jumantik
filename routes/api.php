@@ -66,9 +66,9 @@ Route::prefix('penyakit')->middleware('simple.token')->group(function () {
 
 
         // encapsulated api
-        Route::post('/warga', 'Api\Penyakit\LaporanController@warga');
-        Route::post('/tindakan', 'Api\Penyakit\LaporanController@tindakan');
-        Route::post('/petugas', 'Api\Penyakit\LaporanController@petugas');
+        Route::post('/jumantik', 'Api\Penyakit\LaporanController@jumantik');
+        Route::post('/fogging', 'Api\Penyakit\LaporanController@fogging');
+        Route::post('/dinkes', 'Api\Penyakit\LaporanController@dinkes');
         Route::post('/rumah_sakit', 'Api\Penyakit\LaporanController@rumah_sakit');
         Route::post('/survey', 'Api\Penyakit\LaporanController@survey'); // Puskesmas
 
@@ -133,10 +133,11 @@ Route::get('/403', function () {
 });
 
 
-Route::post('/test_fcm', function(Request $request){
-   return 'ini test fcm';
+Route::middleware('simple.token')->post('/notif', function(Request $request){
+   return $request->auth_user;
 });
 
 Route::get('current_user', function(Request $request){
    return \Illuminate\Support\Facades\Auth::user();
 });
+

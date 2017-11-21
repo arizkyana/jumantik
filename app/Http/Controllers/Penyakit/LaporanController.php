@@ -6,6 +6,8 @@ use App\DetailLaporan;
 use App\Http\Controllers\Controller;
 use App\Kecamatan;
 use App\Kelurahan;
+use App\NotificationHistory;
+use App\NotificationSetup;
 use App\Penyakit;
 use App\Puskesmas\Laporan;
 use App\Role;
@@ -13,9 +15,11 @@ use App\Status;
 use App\Tindakan;
 use App\User;
 use App\Utils\Datatables;
+use App\Utils\FCM;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class LaporanController extends Controller
 {
@@ -240,8 +244,60 @@ class LaporanController extends Controller
 
         $laporan = Laporan::find($id);
 
-        $laporan->status = 2; //
+
+
+        $detail = new DetailLaporan();
+        $detail->pelapor = Auth::user()->id;
+        $detail->tindakan = 3;
+        $detail->status = 2;
+        $detail->keterangan = 'Laporan sudah selesai di tangani';
+        $detail->id_laporan = $id;
+        $detail->is_visible = true;
+        $detail->save();
+
+        $laporan->tindakan = $detail->tindakan;
+        $laporan->status = $detail->status;
         $laporan->save();
+
+        $notifikasi = new NotificationSetup();
+        $notifikasi->title = 'Laporan ' . $laporan->keterangan . ' sudah selesai di tangani';
+        $notifikasi->body = $laporan->keterangan ;
+        $notifikasi->type = 2;
+        $notifikasi->created_by = Auth::user()->id;
+        $notifikasi->is_visible = true;
+
+        $notifikasi->save();
+
+        $users = DB::table('users')
+            ->select('users.fcm_token', 'users.id')
+            ->leftJoin('role', 'users.role_id', '=', 'role.id')
+            ->where('role.name', 'like', '%jumantik%')
+            ->orWhere('role.name', 'like', '%dinkes%')
+            ->orWhere('role.name', 'like', '%warga%')
+            ->get();
+
+        $receivers = [];
+        foreach ($users as $user) {
+
+            $notifikasi_history = new NotificationHistory();
+
+            $notifikasi_history->id_notification_setup = $notifikasi->id;
+            $notifikasi_history->status = 1;
+            $notifikasi_history->receiver = $user->id;
+            $notifikasi_history->id_laporan = $laporan->id;
+            $notifikasi_history->is_visible = true;
+            $notifikasi_history->save();
+
+            array_push($receivers, $user->fcm_token);
+
+        }
+
+        $fcm = new FCM();
+
+        $sent = $fcm->send_messages($receivers, $notifikasi->title, $notifikasi->body);
+
+        Log::info($sent);
+
         return redirect('penyakit/laporan')->with('success', 'Berhasil Selesaikan Laporan ' . $id);
     }
 

@@ -122,7 +122,7 @@ class DetailLaporanController extends Controller
         // if tindakan fogging
         $tindakan = Tindakan::find($detail->tindakan);
 
-        if ($tindakan->nama == 'Perintah Fogging') {
+        if ($tindakan->nama_tindakan == 'Perintah Fogging') {
 
             $notifikasi = new NotificationSetup();
             $notifikasi->title = 'Fogging Untuk Wilayah ' . $laporan->alamat;

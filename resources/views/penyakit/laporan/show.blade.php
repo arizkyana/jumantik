@@ -219,7 +219,7 @@
                                     <div class="row">
                                         <label for="intensitas_jentik" class="col-md-4">Intensitas Jentik</label>
                                         <div class="col-md-8">
-                                            {{ $laporan['isi']->intensitas_jentik }}
+                                            {{ $laporan['isi']->intensitas_jentik == 1 ? '> 10 %' : '< 10 %' }}
                                         </div>
                                     </div>
                                 </div>
