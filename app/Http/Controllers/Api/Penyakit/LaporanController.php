@@ -423,6 +423,7 @@ class LaporanController extends Controller
         $detail->tindakan = $laporan->tindakan;
         $detail->status = $laporan->status;
         $detail->keterangan = $laporan->keterangan;
+        $detail->is_visible = true;
 
         $detail->save();
 
@@ -430,10 +431,10 @@ class LaporanController extends Controller
 
             // kirim notif ke dinkes
             $dinkes = DB::table('users')
-                ->select('users.id')
+                ->select('users.id', 'users.fcm_token')
                 ->leftJoin('role', 'users.role_id', '=', 'role.id')
                 ->where('role.name', 'like', '%dinkes%')
-                ->first();
+                ->get();
 
             Log::info($laporan->keterangan);
 
@@ -468,6 +469,8 @@ class LaporanController extends Controller
 
             Log::info($sent);
         }
+
+        return ResponseMod::success($laporan);
     }
 
     public function store(Request $request)
