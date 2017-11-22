@@ -3,10 +3,12 @@
 namespace App\Http\Middleware;
 
 use App\ApiClient;
+use App\Events\UserNavigated;
 use App\User;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AuthorizeResources
 {
@@ -22,6 +24,8 @@ class AuthorizeResources
 
         $user = Auth::user();
 
+        Log::info($user->email . ' navigate to ' . $resource);
+
         if ($user->isSuperAdmin()) return $next($request);
 
         $authorize_menu = DB::table('menu')
@@ -34,6 +38,9 @@ class AuthorizeResources
             return response()
                 ->view('errors/403', [], 403);
         } else {
+
+            event(new UserNavigated($user));
+
             return $next($request);
         }
 
