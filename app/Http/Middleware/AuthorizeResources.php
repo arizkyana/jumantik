@@ -31,7 +31,8 @@ class AuthorizeResources
             ->first();
 
         if (empty($authorize_menu)){
-            return response('unauthenticated', 403);
+            return response()
+                ->view('errors/403', [], 403);
         } else {
             return $next($request);
         }
