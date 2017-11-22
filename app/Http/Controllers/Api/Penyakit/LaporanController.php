@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Penyakit;
 
 use App\DetailLaporan;
+use App\Events\JumantikReported;
 use App\Http\Controllers\Controller;
 use App\Kecamatan;
 use App\Kelurahan;
@@ -74,45 +75,7 @@ class LaporanController extends Controller
 
         $laporan->save();
 
-        // kirim notif ke dinkes
-        $dinkes = DB::table('users')
-            ->select('users.id', 'users.fcm_token')
-            ->leftJoin('role', 'users.role_id', '=', 'role.id')
-            ->where('role.name', 'like', '%dinkes%')
-            ->get();
-
-        Log::info($laporan->keterangan);
-
-        $notifikasi = new NotificationSetup();
-        $notifikasi->title = $laporan->intensitas_jentik == 1 ? 'Bahaya Jentik!' : 'Laporan Jentik Terbaru dari Jumantik!';
-        $notifikasi->body = $laporan->keterangan . ' ' . $laporan->alamat . ' ' . $laporan->kecamatan . ' ' . $laporan->kelurahan;
-        $notifikasi->type = 2;
-        $notifikasi->created_by = $laporan->pelapor;
-        $notifikasi->is_visible = true;
-
-        $notifikasi->save();
-
-        $receivers = [];
-        foreach ($dinkes as $user) {
-
-            $notifikasi_history = new NotificationHistory();
-
-            $notifikasi_history->id_notification_setup = $notifikasi->id;
-            $notifikasi_history->status = 1;
-            $notifikasi_history->receiver = $user->id;
-            $notifikasi_history->id_laporan = $laporan->id;
-            $notifikasi_history->is_visible = true;
-            $notifikasi_history->save();
-
-            array_push($receivers, $user->fcm_token);
-
-        }
-
-        $fcm = new FCM();
-
-        $sent = $fcm->send_messages($receivers, $notifikasi->title, $notifikasi->body);
-
-        Log::info($sent);
+        event(new JumantikReported($laporan));
 
         return ResponseMod::success($laporan);
     }

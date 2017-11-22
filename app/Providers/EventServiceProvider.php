@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\UserNavigated' => [
             'App\Listeners\UserNavigatedActivity',
         ],
+        'App\Events\JumantikReported' => [
+            'App\Listeners\SendReportNotificationToDinkes',
+        ],
     ];
 
     /**

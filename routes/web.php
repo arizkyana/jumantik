@@ -37,6 +37,7 @@ Route::get('/jadwal/create', 'JadwalController@create')->name('jadwal/create')->
 Route::get('/jadwal/{jadwal}/edit', 'JadwalController@edit')->name('jadwal/edit')->middleware('can:jadwal-edit');
 //Route::get('/jadwal/wilayah/{users}', 'JadwalController@wilayah')->name('jadwal/wilayah')->middleware('can:jadwal-wilayah');
 
+Route::resource('activity', 'ActivityController');
 
 // Penyakit
 Route::namespace('Penyakit')->group(function () {
@@ -186,3 +187,19 @@ Route::get('/media/{filename}', function ($filename) {
 
 
 })->name('media');
+
+// Mailable
+Route::get('/mailable', function(){
+    $laporan = \App\Laporan::find(5);
+
+    return new \App\Mail\JumantikReported($laporan);
+});
+
+Route::get('/sendmail', function(){
+    $laporan = \App\Laporan::find(5);
+
+    \Illuminate\Support\Facades\Mail::to('agung.rizkyana@gmail.com')
+        ->send(new \App\Mail\JumantikReported($laporan));
+
+    return 'email sent';
+});

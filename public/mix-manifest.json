@@ -25,5 +25,6 @@
     "/js/laporan.js": "/js/laporan.js",
     "/js/dinkes/laporan.js": "/js/dinkes/laporan.js",
     "/js/dinkes/jadwal.js": "/js/dinkes/jadwal.js",
-    "/js/dashboard.js": "/js/dashboard.js"
+    "/js/dashboard.js": "/js/dashboard.js",
+    "/js/activity.js": "/js/activity.js"
 }

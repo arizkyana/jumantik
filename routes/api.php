@@ -42,20 +42,20 @@ Route::prefix('kecamatan')->middleware('simple.token')->group(function () {
 });
 
 // Jadwal
-Route::prefix('jadwal')->middleware('simple.token')->group(function(){
+Route::prefix('jadwal')->middleware('simple.token')->group(function () {
     Route::get('/', 'Api\JadwalController@index');
     Route::get('/wilayah/{user}', 'Api\JadwalController@wilayah');
 });
 
 // Dashboard
-Route::prefix('dashboard')->middleware('simple.token')->group(function(){
-   Route::get('/jumantik', 'Api\DashboardController@jumantik');
-   Route::get('/penyakit_nyamuk_menular', 'Api\DashboardController@penyakit_nyamuk_menular');
+Route::prefix('dashboard')->middleware('simple.token')->group(function () {
+    Route::get('/jumantik', 'Api\DashboardController@jumantik');
+    Route::get('/penyakit_nyamuk_menular', 'Api\DashboardController@penyakit_nyamuk_menular');
 });
 
 // Laporan
 Route::prefix('penyakit')->middleware('simple.token')->group(function () {
-    Route::prefix('laporan')->group(function(){
+    Route::prefix('laporan')->group(function () {
         Route::get('/', 'Api\Penyakit\LaporanController@index');
         Route::post('/store', 'Api\Penyakit\LaporanController@store');
         Route::post('/store_log_kejadian', 'Api\Penyakit\LaporanController@store_log_kejadian');
@@ -75,54 +75,58 @@ Route::prefix('penyakit')->middleware('simple.token')->group(function () {
 
     });
 
-    Route::prefix('detail_laporan')->group(function(){
+    Route::prefix('detail_laporan')->group(function () {
         Route::post('/store', 'Api\Penyakit\DetailLaporanController@store');
         Route::post('/approval/{detail_laporan}', 'Api\Penyakit\DetailLaporanController@approval');
     });
 });
 
 
-
 // Master
-Route::prefix('master')->middleware('simple.token')->group(function(){
-   Route::get('/apartment', 'Api\Master\ApartementController@index');
-   Route::get('/faskes', 'Api\Master\FaskesController@index');
-   Route::get('/perkimtan', 'Api\Master\PerkimtanController@index');
-   Route::get('/sekolah', 'Api\Master\SekolahController@index');
-   Route::get('/perumahan', 'Api\Master\PerumahanController@index');
-   Route::get('/tindakan', 'Api\Master\TindakanController@index');
-   Route::get('/penyakit', 'Api\Master\PenyakitController@index');
-   Route::get('/status', function(){
-      $status = [
-          'deleted' => [
-              'id' => 0,
-              'name' => 'Deleted'
-          ],
-          'open' => [
-              'id' => 1,
-              'name' => 'Open'
-          ],
-          'finish' => [
-              'id' => 2,
-              'name' => 'Finish'
-          ],
-          'on_going' => [
-              'id' => 3,
-              'name' => 'On Going'
-          ],
-          'surveyed' => [
-              'id' => 4,
-              'name' => 'Surveyed'
-          ]
-      ];
+Route::prefix('master')->middleware('simple.token')->group(function () {
+    Route::get('/apartment', 'Api\Master\ApartementController@index');
+    Route::get('/faskes', 'Api\Master\FaskesController@index');
+    Route::get('/perkimtan', 'Api\Master\PerkimtanController@index');
+    Route::get('/sekolah', 'Api\Master\SekolahController@index');
+    Route::get('/perumahan', 'Api\Master\PerumahanController@index');
+    Route::get('/tindakan', 'Api\Master\TindakanController@index');
+    Route::get('/penyakit', 'Api\Master\PenyakitController@index');
+    Route::get('/status', function () {
+        $status = [
+            'deleted' => [
+                'id' => 0,
+                'name' => 'Deleted'
+            ],
+            'open' => [
+                'id' => 1,
+                'name' => 'Open'
+            ],
+            'finish' => [
+                'id' => 2,
+                'name' => 'Finish'
+            ],
+            'on_going' => [
+                'id' => 3,
+                'name' => 'On Going'
+            ],
+            'surveyed' => [
+                'id' => 4,
+                'name' => 'Surveyed'
+            ]
+        ];
 
-      return $status;
-   });
+        return $status;
+    });
 });
 
 // Notifikasi
-Route::prefix('notifikasi')->middleware('simple.token')->group(function(){
-   Route::get('/', 'Api\Notifikasi\SetupController@index');
+Route::prefix('notifikasi')->middleware('simple.token')->group(function () {
+    Route::get('/', 'Api\Notifikasi\SetupController@index');
+});
+
+// Log Activity
+Route::prefix('activity')->middleware('simple.token')->group(function () {
+    Route::post('/ajax_log', 'Api\ActivityController@ajax_log');
 });
 
 // api unauthenticated
@@ -133,11 +137,11 @@ Route::get('/403', function () {
 });
 
 
-Route::middleware('simple.token')->post('/notif', function(Request $request){
-   return $request->auth_user;
+Route::middleware('simple.token')->post('/notif', function (Request $request) {
+    return $request->auth_user;
 });
 
-Route::get('current_user', function(Request $request){
-   return \Illuminate\Support\Facades\Auth::user();
+Route::get('current_user', function (Request $request) {
+    return \Illuminate\Support\Facades\Auth::user();
 });
 

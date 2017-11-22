@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\ApiClient;
+use App\Events\UserNavigated;
 use App\Http\Controllers\Controller;
 use App\Menu;
 use App\Role;
@@ -62,6 +63,8 @@ class UsersController extends Controller
             Auth::user()->secret = $apiClient->secret;
             Auth::user()->role = $role;
 
+            event(new UserNavigated($user));
+
             return ResponseMod::success(Auth::user());
 
         }
@@ -112,6 +115,9 @@ class UsersController extends Controller
 
         $user->secret = $_api->secret;
         $user->role = Role::find($user->role_id);
+
+        event(new UserNavigated($user));
+
         return ResponseMod::success($user);
 
 
@@ -119,7 +125,9 @@ class UsersController extends Controller
 
     public function logout()
     {
+        event(new UserNavigated(Auth::user()));
         Auth::logout();
+
         return ResponseMod::success('you logged out');
     }
 
@@ -154,6 +162,8 @@ class UsersController extends Controller
 
         $updated_user->save();
 
+        event(new UserNavigated($updated_user));
+
         return ResponseMod::success([
             'user' => $user,
             'new_password' => $new_password
@@ -184,6 +194,8 @@ class UsersController extends Controller
         $updated_user->password = bcrypt($new_password);
 
         $updated_user->save();
+
+        event(new UserNavigated($updated_user));
 
         return ResponseMod::success([
             'message' => 'Success Update New Password',

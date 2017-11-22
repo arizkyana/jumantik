@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\ApiClient;
+use App\Events\UserNavigated;
 use App\User;
 use Closure;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +30,9 @@ class SimpleTokenApi
             $user = User::find($apiClient->user_id);
 
             $request->auth_user = $user;
+
+            event(new UserNavigated($user));
+
             return $next($request);
         };
 

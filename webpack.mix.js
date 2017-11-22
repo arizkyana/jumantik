@@ -118,4 +118,8 @@ mix
         'resources/assets/js/jadwal/create.js',
     ], 'public/js/jadwal.js')
 
+    .js([
+        'resources/assets/js/activity/index.js'
+    ], 'public/js/activity.js')
+
     .sass('resources/assets/sass/app.scss', 'public/css');
