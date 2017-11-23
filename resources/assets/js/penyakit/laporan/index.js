@@ -193,3 +193,13 @@ window.deleteLaporan = (id) => {
 window.refresh = () => {
     table.redraw("");
 };
+
+$(document).ready(function(){
+    setInterval(function(){
+        table.redraw("?" + $("#form-filter").serialize());
+    }, 5000);
+});
+
+socket.on('connected', function(_socket){
+   console.log(_socket);
+});

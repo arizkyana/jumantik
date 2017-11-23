@@ -60,21 +60,21 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 152);
+/******/ 	return __webpack_require__(__webpack_require__.s = 155);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 152:
+/***/ 155:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(153);
-module.exports = __webpack_require__(154);
+__webpack_require__(156);
+module.exports = __webpack_require__(157);
 
 
 /***/ }),
 
-/***/ 153:
+/***/ 156:
 /***/ (function(module, exports) {
 
 /**
@@ -251,9 +251,19 @@ window.refresh = function () {
     table.redraw("");
 };
 
+$(document).ready(function () {
+    setInterval(function () {
+        table.redraw("?" + $("#form-filter").serialize());
+    }, 5000);
+});
+
+socket.on('connected', function (_socket) {
+    console.log(_socket);
+});
+
 /***/ }),
 
-/***/ 154:
+/***/ 157:
 /***/ (function(module, exports) {
 
 /**

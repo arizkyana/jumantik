@@ -14,6 +14,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
 
 </head>
 
@@ -190,6 +191,8 @@
         {{--<script src="{{ mix('js/app.js') }}"></script>--}}
 
 
+
+        <script src="{{ mix('js/socket.js') }}"></script>
         <script src="{{ mix('js/app.js') }}"></script>
 
         {{--plugins themes js--}}
@@ -218,5 +221,7 @@
         @if (isset($js))
             <script src="{{ mix('js/' . $js) }}" async defer></script>
         @endif
+
+
 </body>
 </html>

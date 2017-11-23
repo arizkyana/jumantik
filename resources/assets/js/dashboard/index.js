@@ -411,7 +411,11 @@ $(document).ready(function () {
     $("#bulan").change(function(){
         let _bulan = $(this).val();
         loadChart();
-    })
+    });
+
+    setInterval(function(){
+        loadChart();
+    }, 5000);
 
 });
 

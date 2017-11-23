@@ -16,6 +16,7 @@ mix
 // themes assset js
 
     .js(['resources/assets/js/app.js'], 'public/js')
+    .js(['resources/assets/js/socket.js'], 'public/js/socket.js')
 
     .js([
         'resources/assets/js/users/create.js',

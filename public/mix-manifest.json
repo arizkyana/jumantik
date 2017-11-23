@@ -4,6 +4,7 @@
     "/js/users.js": "/js/users.js",
     "/js/notification/setup.js": "/js/notification/setup.js",
     "/js/apiClient.js": "/js/apiClient.js",
+    "/js/socket.js": "/js/socket.js",
     "/js/penyakit/profile.js": "/js/penyakit/profile.js",
     "/js/penyakit/laporan.js": "/js/penyakit/laporan.js",
     "/js/master/rumah_sakit.js": "/js/master/rumah_sakit.js",
