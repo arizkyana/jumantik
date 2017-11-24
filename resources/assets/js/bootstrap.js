@@ -1,4 +1,3 @@
-
 window._ = require('lodash');
 
 /**
@@ -8,12 +7,10 @@ window._ = require('lodash');
  */
 
 try {
-    // window.$ = window.jQuery = require('jquery');
-    require('datatables.net-buttons');
-    $.DataTable = require('../themes/js/plugins/dataTables/datatables.min');
 
 
-} catch (e) {}
+} catch (e) {
+}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -32,6 +29,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  */
 
 let token = document.head.querySelector('meta[name="csrf-token"]');
+let user = document.head.querySelector('meta[name="user"]');
 
 if (token) {
     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
@@ -46,10 +44,43 @@ if (token) {
  */
 
 // import Echo from 'laravel-echo'
-
+//
 // window.Pusher = require('pusher-js');
-
+//
 // window.Echo = new Echo({
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // });
+
+import Echo from "laravel-echo"
+
+window.Echo = new Echo({
+    broadcaster: 'socket.io',
+    host: window.location.hostname + ':6001'
+});
+
+
+let countNotification = document.getElementById('count-notification');
+let notificationInfo = document.getElementById('notification-info');
+
+// get notification today
+function getNotificationToday(){
+    window.axios.get('/api/notifikasi/today', {
+        params: {user: user.content}
+    }).then(function (result) {
+
+
+        if (result.data.data.count == 0) {
+            notificationInfo.innerHTML = 'Belum ada laporan terbaru untuk anda';
+        } else {
+            countNotification.innerHTML = result.data.data.count;
+            notificationInfo.innerHTML = 'Anda mempunyai ' + result.data.data.count + ' laporan terbaru';
+        }
+
+    }).catch(function (err) {
+        console.error(err);
+    });
+}
+getNotificationToday();
+
+setInterval(getNotificationToday, 5000);

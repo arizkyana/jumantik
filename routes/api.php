@@ -122,6 +122,7 @@ Route::prefix('master')->middleware('simple.token')->group(function () {
 // Notifikasi
 Route::prefix('notifikasi')->middleware('simple.token')->group(function () {
     Route::get('/', 'Api\Notifikasi\SetupController@index');
+    Route::get('/today', 'Api\Notifikasi\SetupController@today');
 });
 
 // Log Activity

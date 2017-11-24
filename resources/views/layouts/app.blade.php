@@ -8,7 +8,10 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    @guest
+    @else
+        <meta name="user" content="{{ \Illuminate\Support\Facades\Auth::user()->id }}">
+    @endguest
     <title>{{ isset($title) ? config('app.name', 'Laravel') . " | " . $title : config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
@@ -86,6 +89,23 @@
                             </form>
                         </div>
                         <ul class="nav navbar-top-links navbar-right">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" aria-expanded="true">
+                                    <i class="fa fa-bell"></i>  <span class="label label-primary" id="count-notification"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-alerts">
+                                    <li>
+                                        <a href="{{ route('penyakit/laporan') }}">
+                                            <div>
+                                                <i class="fa fa-envelope fa-fw"></i> <span id="notification-info"></span>
+                                                {{--<span class="pull-right text-muted small">4 minutes ago</span>--}}
+                                            </div>
+                                        </a>
+                                    </li>
+
+
+                                </ul>
+                            </li>
                             <li>
 
                                 <a href="{{ route('logout') }}"
@@ -188,11 +208,7 @@
         {{--Clockpicker--}}
         <script src="{{ asset('js/themes/plugins/clockpicker/clockpicker.js') }}"></script>
 
-        {{--<script src="{{ mix('js/app.js') }}"></script>--}}
 
-
-
-        <script src="{{ mix('js/socket.js') }}"></script>
         <script src="{{ mix('js/app.js') }}"></script>
 
         {{--plugins themes js--}}

@@ -174,7 +174,6 @@ let _dataTable = {};
 window.deleteLaporan = (id) => {
 
 
-
     let confirms = confirm('Apakah anda yakin?');
     if (confirms) {
         $.ajax({
@@ -195,11 +194,5 @@ window.refresh = () => {
 };
 
 $(document).ready(function(){
-    setInterval(function(){
-        table.redraw("?" + $("#form-filter").serialize());
-    }, 5000);
-});
-
-socket.on('connected', function(_socket){
-   console.log(_socket);
+    setInterval(function(){table.redraw("?" + $("#form-filter").serialize());}, 5000);
 });

@@ -60,21 +60,21 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 155);
+/******/ 	return __webpack_require__(__webpack_require__.s = 185);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 155:
+/***/ 185:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(156);
-module.exports = __webpack_require__(157);
+__webpack_require__(186);
+module.exports = __webpack_require__(187);
 
 
 /***/ }),
 
-/***/ 156:
+/***/ 186:
 /***/ (function(module, exports) {
 
 /**
@@ -257,13 +257,9 @@ $(document).ready(function () {
     }, 5000);
 });
 
-socket.on('connected', function (_socket) {
-    console.log(_socket);
-});
-
 /***/ }),
 
-/***/ 157:
+/***/ 187:
 /***/ (function(module, exports) {
 
 /**

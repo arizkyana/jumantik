@@ -32,4 +32,29 @@ class SetupController extends Controller
             'notifications' => $notifikasi
         ]);
     }
+
+    public function today(Request $request){
+        $user = User::find($request->input('user'));
+
+
+        $tanggal_mulai = date('Y-m-d 00:00:00');
+        $tanggal_akhir = date('Y-m-d 23:59:59');
+
+        $notifikasi = DB::table('notification_history')
+            ->select('notification_history.status', 'notification_history.created_at', 'notification_setup.title', 'notification_setup.body', 'notification_history.id_laporan')
+            ->leftJoin('notification_setup', 'notification_history.id_notification_setup', '=', 'notification_setup.id')
+            ->where('receiver', '=', $user->id)
+            ->whereBetween('notification_history.created_at', [$tanggal_mulai, $tanggal_akhir])
+            ->limit(10)
+            ->get();
+
+        $count = count($notifikasi);
+
+        return ResponseMod::success([
+            'receiver' => $user,
+            'notifications' => $notifikasi,
+            'count' => $count
+        ]);
+
+    }
 }
