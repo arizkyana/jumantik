@@ -3,5 +3,5 @@ try {
 
     window.Highcharts = Highcharts = require('highcharts');
 
-    require('./bootstrap')
+    // require('./bootstrap')
 }catch(e){}
