@@ -52,12 +52,12 @@ if (token) {
 //     key: 'your-pusher-key'
 // });
 
-import Echo from "laravel-echo"
-
-window.Echo = new Echo({
-    broadcaster: 'socket.io',
-    host: window.location.hostname + ':6001'
-});
+// import Echo from "laravel-echo"
+//
+// window.Echo = new Echo({
+//     broadcaster: 'socket.io',
+//     host: window.location.hostname + ':6001'
+// });
 
 
 let countNotification = document.getElementById('count-notification');
@@ -69,6 +69,7 @@ function getNotificationToday(){
         params: {user: user.content}
     }).then(function (result) {
 
+        console.log(result);
 
         if (result.data.data.count == 0) {
             notificationInfo.innerHTML = 'Belum ada laporan terbaru untuk anda';

@@ -60,131 +60,74 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 169);
+/******/ 	return __webpack_require__(__webpack_require__.s = 125);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 169:
+/***/ 125:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(170);
-module.exports = __webpack_require__(171);
+__webpack_require__(126);
+__webpack_require__(127);
+module.exports = __webpack_require__(128);
 
 
 /***/ }),
 
-/***/ 170:
+/***/ 126:
 /***/ (function(module, exports) {
 
-var _dataTable;
-var table, kecamatan;
-window.dinkes = function () {
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open 'D:\\xampp\\htdocs\\edu\\resources\\assets\\js\\setting\\users\\create.js'\n    at Error (native)");
 
-    function init() {
-        initTable();
+/***/ }),
+
+/***/ 127:
+/***/ (function(module, exports) {
+
+var form = {
+    api: {
+        scope: {}
     }
-
-    function initTable() {
-        table = {
-            el: $("#table-dinkes"),
-            evt: {},
-            init: function init() {
-                var self = this;
-
-                self.el.DataTable();
-            }
-        };
-
-        table.init();
-    }
-
-    return {
-        init: init
-    };
-}();
-
-$(document).ready(function () {
-    window.dinkes.init();
-});
-
-window.remove = function (id) {
-    event.preventDefault();
-
-    swal({
-        title: "Apakah Anda Yakin?",
-        text: "Dinkes yang sudah di hapus tidak dapat di kembalikan!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Ya, Hapus!",
-        cancelButtonText: 'Batal',
-        closeOnConfirm: false,
-        html: false
-    }, function () {
-        document.getElementById('delete-' + id).submit();
-        swal("Berhasil!", "Dinkes sudah dihapus.", "success");
-    });
 };
 
-/***/ }),
+$(document).ready(function () {
 
-/***/ 171:
-/***/ (function(module, exports) {
-
-var kecamatan, kelurahan, role;
-(function () {
-
-    kelurahan = {
-        el: $('#kelurahan'),
-        evt: {},
-        init: function init() {
-            var self = this;
-
-            $(self.el).select2();
-        }
-
-    };
-
-    kecamatan = {
-        el: $('#kecamatan'),
+    form.api.scope = {
+        el: $("#client_scope"),
         evt: {
-            change: function change() {
-                var idKecamatan = $(this).val();
-                $.ajax({
-                    url: base_url + '/api/kelurahan/get_by_kecamatan/' + idKecamatan,
-                    method: 'get'
-                }).then(function (result) {
-                    kelurahan.el.select2().val(null).trigger('change');
-                    kelurahan.el.empty();
-                    $.each(result.data, function (i, item) {
-
-                        var options = "<option value='" + item.kelurahan_id + "'>" + item.nama_kelurahan + "</option>";
-                        kelurahan.el.append(options);
-                    });
-                }, logError);
+            onChange: function onChange(e) {
+                e.preventDefault();
+                return;
             }
         },
         init: function init() {
             var self = this;
-            self.el.select2();
-            self.el.change(self.evt.change);
+            self.el.select2({
+                placeholder: 'Pilih Scope'
+            });
         }
     };
+});
 
-    role = {
-        el: $("#role"),
+/***/ }),
+
+/***/ 128:
+/***/ (function(module, exports) {
+
+var table = {};
+$(document).ready(function () {
+    table = {
+        el: $("#table-users"),
         evt: {},
         init: function init() {
             var self = this;
-            self.el.select2();
+            self.el.dataTable();
         }
     };
 
-    kelurahan.init();
-    kecamatan.init();
-    role.init();
-})();
+    table.init();
+});
 
 /***/ })
 

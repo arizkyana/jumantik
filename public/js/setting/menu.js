@@ -60,55 +60,23 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 163);
+/******/ 	return __webpack_require__(__webpack_require__.s = 133);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 163:
+/***/ 133:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(164);
+module.exports = __webpack_require__(134);
 
 
 /***/ }),
 
-/***/ 164:
+/***/ 134:
 /***/ (function(module, exports) {
 
-var table = {};
-
-$(document).ready(function () {
-    table = {
-        el: $("#table-users"),
-        evt: {},
-        init: function init() {
-            var self = this;
-            self.el.dataTable();
-        }
-    };
-
-    table.init();
-});
-
-window.remove = function (id) {
-    event.preventDefault();
-
-    swal({
-        title: "Apakah Anda Yakin?",
-        text: "Penyakit yang sudah di hapus tidak dapat di kembalikan!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Ya, Hapus!",
-        cancelButtonText: 'Batal',
-        closeOnConfirm: false,
-        html: false
-    }, function () {
-        document.getElementById('delete-' + id).submit();
-        swal("Berhasil!", "Penyakit sudah dihapus.", "success");
-    });
-};
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open 'D:\\xampp\\htdocs\\edu\\resources\\assets\\js\\setting\\menu\\index.js'\n    at Error (native)");
 
 /***/ })
 
