@@ -60,29 +60,29 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 125);
+/******/ 	return __webpack_require__(__webpack_require__.s = 155);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 125:
+/***/ 155:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(126);
-__webpack_require__(127);
-module.exports = __webpack_require__(128);
+__webpack_require__(156);
+__webpack_require__(157);
+module.exports = __webpack_require__(158);
 
 
 /***/ }),
 
-/***/ 126:
+/***/ 156:
 /***/ (function(module, exports) {
 
 throw new Error("Module build failed: Error: ENOENT: no such file or directory, open 'D:\\xampp\\htdocs\\edu\\resources\\assets\\js\\setting\\users\\create.js'\n    at Error (native)");
 
 /***/ }),
 
-/***/ 127:
+/***/ 157:
 /***/ (function(module, exports) {
 
 var form = {
@@ -112,7 +112,7 @@ $(document).ready(function () {
 
 /***/ }),
 
-/***/ 128:
+/***/ 158:
 /***/ (function(module, exports) {
 
 var table = {};
@@ -128,6 +128,25 @@ $(document).ready(function () {
 
     table.init();
 });
+
+window.remove = function (id) {
+    event.preventDefault();
+
+    swal({
+        title: "Apakah Anda Yakin?",
+        text: "Users yang sudah di hapus tidak dapat di kembalikan!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya, Hapus!",
+        cancelButtonText: 'Batal',
+        closeOnConfirm: false,
+        html: false
+    }, function () {
+        document.getElementById('delete-' + id).submit();
+        swal("Berhasil!", "Users sudah dihapus.", "success");
+    });
+};
 
 /***/ })
 

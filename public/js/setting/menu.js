@@ -60,23 +60,67 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 133);
+/******/ 	return __webpack_require__(__webpack_require__.s = 163);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 133:
+/***/ 163:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(134);
+__webpack_require__(164);
+module.exports = __webpack_require__(165);
 
 
 /***/ }),
 
-/***/ 134:
+/***/ 164:
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open 'D:\\xampp\\htdocs\\edu\\resources\\assets\\js\\setting\\menu\\index.js'\n    at Error (native)");
+
+
+var table = {};
+$(document).ready(function () {
+    table = {
+        el: $("#table-menu"),
+        evt: {},
+        init: function init() {
+            var self = this;
+            // console.log(self);
+            self.el.DataTable({
+                saveState: true
+            });
+        }
+    };
+
+    table.init();
+});
+
+window.remove = function (id) {
+    event.preventDefault();
+
+    swal({
+        title: "Apakah Anda Yakin?",
+        text: "Menu yang sudah di hapus tidak dapat di kembalikan!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya, Hapus!",
+        cancelButtonText: 'Batal',
+        closeOnConfirm: false,
+        html: false
+    }, function () {
+        document.getElementById('delete-' + id).submit();
+        swal("Berhasil!", "Menu sudah dihapus.", "success");
+    });
+};
+
+/***/ }),
+
+/***/ 165:
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open 'D:\\xampp\\htdocs\\edu\\resources\\assets\\js\\setting\\menu\\create.js'\n    at Error (native)");
 
 /***/ })
 

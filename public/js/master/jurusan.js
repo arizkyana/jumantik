@@ -78,7 +78,75 @@ module.exports = __webpack_require__(191);
 /***/ 189:
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open 'D:\\xampp\\htdocs\\edu\\resources\\assets\\js\\master\\jurusan\\index.js'\n    at Error (native)");
+var table = {};
+var _datatable = void 0;
+$(document).ready(function () {
+    table = {
+        el: $("#table-users"),
+        evt: {},
+        redraw: function redraw() {
+            _datatable.ajax.url(base_url + '/api/master/jurusan').load();
+            _datatable.draw();
+        },
+        init: function init() {
+            var self = this;
+            _datatable = self.el.DataTable({
+                serverSide: true,
+                processing: true,
+                ajax: {
+                    url: base_url + '/api/master/jurusan',
+                    method: 'post'
+                },
+                createdRow: function createdRow(row) {
+                    $('td', row).eq(5).addClass('text-center');
+                },
+                order: [[0, 'desc']],
+                columns: [{
+                    data: 'created_at', name: 'jurusan.created_at',
+                    render: function render(data, type, row, meta) {
+                        return moment(data, 'yyyy-mm-dd hh:mm:ss').format('D MMM Y');
+                    }
+                }, {
+                    data: 'kode', name: 'jurusan.kode',
+                    render: function render(data, type, row, meta) {
+                        return '<a class="text-danger" href="' + base_url + '/master/jurusan/' + row.id + '/edit">' + data + '</a>';
+                    }
+                }, { data: 'nama', name: 'jurusan.nama' }, { data: 'fakultas', name: 'fakultas.nama' }, {
+                    data: 'id', name: 'jurusan.id',
+                    render: function render(data, type, row, meta) {
+                        return '<button type="button" onclick="remove(' + row.id + ')" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>';
+                    }
+                }]
+            });
+        }
+    };
+
+    table.init();
+});
+
+window.remove = function (id) {
+    event.preventDefault();
+
+    swal({
+        title: "Apakah Anda Yakin?",
+        text: "Jurusan yang sudah di hapus tidak dapat di kembalikan!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya, Hapus!",
+        cancelButtonText: 'Batal',
+        closeOnConfirm: false,
+        html: false
+    }, function () {
+
+        window.axios.post(base_url + '/api/master/jurusan/' + id + '/destroy', {
+            id: id
+        }).then(function () {
+            swal("Berhasil!", "Jurusan sudah dihapus.", "success");
+            table.redraw();
+        }).catch(window.logError);
+    });
+};
 
 /***/ }),
 
