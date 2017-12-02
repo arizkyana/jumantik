@@ -37,6 +37,7 @@ class LaporanController extends Controller
     public function jumantik(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'title' => 'required|max:100|unique:laporan,title',
             'jumlah_suspect' => 'required',
             'penyakit' => 'required',
             'intensitas_jentik' => 'required',
@@ -59,6 +60,8 @@ class LaporanController extends Controller
         $laporan = new \App\Laporan();
 
         $laporan->pelapor = $pelapor;
+        $laporan->title = $request->input('title');
+        $laporan->sub_title = $request->input('sub_title');
         $laporan->jumlah_suspect = $request->input('jumlah_suspect');
         $laporan->penyakit = $request->input('penyakit'); // demam berdarah
         $laporan->intensitas_jentik = $request->input('intensitas_jentik');
@@ -83,6 +86,7 @@ class LaporanController extends Controller
     public function dinkes(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'title' => 'required|max:100|unique:laporan,title',
             'jumlah_suspect' => 'required',
             'penyakit' => 'required',
             'intensitas_jentik' => 'required',
@@ -105,6 +109,8 @@ class LaporanController extends Controller
         $laporan = new \App\Laporan();
 
         $laporan->pelapor = $pelapor;
+        $laporan->title = $request->input('title');
+        $laporan->sub_title = $request->input('sub_title');
         $laporan->jumlah_suspect = $request->input('jumlah_suspect');
         $laporan->penyakit = $request->input('penyakit'); // demam berdarah
         $laporan->intensitas_jentik = $request->input('intensitas_jentik');
@@ -133,7 +139,7 @@ class LaporanController extends Controller
             Log::info($laporan->keterangan);
 
             $notifikasi = new NotificationSetup();
-            $notifikasi->title = 'Laporan Jentik Terbaru!';
+            $notifikasi->title = $laporan->title;
             $notifikasi->body = $laporan->keterangan . ' ' . $laporan->alamat . ' ' . $laporan->kecamatan . ' ' . $laporan->kelurahan;
             $notifikasi->type = 2;
             $notifikasi->created_by = $laporan->pelapor;
@@ -217,7 +223,7 @@ class LaporanController extends Controller
 
         $notifikasi = new NotificationSetup();
         $notifikasi->title = 'Sudah Melakukan Fogging';
-        $notifikasi->body = 'Tim Petugas Dinkes sudah melakukan fogging untuk alamat ' . $laporan->alamat;
+        $notifikasi->body = 'Tim Petugas Dinkes sudah melakukan fogging untuk alamat ' . $laporan->alamat . ' pada laporan ' . $laporan->judul;
         $notifikasi->type = 2;
         $notifikasi->created_by = $laporan->pelapor;
         $notifikasi->is_visible = true;
@@ -252,6 +258,7 @@ class LaporanController extends Controller
     public function rumah_sakit(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'title' => 'required|max:100|unique:laporan,title',
             'jumlah_suspect' => 'required',
             'penyakit' => 'required',
 
@@ -292,6 +299,8 @@ class LaporanController extends Controller
             $laporan = new \App\Laporan();
 
             $laporan->pelapor = $pelapor;
+            $laporan->title = $request->input('title');
+            $laporan->sub_title = $request->input('sub_title');
             $laporan->jumlah_suspect = $request->input('jumlah_suspect');
             $laporan->penyakit = $request->input('penyakit'); // demam berdarah
             $laporan->intensitas_jentik = 0;
@@ -319,7 +328,7 @@ class LaporanController extends Controller
             Log::info($laporan->keterangan);
 
             $notifikasi = new NotificationSetup();
-            $notifikasi->title = 'Laporan Suspect Penyakit Nyamuk Menular dari Rumah Sakit!';
+            $notifikasi->title = $laporan->title;
             $notifikasi->body = $laporan->keterangan . ' ' . $laporan->alamat . ' ' . $laporan->kecamatan . ' ' . $laporan->kelurahan;
             $notifikasi->type = 2;
             $notifikasi->created_by = $laporan->pelapor;
@@ -440,6 +449,7 @@ class LaporanController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
+            'title' => 'required|max:100|unique:laporan,title',
             'jumlah_suspect' => 'required',
             'penyakit' => 'required',
             'intensitas_jentik' => 'required',
@@ -462,6 +472,8 @@ class LaporanController extends Controller
         $laporan = new \App\Laporan();
 
         $laporan->pelapor = $pelapor;
+        $laporan->title = $request->input('title');
+        $laporan->sub_title = $request->input('sub_title');
         $laporan->jumlah_suspect = $request->input('jumlah_suspect');
         $laporan->penyakit = $request->input('penyakit'); // demam berdarah
         $laporan->intensitas_jentik = $request->input('intensitas_jentik');
@@ -500,6 +512,7 @@ class LaporanController extends Controller
 
 
         $validator = Validator::make($request->all(), [
+            'title' => 'max:100',
             'jumlah_suspect' => 'required',
             'penyakit' => 'required',
             'intensitas_jentik' => 'required',
@@ -521,6 +534,8 @@ class LaporanController extends Controller
 
 
         $laporan->pelapor = $pelapor;
+        $laporan->title = $request->input('title');
+        $laporan->sub_title = $request->input('sub_title');
         $laporan->jumlah_suspect = $request->input('jumlah_suspect');
         $laporan->penyakit = $request->input('penyakit'); // demam berdarah
         $laporan->intensitas_jentik = $request->input('intensitas_jentik');

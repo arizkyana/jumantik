@@ -45,7 +45,7 @@ class SendReportNotificationToDinkes
         Log::info($laporan->keterangan);
 
         $notifikasi = new NotificationSetup();
-        $notifikasi->title = $laporan->intensitas_jentik == 1 ? 'Bahaya Jentik!' : 'Laporan Jentik Terbaru dari Jumantik!';
+        $notifikasi->title = $laporan->intensitas_jentik == 1 ? 'Bahaya Jentik pada laporan  ' . $laporan->title : $laporan->title;
         $notifikasi->body = $laporan->keterangan . ' ' . $laporan->alamat . ' ' . $laporan->kecamatan . ' ' . $laporan->kelurahan;
         $notifikasi->type = 2;
         $notifikasi->created_by = $laporan->pelapor;
