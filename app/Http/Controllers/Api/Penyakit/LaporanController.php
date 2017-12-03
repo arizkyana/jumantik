@@ -49,6 +49,7 @@ class LaporanController extends Controller
             'lon' => 'required',
             'alamat' => 'required',
             'is_pekdrs' => 'required',
+            'foto' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -75,6 +76,16 @@ class LaporanController extends Controller
         $laporan->status = 1; // Open
         $laporan->is_pekdrs = $request->input('is_pekdrs');
         $laporan->update_by = $pelapor;
+
+
+        $files = $request->file('foto');
+        $fotos = [];
+        foreach ($files as $file) {
+            $foto = $file->store('uploads');
+            array_push($fotos, $foto);
+        }
+
+        $laporan->foto = implode(',', $fotos);
 
         $laporan->save();
 
@@ -98,6 +109,7 @@ class LaporanController extends Controller
             'lon' => 'required',
             'alamat' => 'required',
             'is_pekdrs' => 'required',
+            'foto' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -124,6 +136,15 @@ class LaporanController extends Controller
         $laporan->status = 1; // Open
         $laporan->is_pekdrs = $request->input('is_pekdrs');
         $laporan->update_by = $pelapor;
+
+        $files = $request->file('foto');
+        $fotos = [];
+        foreach ($files as $file) {
+            $foto = $file->store('uploads');
+            array_push($fotos, $foto);
+        }
+
+        $laporan->foto = implode(',', $fotos);
 
         $laporan->save();
 
@@ -197,11 +218,15 @@ class LaporanController extends Controller
         $detail->is_visible = true;
 
         // if has file
-        if ($request->hasFile('foto')) {
-//            $path = strtolower(trim(str_replace(" ", "_", $request->input('nama'))));
-            $foto = $request->file('foto')->store('uploads/');
-            $detail->foto = $foto;
+
+        $files = $request->file('foto');
+        $fotos = [];
+        foreach ($files as $file) {
+            $foto = $file->store('uploads');
+            array_push($fotos, $foto);
         }
+
+        $detail->foto = implode(',', $fotos);
 
         $detail->save();
 
@@ -270,6 +295,7 @@ class LaporanController extends Controller
             'lon' => 'required',
             'alamat' => 'required',
             'is_pekdrs' => 'required',
+            'foto' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -314,6 +340,15 @@ class LaporanController extends Controller
             $laporan->status = 1; // Open
             $laporan->is_pekdrs = $request->input('is_pekdrs');
             $laporan->update_by = $pelapor;
+
+            $files = $request->file('foto');
+            $fotos = [];
+            foreach ($files as $file) {
+                $foto = $file->store('uploads');
+                array_push($fotos, $foto);
+            }
+
+            $laporan->foto = implode(',', $fotos);
 
             $laporan->save();
 
@@ -373,7 +408,8 @@ class LaporanController extends Controller
             'tindakan' => 'required',
             'status' => 'required',
             'is_pekdrs' => 'required',
-            'id_laporan' => 'required'
+            'id_laporan' => 'required',
+            'foto' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -396,6 +432,15 @@ class LaporanController extends Controller
         $detail->status = $laporan->status;
         $detail->keterangan = $laporan->keterangan;
         $detail->is_visible = true;
+
+        $files = $request->file('foto');
+        $fotos = [];
+        foreach ($files as $file) {
+            $foto = $file->store('uploads');
+            array_push($fotos, $foto);
+        }
+
+        $detail->foto = implode(',', $fotos);
 
         $detail->save();
 

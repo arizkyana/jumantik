@@ -180,12 +180,45 @@
                 </table>
             </fieldset>
             <fieldset>
-                <legend>Lokasi</legend>
-                <input type="hidden" id="lat" name="lat" value="{{ $laporan['isi']->lat }}"/>
-                <input type="hidden" id="lon" name="lon" value="{{ $laporan['isi']->lon }}"/>
-                <div id="map" class="google-map" style=" height: 500px !important;">
+                <legend>Foto Evidence</legend>
 
-                </div>
+                @if (!empty($laporan['isi']['foto']))
+
+                    <div class="carousel slide" id="carousel2">
+                        <ol class="carousel-indicators">
+
+                            @foreach (explode(',', $laporan['isi']['foto']) as $key => $foto)
+                                <li data-slide-to="{{ $key }}" data-target="#carousel2"
+                                    class="{{ $key == 0 ? 'active' : '' }}"></li>
+                            @endforeach
+
+                        </ol>
+                        <div class="carousel-inner">
+
+                            @foreach (explode(',', $laporan['isi']['foto']) as $key => $foto)
+                                <div class="item {{ $key == 0 ? 'active' : '' }}">
+                                    <img alt="image" class="img-responsive"
+                                         src="{{ url('media/' . str_replace("uploads/", "", $foto)) }}">
+                                    {{--<div class="carousel-caption">--}}
+                                    {{--<p>This is simple caption 1</p>--}}
+                                    {{--</div>--}}
+                                </div>
+                            @endforeach
+
+
+                        </div>
+                        <a data-slide="prev" href="#carousel2" class="left carousel-control">
+                            <span class="icon-prev"></span>
+                        </a>
+                        <a data-slide="next" href="#carousel2" class="right carousel-control">
+                            <span class="icon-next"></span>
+                        </a>
+                    </div>
+                @else
+                    <p>
+                        Belum ada foto
+                    </p>
+                @endif
 
             </fieldset>
         </div>

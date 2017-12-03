@@ -173,17 +173,7 @@ window.detail = function () {
         });
     }
 
-    function init() {
-        var latitude = Number(-6.2383);
-        var longitude = Number(106.9756);
-
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: latitude, lng: longitude },
-            zoom: 12
-        });
-
-        loadmap(map).then(addMarker).catch(logError);
-    }
+    function init() {}
 
     return {
         init: init
