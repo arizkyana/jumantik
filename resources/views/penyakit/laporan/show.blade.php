@@ -16,6 +16,7 @@
     <div class="ibox">
         <div class="ibox-title">
             <h5>Laporan</h5>
+
             <div class="ibox-tools">
                 <strong>{{ $laporan['isi']->created_at }}</strong>
             </div>
@@ -45,118 +46,12 @@
             </div>
             {{--/modal foto--}}
 
-            {{--modal laporan pe--}}
-            <div class="modal inmodal fade" id="modal_laporan_pe" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span
-                                        aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                            <h4 class="modal-title">Laporan PE</h4>
-
-                        </div>
-                        <div class="modal-body">
-                            <div style="width: 500px; padding: 10px;" class="center-block border-left-right">
-                                <h3>Laporan PE</h3>
-                                <p>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                    It has survived not only five centuries, but also the leap into electronic
-                                    typesetting, remaining essentially unchanged. It was popularised in the 1960s with
-                                    the release of Letraset sheets containing Lorem Ipsum passages, and more recently
-                                    with desktop publishing software like Aldus PageMaker including versions of Lorem
-                                    Ipsum
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>{{ $laporan['isi']['title'] }}</h1>
+                    <h2>{{ $laporan['isi']['sub_title'] }}</h2>
                 </div>
             </div>
-            {{--/modal laporan pe--}}
-
-            {{--modal add detail laporan pe--}}
-            <div class="modal inmodal fade" id="modal_add_detail_laporan" tabindex="-1" role="dialog"
-                 aria-hidden="true">
-                <form method="post" id="form-add-detail-laporan" name="form-add-detail-laporan" action="{{ action('Penyakit\DetailLaporanController@store') }}" enctype="multipart/form-data">
-                    {{ csrf_field() }}
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal"><span
-                                            aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                                <h4 class="modal-title">Detail Laporan</h4>
-
-                            </div>
-                            <div class="modal-body">
-
-                                <input type="hidden" name="id_laporan" value="{{ $laporan['isi']->id }}" />
-
-                                {{--tindakan--}}
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label for="detail_tindakan" class="col-md-3">Tindakan</label>
-                                        <div class="col-md-9">
-                                            <select name="detail_tindakan" id="detail_tindakan" class="form-control">
-                                                <option value=""></option>
-                                                @foreach ($detail_tindakan as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->nama_tindakan }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label for="detail_status" class="col-md-3">Status</label>
-                                        <div class="col-md-9">
-                                            <select name="detail_status" id="detail_status" class="form-control">
-                                                <option value=""></option>
-                                                @foreach ($detail_status as $item)
-                                                    <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {{--keterangan--}}
-                                <div class="form-group">
-
-                                    <div class="row">
-                                        <label class="col-md-3" for="detail_keterangan">Keterangan</label>
-                                        <div class="col-md-9">
-                                            <textarea class="form-control" name="detail_keterangan"
-                                                      id="detail_keterangan" cols="30" rows="10"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {{--foto--}}
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label for="detail_foto" class="col-md-3">Foto</label>
-                                        <div class="col-md-9">
-                                            <input type="file" name="detail_foto" id="detail_foto" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            {{--/modal add detail laporan pe--}}
 
             <div class="row">
                 <div class="col-md-6">
@@ -183,7 +78,7 @@
 
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <fieldset>
                         <legend>Laporan</legend>
 
@@ -243,37 +138,7 @@
                         </div>
                     </fieldset>
                 </div>
-                <div class="col-md-6">
-                    <fieldset>
-                        <legend>DBD</legend>
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label for="penyakit" class="col-md-4">KDRS</label>
-                                        <div class="col-md-8">
-                                            -
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <label for="suspect" class="col-md-4">PE</label>
-                                        <div class="col-md-8">
-                                            <button type="button" data-toggle="modal" data-target="#modal_laporan_pe"
-                                                    class="btn btn-primary btn-sm btn-block">
-                                                <i class="fa fa-eye"></i> Lihat Laporan
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </fieldset>
-                </div>
             </div>
             <fieldset>
                 <legend style="line-height: 3;">

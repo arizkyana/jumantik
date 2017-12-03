@@ -60,20 +60,20 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 170);
+/******/ 	return __webpack_require__(__webpack_require__.s = 140);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 170:
+/***/ 140:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(171);
+module.exports = __webpack_require__(141);
 
 
 /***/ }),
 
-/***/ 171:
+/***/ 141:
 /***/ (function(module, exports) {
 
 // load map
@@ -326,6 +326,8 @@ window.dashboard = function () {
             method: 'get'
         }).then(function (result) {
 
+            console.log(result);
+
             var coords = [];
             var rgb = "255,255,0";
             $.each(result.data, function (i, area) {
@@ -342,7 +344,7 @@ window.dashboard = function () {
                     strokeColor: '#FF0000',
                     strokeOpacity: 0.8,
                     strokeWeight: 3,
-                    fillColor: 'rgb(' + rgb + ')',
+                    fillColor: 'rgb(226,183,83)',
                     fillOpacity: 0.35
                 });
 
@@ -354,9 +356,11 @@ window.dashboard = function () {
                 });
 
                 new google.maps.event.addListener(polygon, 'click', function (event) {
-                    infowindow.setContent(contentString);
-                    infowindow.setPosition(event.latLng);
-                    infowindow.open(map);
+                    // infowindow.setContent(contentString);
+                    // infowindow.setPosition(event.latLng);
+                    // infowindow.open(map);
+                    var kecamatan = area.kecamatan.replace(/\s+/g, '-').toLowerCase();
+                    window.location.href = base_url + '/penyakit/laporan?kecamatan=' + kecamatan;
                 });
             });
 
