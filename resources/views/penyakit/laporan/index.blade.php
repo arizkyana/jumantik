@@ -73,6 +73,7 @@
                     <th>Tanggal Lapor</th>
                     <th>Pelapor</th>
                     <th>Tipe Pelapor</th>
+                    <th>Judul</th>
                     <th>Penyakit</th>
                     <th>Tindakan</th>
                     <th>Kecamatan</th>

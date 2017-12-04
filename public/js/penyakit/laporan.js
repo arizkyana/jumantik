@@ -118,7 +118,8 @@ var _dataTable = {};
                             break;
                     }
 
-                    $('td', row).eq(6).html(text).addClass(bg);
+                    $('td', row).eq(7).html(text).addClass(bg);
+                    $('td', row).addClass('cursor-pointer');
                 },
                 columns: [{
                     data: 'created_at',
@@ -136,7 +137,7 @@ var _dataTable = {};
                     data: 'tipe_pelapor',
                     name: 'role.name'
 
-                }, {
+                }, { data: 'title', name: 'laporan.title' }, {
                     data: 'nama_penyakit',
                     name: 'penyakit.nama_penyakit'
                 }, {
@@ -146,7 +147,7 @@ var _dataTable = {};
                     data: 'alamat',
                     name: 'laporan.alamat',
                     render: function render(data, type, row, meta) {
-                        var html = data + '<br /><small>' + row.nama_kelurahan + ", " + row.nama_kecamatan + '</small>';
+                        var html = '<small>' + row.nama_kelurahan + ", " + row.nama_kecamatan + '</small>';
                         return html;
                     }
                 }, {
@@ -154,6 +155,13 @@ var _dataTable = {};
                     data: 'status',
                     name: 'laporan.status'
                 }]
+            });
+
+            $('#table-laporan-jumantik tbody').on('click', 'tr', function () {
+                var data = _dataTable.row(this).data();
+                console.log(data);
+                window.location.href = base_url + '/penyakit/laporan/' + data.id + '/show';
+                // alert( 'You clicked on '+data[0]+'\'s row' );
             });
         },
         redraw: function redraw(query) {

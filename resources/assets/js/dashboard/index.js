@@ -264,6 +264,8 @@ window.dashboard = (function () {
             method: 'get'
         }).then(function (result) {
 
+            console.log(result);
+
             let coords = [];
             let rgb = "255,255,0";
             $.each(result.data, function (i, area) {
@@ -280,7 +282,7 @@ window.dashboard = (function () {
                     strokeColor: '#FF0000',
                     strokeOpacity: 0.8,
                     strokeWeight: 3,
-                    fillColor: 'rgb(' + rgb + ')',
+                    fillColor: 'rgb(226,183,83)',
                     fillOpacity: 0.35
                 });
 
@@ -292,9 +294,11 @@ window.dashboard = (function () {
                 });
 
                 new google.maps.event.addListener(polygon, 'click', function (event) {
-                    infowindow.setContent(contentString);
-                    infowindow.setPosition(event.latLng);
-                    infowindow.open(map);
+                    // infowindow.setContent(contentString);
+                    // infowindow.setPosition(event.latLng);
+                    // infowindow.open(map);
+                    let kecamatan = area.kecamatan.replace(/\s+/g, '-').toLowerCase();
+                    window.location.href = base_url + '/penyakit/laporan?kecamatan=' + kecamatan;
                 });
 
 

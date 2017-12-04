@@ -138,6 +138,27 @@ Route::get('/403', function () {
 });
 
 
+// test multi upload
+Route::post('/multi', function(Request $request){
+   if ($request->hasFile('foto')){
+
+       $files = $request->file('foto');
+
+       $fotos = [];
+       foreach ($files as $file) {
+
+           $foto = $file->store('uploads');
+           array_push($fotos, $foto);
+       }
+
+
+
+       return [
+           'foto ' => implode(',', $fotos)
+       ];
+   }
+});
+
 Route::middleware('simple.token')->post('/notif', function (Request $request) {
     return $request->auth_user;
 });

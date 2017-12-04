@@ -37,6 +37,7 @@ class LaporanController extends Controller
     public function jumantik(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'title' => 'required|max:100|unique:laporan,title',
             'jumlah_suspect' => 'required',
             'penyakit' => 'required',
             'intensitas_jentik' => 'required',
@@ -48,6 +49,7 @@ class LaporanController extends Controller
             'lon' => 'required',
             'alamat' => 'required',
             'is_pekdrs' => 'required',
+            'foto' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -59,6 +61,8 @@ class LaporanController extends Controller
         $laporan = new \App\Laporan();
 
         $laporan->pelapor = $pelapor;
+        $laporan->title = $request->input('title');
+        $laporan->sub_title = $request->input('sub_title');
         $laporan->jumlah_suspect = $request->input('jumlah_suspect');
         $laporan->penyakit = $request->input('penyakit'); // demam berdarah
         $laporan->intensitas_jentik = $request->input('intensitas_jentik');
@@ -72,6 +76,16 @@ class LaporanController extends Controller
         $laporan->status = 1; // Open
         $laporan->is_pekdrs = $request->input('is_pekdrs');
         $laporan->update_by = $pelapor;
+
+
+        $files = $request->file('foto');
+        $fotos = [];
+        foreach ($files as $file) {
+            $foto = $file->store('uploads');
+            array_push($fotos, $foto);
+        }
+
+        $laporan->foto = implode(',', $fotos);
 
         $laporan->save();
 
@@ -83,6 +97,7 @@ class LaporanController extends Controller
     public function dinkes(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'title' => 'required|max:100|unique:laporan,title',
             'jumlah_suspect' => 'required',
             'penyakit' => 'required',
             'intensitas_jentik' => 'required',
@@ -94,6 +109,7 @@ class LaporanController extends Controller
             'lon' => 'required',
             'alamat' => 'required',
             'is_pekdrs' => 'required',
+            'foto' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -105,6 +121,8 @@ class LaporanController extends Controller
         $laporan = new \App\Laporan();
 
         $laporan->pelapor = $pelapor;
+        $laporan->title = $request->input('title');
+        $laporan->sub_title = $request->input('sub_title');
         $laporan->jumlah_suspect = $request->input('jumlah_suspect');
         $laporan->penyakit = $request->input('penyakit'); // demam berdarah
         $laporan->intensitas_jentik = $request->input('intensitas_jentik');
@@ -118,6 +136,15 @@ class LaporanController extends Controller
         $laporan->status = 1; // Open
         $laporan->is_pekdrs = $request->input('is_pekdrs');
         $laporan->update_by = $pelapor;
+
+        $files = $request->file('foto');
+        $fotos = [];
+        foreach ($files as $file) {
+            $foto = $file->store('uploads');
+            array_push($fotos, $foto);
+        }
+
+        $laporan->foto = implode(',', $fotos);
 
         $laporan->save();
 
@@ -133,7 +160,7 @@ class LaporanController extends Controller
             Log::info($laporan->keterangan);
 
             $notifikasi = new NotificationSetup();
-            $notifikasi->title = 'Laporan Jentik Terbaru!';
+            $notifikasi->title = $laporan->title;
             $notifikasi->body = $laporan->keterangan . ' ' . $laporan->alamat . ' ' . $laporan->kecamatan . ' ' . $laporan->kelurahan;
             $notifikasi->type = 2;
             $notifikasi->created_by = $laporan->pelapor;
@@ -191,11 +218,15 @@ class LaporanController extends Controller
         $detail->is_visible = true;
 
         // if has file
-        if ($request->hasFile('foto')) {
-//            $path = strtolower(trim(str_replace(" ", "_", $request->input('nama'))));
-            $foto = $request->file('foto')->store('uploads/');
-            $detail->foto = $foto;
+
+        $files = $request->file('foto');
+        $fotos = [];
+        foreach ($files as $file) {
+            $foto = $file->store('uploads');
+            array_push($fotos, $foto);
         }
+
+        $detail->foto = implode(',', $fotos);
 
         $detail->save();
 
@@ -217,7 +248,7 @@ class LaporanController extends Controller
 
         $notifikasi = new NotificationSetup();
         $notifikasi->title = 'Sudah Melakukan Fogging';
-        $notifikasi->body = 'Tim Petugas Dinkes sudah melakukan fogging untuk alamat ' . $laporan->alamat;
+        $notifikasi->body = 'Tim Petugas Dinkes sudah melakukan fogging untuk alamat ' . $laporan->alamat . ' pada laporan ' . $laporan->judul;
         $notifikasi->type = 2;
         $notifikasi->created_by = $laporan->pelapor;
         $notifikasi->is_visible = true;
@@ -252,6 +283,7 @@ class LaporanController extends Controller
     public function rumah_sakit(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'title' => 'required|max:100|unique:laporan,title',
             'jumlah_suspect' => 'required',
             'penyakit' => 'required',
 
@@ -263,6 +295,7 @@ class LaporanController extends Controller
             'lon' => 'required',
             'alamat' => 'required',
             'is_pekdrs' => 'required',
+            'foto' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -292,6 +325,8 @@ class LaporanController extends Controller
             $laporan = new \App\Laporan();
 
             $laporan->pelapor = $pelapor;
+            $laporan->title = $request->input('title');
+            $laporan->sub_title = $request->input('sub_title');
             $laporan->jumlah_suspect = $request->input('jumlah_suspect');
             $laporan->penyakit = $request->input('penyakit'); // demam berdarah
             $laporan->intensitas_jentik = 0;
@@ -306,6 +341,15 @@ class LaporanController extends Controller
             $laporan->is_pekdrs = $request->input('is_pekdrs');
             $laporan->update_by = $pelapor;
 
+            $files = $request->file('foto');
+            $fotos = [];
+            foreach ($files as $file) {
+                $foto = $file->store('uploads');
+                array_push($fotos, $foto);
+            }
+
+            $laporan->foto = implode(',', $fotos);
+
             $laporan->save();
 
             // kirim notif ke dinkes
@@ -319,7 +363,7 @@ class LaporanController extends Controller
             Log::info($laporan->keterangan);
 
             $notifikasi = new NotificationSetup();
-            $notifikasi->title = 'Laporan Suspect Penyakit Nyamuk Menular dari Rumah Sakit!';
+            $notifikasi->title = $laporan->title;
             $notifikasi->body = $laporan->keterangan . ' ' . $laporan->alamat . ' ' . $laporan->kecamatan . ' ' . $laporan->kelurahan;
             $notifikasi->type = 2;
             $notifikasi->created_by = $laporan->pelapor;
@@ -364,7 +408,8 @@ class LaporanController extends Controller
             'tindakan' => 'required',
             'status' => 'required',
             'is_pekdrs' => 'required',
-            'id_laporan' => 'required'
+            'id_laporan' => 'required',
+            'foto' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -387,6 +432,15 @@ class LaporanController extends Controller
         $detail->status = $laporan->status;
         $detail->keterangan = $laporan->keterangan;
         $detail->is_visible = true;
+
+        $files = $request->file('foto');
+        $fotos = [];
+        foreach ($files as $file) {
+            $foto = $file->store('uploads');
+            array_push($fotos, $foto);
+        }
+
+        $detail->foto = implode(',', $fotos);
 
         $detail->save();
 
@@ -440,6 +494,7 @@ class LaporanController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
+            'title' => 'required|max:100|unique:laporan,title',
             'jumlah_suspect' => 'required',
             'penyakit' => 'required',
             'intensitas_jentik' => 'required',
@@ -462,6 +517,8 @@ class LaporanController extends Controller
         $laporan = new \App\Laporan();
 
         $laporan->pelapor = $pelapor;
+        $laporan->title = $request->input('title');
+        $laporan->sub_title = $request->input('sub_title');
         $laporan->jumlah_suspect = $request->input('jumlah_suspect');
         $laporan->penyakit = $request->input('penyakit'); // demam berdarah
         $laporan->intensitas_jentik = $request->input('intensitas_jentik');
@@ -500,6 +557,7 @@ class LaporanController extends Controller
 
 
         $validator = Validator::make($request->all(), [
+            'title' => 'max:100',
             'jumlah_suspect' => 'required',
             'penyakit' => 'required',
             'intensitas_jentik' => 'required',
@@ -521,6 +579,8 @@ class LaporanController extends Controller
 
 
         $laporan->pelapor = $pelapor;
+        $laporan->title = $request->input('title');
+        $laporan->sub_title = $request->input('sub_title');
         $laporan->jumlah_suspect = $request->input('jumlah_suspect');
         $laporan->penyakit = $request->input('penyakit'); // demam berdarah
         $laporan->intensitas_jentik = $request->input('intensitas_jentik');
