@@ -60,21 +60,21 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 155);
+/******/ 	return __webpack_require__(__webpack_require__.s = 185);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 155:
+/***/ 185:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(156);
-module.exports = __webpack_require__(157);
+__webpack_require__(186);
+module.exports = __webpack_require__(187);
 
 
 /***/ }),
 
-/***/ 156:
+/***/ 186:
 /***/ (function(module, exports) {
 
 /**
@@ -96,7 +96,7 @@ var _dataTable = {};
                 serverSide: true,
                 saveState: true,
                 ajax: {
-                    url: base_url + '/api/penyakit/laporan/ajax_laporan',
+                    url: base_url + '/api/penyakit/laporan/ajax_laporan' + "?" + $("#form-filter").serialize(),
                     method: 'post'
                 },
                 order: [[0, 'desc']],
@@ -233,10 +233,28 @@ var _dataTable = {};
         }
     };
 
+    filter.kecamatan = {
+        el: $('#kecamatan'),
+        evt: {
+            change: function change(e) {
+                e.preventDefault();
+                table.redraw("?" + $("#form-filter").serialize());
+            }
+        },
+        init: function init() {
+            var self = this;
+
+            self.el.select2();
+
+            self.el.change(self.evt.change);
+        }
+    };
+
     filter.tanggalMulai.init();
     filter.tanggalAkhir.init();
     filter.tipePelapor.init();
     filter.penyakit.init();
+    filter.kecamatan.init();
     table.init();
 })();
 
@@ -267,7 +285,7 @@ $(document).ready(function () {
 
 /***/ }),
 
-/***/ 157:
+/***/ 187:
 /***/ (function(module, exports) {
 
 /**

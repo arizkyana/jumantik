@@ -14,44 +14,60 @@
     {{--filter--}}
     <div class="ibox">
         <div class="ibox-content no-overflow">
-            <form class="form-inline" id="form-filter">
-                <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                        <input type="text" class="form-control" placeholder="Tanggal Mulai" name="tanggal_mulai"
-                               id="tanggal_mulai"/>
-                        <span class="input-group-addon"> - </span>
-                        <input type="text" class="form-control" placeholder="Tanggal Akhir" name="tanggal_akhir"
-                               id="tanggal_akhir"/>
+            <form id="form-filter">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group" >
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                <input type="text" class="form-control" placeholder="Tanggal Mulai" name="tanggal_mulai"
+                                       id="tanggal_mulai"/>
+                                <span class="input-group-addon"> - </span>
+                                <input type="text" class="form-control" placeholder="Tanggal Akhir" name="tanggal_akhir"
+                                       id="tanggal_akhir"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="tipe_pelapor">Tipe Pelapor</label>
+                                <select name="tipe_pelapor" id="tipe_pelapor" class="form-control"
+                                        data-placeholder="Pilih Tipe Pelapor">
+                                    <option value=""></option>
+                                    <option value="all">All</option>
+
+                                    @foreach(\App\Role::all() as $role)
+                                        <option value="{{$role->id}}">{{$role->name}}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="penyakit">Penyakit</label>
+                                <select name="penyakit" id="penyakit" class="form-control"
+                                        data-placeholder="Pilih Penyakit">
+                                    <option value=""></option>
+                                    <option value="all">All</option>
+
+                                    @foreach (\App\Penyakit::all() as $penyakit)
+                                        <option value="{{$penyakit->id}}">{{$penyakit->nama_penyakit}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="kecamatan">Kecamatan</label>
+                                <select name="kecamatan" id="kecamatan" class="form-control"
+                                        data-placeholder="Pilih Kecamatan">
+                                    <option value=""></option>
+                                    @foreach ($kecamatan as $item)
+                                        <option value="{{ strtolower(preg_replace('/\s+/', '-', $item->nama_kecamatan)) }}" {{ $init_kecamatan == strtolower(preg_replace('/\s+/', '-', $item->nama_kecamatan)) ? 'selected' : '' }}>{{ $item->nama_kecamatan }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="pull-right">
-                    <div class="form-group">
-                        <label for="tipe_pelapor">Tipe Pelapor</label>
-                        <select name="tipe_pelapor" id="tipe_pelapor" class="form-control"
-                                data-placeholder="Pilih Tipe Pelapor">
-                            <option value=""></option>
-                            <option value="all">All</option>
-
-                            @foreach(\App\Role::all() as $role)
-                                <option value="{{$role->id}}">{{$role->name}}</option>
-                            @endforeach
-
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="penyakit">Penyakit</label>
-                        <select name="penyakit" id="penyakit" class="form-control" data-placeholder="Pilih Penyakit">
-                            <option value=""></option>
-                            <option value="all">All</option>
-
-                            @foreach (\App\Penyakit::all() as $penyakit)
-                                <option value="{{$penyakit->id}}">{{$penyakit->nama_penyakit}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
             </form>
         </div>
     </div>

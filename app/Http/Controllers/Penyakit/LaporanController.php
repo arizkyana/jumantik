@@ -34,12 +34,18 @@ class LaporanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
+        $kecamatan = Kecamatan::all();
+        $init_kecamatan = $request->query('kecamatan');
+
+
         return view('penyakit/laporan/index')->with([
             'js' => 'penyakit/laporan.js',
-            'title' => 'Laporan'
-
+            'title' => 'Laporan',
+            'kecamatan' => $kecamatan,
+            'init_kecamatan' => $init_kecamatan
         ]);
     }
 

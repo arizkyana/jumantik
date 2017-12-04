@@ -17,7 +17,7 @@ let _dataTable = {};
                 serverSide: true,
                 saveState: true,
                 ajax: {
-                    url: base_url + '/api/penyakit/laporan/ajax_laporan',
+                    url: base_url + '/api/penyakit/laporan/ajax_laporan' + "?" + $("#form-filter").serialize(),
                     method: 'post'
                 },
                 order: [[0, 'desc']],
@@ -174,10 +174,28 @@ let _dataTable = {};
         }
     };
 
+    filter.kecamatan = {
+        el: $('#kecamatan'),
+        evt: {
+            change: function (e) {
+                e.preventDefault();
+                table.redraw("?" + $("#form-filter").serialize());
+            }
+        },
+        init: function () {
+            const self = this;
+
+            self.el.select2();
+
+            self.el.change(self.evt.change);
+        }
+    };
+
     filter.tanggalMulai.init();
     filter.tanggalAkhir.init();
     filter.tipePelapor.init();
     filter.penyakit.init();
+    filter.kecamatan.init();
     table.init();
 })();
 

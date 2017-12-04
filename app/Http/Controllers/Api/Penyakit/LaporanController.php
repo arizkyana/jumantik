@@ -657,6 +657,18 @@ class LaporanController extends Controller
             ->where('laporan.status', '<>', 0);
 
 
+        if ($request->query('tanggal_mulai') && $request->query('tanggal_akhir') && $request->query('tipe_pelapor') && $request->query('penyakit') && $request->query('kecamatan')) {
+            $tanggal_mulai = date('Y-m-d', strtotime($request->query('tanggal_mulai')));
+            $tanggal_akhir = date('Y-m-d', strtotime($request->query('tanggal_akhir')));
+            $data->whereBetween('laporan.created_at', [$tanggal_mulai, $tanggal_akhir]);
+            if ($request->query('tipe_pelapor') !== 'all' && $request->query('penyakit') !== 'all') {
+                $data->where('role.id', '=', $request->query('tipe_pelapor'));
+                $data->where('penyakit.id', '=', $request->query('penyakit'));
+            }
+            $data->where('kecamatan.nama_kecamatan', 'LIKE', '%'.$this->parseKecamatan($request->query('kecamatan')).'%');
+
+        }
+
         if ($request->query('tanggal_mulai') && $request->query('tanggal_akhir') && $request->query('tipe_pelapor') && $request->query('penyakit')) {
             $tanggal_mulai = date('Y-m-d', strtotime($request->query('tanggal_mulai')));
             $tanggal_akhir = date('Y-m-d', strtotime($request->query('tanggal_akhir')));
@@ -668,8 +680,8 @@ class LaporanController extends Controller
         }
 
         if ($request->query('tanggal_mulai') && $request->query('tanggal_akhir') && $request->query('tipe_pelapor')) {
-            $tanggal_mulai = date('Y-m-d', strtotime($request->query('tanggal_mulai')));
-            $tanggal_akhir = date('Y-m-d', strtotime($request->query('tanggal_akhir')));
+            $tanggal_mulai = date('Y-m-d 00:00:00', strtotime($request->query('tanggal_mulai')));
+            $tanggal_akhir = date('Y-m-d 23:59:59', strtotime($request->query('tanggal_akhir')));
             $data->whereBetween('laporan.created_at', [$tanggal_mulai, $tanggal_akhir]);
             if ($request->query('tipe_pelapor') !== 'all') {
                 $data->where('role.id', '=', $request->query('tipe_pelapor'));
@@ -682,6 +694,14 @@ class LaporanController extends Controller
             $data->whereBetween('laporan.created_at', [$tanggal_mulai, $tanggal_akhir]);
         }
 
+
+        if ($request->query('tipe_pelapor') && $request->query('penyakit') && $request->query('kecamatan')) {
+            if ($request->query('tipe_pelapor') !== 'all' && $request->query('penyakit') !== 'all') {
+                $data->where('role.id', '=', $request->query('tipe_pelapor'));
+                $data->where('penyakit.id', '=', $request->query('penyakit'));
+            }
+            $data->where('kecamatan.nama_kecamatan', 'LIKE', '%'.$this->parseKecamatan($request->query('kecamatan')).'%');
+        }
 
         if ($request->query('tipe_pelapor') && $request->query('penyakit')) {
             if ($request->query('tipe_pelapor') !== 'all' && $request->query('penyakit') !== 'all') {
@@ -700,6 +720,10 @@ class LaporanController extends Controller
             if ($request->query('penyakit') !== 'all') {
                 $data->where('penyakit.id', '=', $request->query('penyakit'));
             }
+        }
+
+        if ($request->query('kecamatan')){
+            $data->where('kecamatan.nama_kecamatan', 'LIKE', '%'.$this->parseKecamatan($request->query('kecamatan')).'%');
         }
 
         $data = Datatables::like($request, $data);
@@ -723,5 +747,10 @@ class LaporanController extends Controller
 
         $laporan->save();
         return $laporan;
+    }
+
+    // util
+    private function parseKecamatan($kecamatan){
+        return trim(str_replace('-', ' ', $kecamatan));
     }
 }
