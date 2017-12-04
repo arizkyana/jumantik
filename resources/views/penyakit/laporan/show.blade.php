@@ -44,6 +44,85 @@
             </div>
             {{--/modal foto--}}
 
+            {{--modal add detail laporan pe--}}
+            <div class="modal inmodal fade" id="modal_add_detail_laporan" tabindex="-1" role="dialog"
+                 aria-hidden="true">
+                <form method="post" id="form-add-detail-laporan" name="form-add-detail-laporan" action="{{ action('Penyakit\DetailLaporanController@store') }}" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span
+                                            aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title">Detail Laporan</h4>
+
+                            </div>
+                            <div class="modal-body">
+
+                                <input type="hidden" name="id_laporan" value="{{ $laporan['isi']->id }}" />
+
+                                {{--tindakan--}}
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label for="detail_tindakan" class="col-md-3">Tindakan</label>
+                                        <div class="col-md-9">
+                                            <select name="detail_tindakan" id="detail_tindakan" class="form-control">
+                                                <option value=""></option>
+                                                @foreach ($detail_tindakan as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->nama_tindakan }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label for="detail_status" class="col-md-3">Status</label>
+                                        <div class="col-md-9">
+                                            <select name="detail_status" id="detail_status" class="form-control">
+                                                <option value=""></option>
+                                                @foreach ($detail_status as $item)
+                                                    <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{--keterangan--}}
+                                <div class="form-group">
+
+                                    <div class="row">
+                                        <label class="col-md-3" for="detail_keterangan">Keterangan</label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" name="detail_keterangan"
+                                                      id="detail_keterangan" cols="30" rows="10"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{--foto--}}
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label for="detail_foto" class="col-md-3">Foto</label>
+                                        <div class="col-md-9">
+                                            <input type="file" name="detail_foto" id="detail_foto" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {{--/modal add detail laporan pe--}}
+
             <div class="row">
                 <div class="col-md-12">
                     <h1>{{ $laporan['isi']['title'] }}</h1>
