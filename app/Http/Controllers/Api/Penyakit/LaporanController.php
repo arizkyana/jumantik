@@ -352,7 +352,7 @@ class LaporanController extends Controller
 
             $laporan->save();
 
-            // kirim notif ke dinkes
+            // kirim notif ke puskesmas
             $dinkes = DB::table('users')
                 ->select('users.id', 'users.fcm_token')
                 ->leftJoin('role', 'users.role_id', '=', 'role.id')

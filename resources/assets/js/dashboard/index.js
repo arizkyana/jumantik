@@ -22,7 +22,7 @@ window.dashboard = (function () {
             infowindow.setContent(laporan.title + ' ' + laporan.keterangan);
             infowindow.setPosition(event.latLng);
             infowindow.open(map);
-            setTimeout(function(){
+            setTimeout(function () {
                 window.location.href = base_url + '/penyakit/laporan/' + laporan.id + '/show';
             }, 1200);
         });
@@ -425,18 +425,18 @@ $(document).ready(function () {
 
     loadChart();
 
-    $("#bulan").change(function(){
+    $("#bulan").change(function () {
         let _bulan = $(this).val();
         loadChart();
     });
 
-    setInterval(function(){
-        loadChart();
-    }, 5000);
+    // setInterval(function(){
+    //     loadChart();
+    // }, 5000);
 
 });
 
-function loadChart(){
+function loadChart() {
     loadStatistikJumantik()
         .then(buildCartJumantik)
         .then(loadStatistikPenyakitMenularNyamuk)
@@ -451,8 +451,6 @@ function loadStatistikJumantik() {
             url: base_url + '/api/dashboard/jumantik?' + $("#form-filter").serialize(),
             method: 'get'
         }).then(function (result) {
-            console.log(result);
-
             let data = [];
             $.each(result, function (i, o) {
                 let _date = {
@@ -460,7 +458,6 @@ function loadStatistikJumantik() {
                     month: Number(moment(o.created_at, 'YYYY-MM-DD').format('MM')),
                     day: Number(moment(o.created_at, 'YYYY-MM-DD').format('DD'))
                 };
-                console.log(_date);
                 data.push([Date.UTC(Number(_date.year), Number(_date.month) - 1, Number(_date.day)) - 1, o.jumlah]);
             });
 
@@ -475,15 +472,28 @@ function loadStatistikJumantik() {
 
 
 }
+
 function buildCartJumantik(data) {
     Highcharts.chart('ct-jumantik', {
         credits: false,
         chart: {
-            zoomType: 'x'
+            type: 'line',
+            zoomType: 'x',
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 10,
+            events: {
+                load: function () {
+
+                    let series = this.series[0];
+                    console.log('series', series);
+
+                }
+            }
         },
         title: {
             text: 'Laporan Jumantik'
         },
+
         // subtitle: {
         //     text: document.ontouchstart === undefined ?
         //         'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
@@ -561,6 +571,7 @@ function loadStatistikPenyakitMenularNyamuk() {
 
 
 }
+
 function buildChartPenyakitNyamukMenular(data) {
     Highcharts.chart('ct-penyakit-menular-nyamuk', {
         credits: false,

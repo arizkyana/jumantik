@@ -482,9 +482,9 @@ $(document).ready(function () {
         loadChart();
     });
 
-    setInterval(function () {
-        loadChart();
-    }, 5000);
+    // setInterval(function(){
+    //     loadChart();
+    // }, 5000);
 });
 
 function loadChart() {
@@ -498,8 +498,6 @@ function loadStatistikJumantik() {
             url: base_url + '/api/dashboard/jumantik?' + $("#form-filter").serialize(),
             method: 'get'
         }).then(function (result) {
-            console.log(result);
-
             var data = [];
             $.each(result, function (i, o) {
                 var _date = {
@@ -507,7 +505,6 @@ function loadStatistikJumantik() {
                     month: Number(moment(o.created_at, 'YYYY-MM-DD').format('MM')),
                     day: Number(moment(o.created_at, 'YYYY-MM-DD').format('DD'))
                 };
-                console.log(_date);
                 data.push([Date.UTC(Number(_date.year), Number(_date.month) - 1, Number(_date.day)) - 1, o.jumlah]);
             });
 
@@ -519,15 +516,27 @@ function loadStatistikJumantik() {
 
     return _promise;
 }
+
 function buildCartJumantik(data) {
     Highcharts.chart('ct-jumantik', {
         credits: false,
         chart: {
-            zoomType: 'x'
+            type: 'line',
+            zoomType: 'x',
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 10,
+            events: {
+                load: function load() {
+
+                    var series = this.series[0];
+                    console.log('series', series);
+                }
+            }
         },
         title: {
             text: 'Laporan Jumantik'
         },
+
         // subtitle: {
         //     text: document.ontouchstart === undefined ?
         //         'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
@@ -597,6 +606,7 @@ function loadStatistikPenyakitMenularNyamuk() {
 
     return _promise;
 }
+
 function buildChartPenyakitNyamukMenular(data) {
     Highcharts.chart('ct-penyakit-menular-nyamuk', {
         credits: false,
