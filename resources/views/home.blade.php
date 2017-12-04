@@ -12,7 +12,7 @@
                 </div>
                 <div class="ibox-content" style="position: relative;">
                     {{--custom maps tools--}}
-                    <div style="width: 20em; position: absolute; top:0; bottom: 0; z-index: 1000; margin: 60px 8px">
+                    <div class="filter-wilayah-container">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h5 class="panel-title">Wilayah</h5>

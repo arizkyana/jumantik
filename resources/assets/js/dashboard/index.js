@@ -12,17 +12,22 @@ var cluster;
 
 window.dashboard = (function () {
 
-    function openWindow(object, contentString, map) {
+    function openWindow(object, laporan, map) {
 
         let infowindow = new google.maps.InfoWindow({
-            content: contentString
+            content: laporan.title + ' ' + laporan.keterangan
         });
 
         new google.maps.event.addListener(object, 'click', function (event) {
-            infowindow.setContent(contentString);
+            infowindow.setContent(laporan.title + ' ' + laporan.keterangan);
             infowindow.setPosition(event.latLng);
             infowindow.open(map);
+            setTimeout(function(){
+                window.location.href = base_url + '/penyakit/laporan/' + laporan.id + '/show';
+            }, 1200);
         });
+
+
     }
 
     function laporanIcon(status) {
@@ -62,7 +67,7 @@ window.dashboard = (function () {
                         map: map
                     });
 
-                    openWindow(_laporan, laporan.keterangan, map);
+                    openWindow(_laporan, laporan, map);
 
                 });
 
@@ -299,6 +304,14 @@ window.dashboard = (function () {
                     // infowindow.open(map);
                     let kecamatan = area.kecamatan.replace(/\s+/g, '-').toLowerCase();
                     window.location.href = base_url + '/penyakit/laporan?kecamatan=' + kecamatan;
+                });
+
+                new google.maps.event.addListener(polygon, 'mouseover', function (event) {
+                    infowindow.setContent(contentString);
+                    infowindow.setPosition(event.latLng);
+                    infowindow.open(map);
+                    // let kecamatan = area.kecamatan.replace(/\s+/g, '-').toLowerCase();
+                    // window.location.href = base_url + '/penyakit/laporan?kecamatan=' + kecamatan;
                 });
 
 
