@@ -72,6 +72,10 @@ Route::prefix('penyakit')->middleware('simple.token')->group(function () {
         Route::post('/rumah_sakit', 'Api\Penyakit\LaporanController@rumah_sakit');
         Route::post('/survey', 'Api\Penyakit\LaporanController@survey'); // Puskesmas
 
+        // histories and to self
+        Route::post('/histories', 'Api\Penyakit\LaporanController@histories');
+        Route::post('/to_self', 'Api\Penyakit\LaporanController@to_self');
+
 
     });
 

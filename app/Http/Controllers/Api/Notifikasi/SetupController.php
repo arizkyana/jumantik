@@ -18,13 +18,16 @@ use Illuminate\Support\Facades\Validator;
 
 class SetupController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $user = $request->auth_user;
 
         $notifikasi = DB::table('notification_history')
             ->select('notification_history.status', 'notification_history.created_at', 'notification_setup.title', 'notification_setup.body', 'notification_history.id_laporan')
             ->leftJoin('notification_setup', 'notification_history.id_notification_setup', '=', 'notification_setup.id')
+            ->leftJoin('laporan', 'notification_history.id_laporan', '=', 'laporan.id')
             ->where('receiver', '=', $user->id)
+            ->whereRaw('laporan.status <> ? AND laporan.status <> ? ', [0, 2])
             ->get();
 
         return ResponseMod::success([
@@ -33,7 +36,8 @@ class SetupController extends Controller
         ]);
     }
 
-    public function today(Request $request){
+    public function today(Request $request)
+    {
         $user = User::find($request->input('user'));
 
 

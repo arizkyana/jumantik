@@ -32,6 +32,41 @@ class LaporanController extends Controller
         return Laporan::all();
     }
 
+    public function histories(Request $request){
+        $user = $request->auth_user;
+
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
+
+        $histories = DB::table('notification_history')
+            ->select('laporan.*')
+            ->leftJoin('notification_setup', 'notification_history.id_notification_setup', '=', 'notification_setup.id')
+            ->leftJoin('laporan', 'notification_history.id_laporan', '=', 'laporan.id')
+            ->where('laporan.update_by', '=', $user->id)
+            ->limit($limit)
+            ->offset($offset)
+            ->get();
+
+        return ResponseMod::success($histories);
+    }
+
+    public function to_self(Request $request){
+        $user = $request->auth_user;
+
+        $limit = $request->input('limit');
+        $offset = $request->input('offset');
+
+        $laporan = DB::table('notification_history')
+            ->select('laporan.*', 'notification_history.receiver')
+            ->leftJoin('notification_setup', 'notification_history.id_notification_setup', '=', 'notification_setup.id')
+            ->leftJoin('laporan', 'notification_history.id_laporan', '=', 'laporan.id')
+            ->where('receiver', '=', $user->id)
+            ->limit($limit)
+            ->offset($offset)
+            ->get();
+
+        return ResponseMod::success($laporan);
+    }
 
     // encapsulated api
     public function jumantik(Request $request)
