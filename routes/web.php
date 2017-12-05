@@ -15,6 +15,9 @@ Route::get('/', 'HomeController@index');
 
 Auth::routes();
 
+// Custom Registration
+//Route::get('/registrasi')
+
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard')->middleware('can:dashboard');
 
