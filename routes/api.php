@@ -159,6 +159,19 @@ Route::post('/multi', function(Request $request){
    }
 });
 
+// Media Access
+Route::get('/thumbnail/{width}/{height}/{filename}', function (Request $request, $width, $height, $filename) {
+
+    $path = storage_path('app/uploads') . "/" . $filename;
+
+    if (!\Illuminate\Support\Facades\File::exists($path)) abort(404);
+    $file = \Illuminate\Support\Facades\File::get($path);
+    $type = \Illuminate\Support\Facades\File::mimeType($path);
+
+    $img = Image::make($path)->resize($width, $height);
+    return $img->response($type);
+});
+
 Route::middleware('simple.token')->post('/notif', function (Request $request) {
     return $request->auth_user;
 });
