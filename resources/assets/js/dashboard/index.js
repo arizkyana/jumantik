@@ -344,27 +344,7 @@ window.dashboard = (function () {
 
     }
 
-    function init() {
-        const latitude = Number(-6.2383);
-        const longitude = Number(106.9756);
 
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: latitude, lng: longitude},
-            zoom: 12
-        });
-
-        loadmap(map);
-
-        // switchery
-
-
-        var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-
-        elems.forEach(function (html) {
-            var switchery = new Switchery(html);
-        });
-
-    }
 
     function changeMapLayer(el, layer) {
 
@@ -413,13 +393,36 @@ window.dashboard = (function () {
     }
 
     return {
-        init: (init),
+        loadmap: loadmap,
         changeMapLayer: (changeMapLayer)
     }
 })();
 
+// init map
+function init() {
+    const latitude = Number(-6.2383);
+    const longitude = Number(106.9756);
+
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: latitude, lng: longitude},
+        zoom: 12
+    });
+
+    window.dashboard.loadmap(map);
+
+    // switchery
+
+
+    var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+
+    elems.forEach(function (html) {
+        var switchery = new Switchery(html);
+    });
+
+}
+
 $(document).ready(function () {
-    window.dashboard.init();
+    init();
 
     $("input[name=bulan]").datepicker({
         format: "yyyy-mm",

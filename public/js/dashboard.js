@@ -60,20 +60,20 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 168);
+/******/ 	return __webpack_require__(__webpack_require__.s = 170);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 168:
+/***/ 170:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(169);
+module.exports = __webpack_require__(171);
 
 
 /***/ }),
 
-/***/ 169:
+/***/ 171:
 /***/ (function(module, exports) {
 
 // load map
@@ -397,27 +397,6 @@ window.dashboard = function () {
         });
     }
 
-    function init() {
-        var latitude = Number(-6.2383);
-        var longitude = Number(106.9756);
-
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: latitude, lng: longitude },
-            zoom: 12
-        });
-
-        loadmap(map);
-
-        // switchery
-
-
-        var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-
-        elems.forEach(function (html) {
-            var switchery = new Switchery(html);
-        });
-    }
-
     function changeMapLayer(el, layer) {
 
         var isChecked = $(el).is(':checked');
@@ -465,13 +444,35 @@ window.dashboard = function () {
     }
 
     return {
-        init: init,
+        loadmap: loadmap,
         changeMapLayer: changeMapLayer
     };
 }();
 
+// init map
+function init() {
+    var latitude = Number(-6.2383);
+    var longitude = Number(106.9756);
+
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: latitude, lng: longitude },
+        zoom: 12
+    });
+
+    window.dashboard.loadmap(map);
+
+    // switchery
+
+
+    var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+
+    elems.forEach(function (html) {
+        var switchery = new Switchery(html);
+    });
+}
+
 $(document).ready(function () {
-    window.dashboard.init();
+    init();
 
     $("input[name=bulan]").datepicker({
         format: "yyyy-mm",
