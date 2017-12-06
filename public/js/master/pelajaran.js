@@ -160,7 +160,30 @@ throw new Error("Module build failed: Error: ENOENT: no such file or directory, 
 /***/ 203:
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open 'D:\\xampp\\htdocs\\edu\\resources\\assets\\js\\master\\pelajaran\\edit.js'\n    at Error (native)");
+var form = {
+    api: {
+        scope: {}
+    }
+};
+
+$(document).ready(function () {
+
+    form.api.scope = {
+        el: $("#client_scope"),
+        evt: {
+            onChange: function onChange(e) {
+                e.preventDefault();
+                return;
+            }
+        },
+        init: function init() {
+            var self = this;
+            self.el.select2({
+                placeholder: 'Pilih Scope'
+            });
+        }
+    };
+});
 
 /***/ })
 

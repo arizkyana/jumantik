@@ -60,22 +60,22 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 192);
+/******/ 	return __webpack_require__(__webpack_require__.s = 208);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 192:
+/***/ 208:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(193);
-__webpack_require__(194);
-module.exports = __webpack_require__(195);
+__webpack_require__(209);
+__webpack_require__(210);
+module.exports = __webpack_require__(211);
 
 
 /***/ }),
 
-/***/ 193:
+/***/ 209:
 /***/ (function(module, exports) {
 
 var table = {};
@@ -90,34 +90,7 @@ $(document).ready(function () {
         },
         init: function init() {
             var self = this;
-            _datatable = self.el.DataTable({
-                serverSide: true,
-                processing: true,
-                ajax: {
-                    url: base_url + '/api/master/fakultas',
-                    method: 'post'
-                },
-                createdRow: function createdRow(row) {
-                    $('td', row).eq(5).addClass('text-center');
-                },
-                order: [[0, 'desc']],
-                columns: [{
-                    data: 'created_at', name: 'fakultas.created_at',
-                    render: function render(data, type, row, meta) {
-                        return moment(data, 'yyyy-mm-dd hh:mm:ss').format('D MMM Y');
-                    }
-                }, {
-                    data: 'kode', name: 'fakultas.kode',
-                    render: function render(data, type, row, meta) {
-                        return '<a class="text-danger" href="' + base_url + '/master/fakultas/' + row.id + '/edit">' + data + '</a>';
-                    }
-                }, { data: 'nama', name: 'fakultas.nama' }, {
-                    data: 'id', name: 'fakultas.id',
-                    render: function render(data, type, row, meta) {
-                        return '<button type="button" onclick="remove(' + row.id + ')" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>';
-                    }
-                }]
-            });
+            _datatable = self.el.DataTable();
         }
     };
 
@@ -150,14 +123,14 @@ window.remove = function (id) {
 
 /***/ }),
 
-/***/ 194:
+/***/ 210:
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open 'D:\\xampp\\htdocs\\edu\\resources\\assets\\js\\master\\fakultas\\create.js'\n    at Error (native)");
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open 'D:\\xampp\\htdocs\\edu\\resources\\assets\\js\\perwalian\\adddrop\\create.js'\n    at Error (native)");
 
 /***/ }),
 
-/***/ 195:
+/***/ 211:
 /***/ (function(module, exports) {
 
 var form = {
