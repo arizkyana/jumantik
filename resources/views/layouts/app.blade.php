@@ -9,15 +9,15 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @guest
-    @else
-        <meta name="user" content="{{ \Illuminate\Support\Facades\Auth::user()->id }}">
-    @endguest
-    <title>{{ isset($title) ? config('app.name', 'Laravel') . " | " . $title : config('app.name', 'Laravel') }}</title>
+        @else
+            <meta name="user" content="{{ \Illuminate\Support\Facades\Auth::user()->id }}">
+            @endguest
+            <title>{{ isset($title) ? config('app.name', 'Laravel') . " | " . $title : config('app.name', 'Laravel') }}</title>
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+            <!-- Styles -->
+            <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    {{--<script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>--}}
+            {{--<script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>--}}
 
 </head>
 
@@ -90,14 +90,17 @@
                         </div>
                         <ul class="nav navbar-top-links navbar-right">
                             <li class="dropdown">
-                                <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" aria-expanded="true">
-                                    <i class="fa fa-bell"></i>  <span class="label label-primary" id="count-notification"></span>
+                                <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#"
+                                   aria-expanded="true">
+                                    <i class="fa fa-bell"></i> <span class="label label-primary"
+                                                                     id="count-notification"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-alerts">
                                     <li>
                                         <a href="{{ route('penyakit/laporan') }}">
                                             <div>
-                                                <i class="fa fa-envelope fa-fw"></i> <span id="notification-info"></span>
+                                                <i class="fa fa-envelope fa-fw"></i> <span
+                                                        id="notification-info"></span>
                                                 {{--<span class="pull-right text-muted small">4 minutes ago</span>--}}
                                             </div>
                                         </a>
@@ -222,8 +225,26 @@
         @if (isset($gmaps) and $gmaps)
             <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
             </script>
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACK1BU_M2kIo8xohz0dx5RjNOqDwwUKSE" async
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACK1BU_M2kIo8xohz0dx5RjNOqDwwUKSE&callback=init"
+                    async
                     defer></script>
+            <script>
+                function init() {
+                    const latitude = Number(-6.2383);
+                    const longitude = Number(106.9756);
+
+                    var _map = new google.maps.Map(document.getElementById('map'), {
+                        center: {lat: latitude, lng: longitude},
+                        zoom: 12
+                    });
+
+                    console.log(window.dashboard)
+
+                    window.dashboard.loadmap(_map);
+                    window.gmap = _map;
+
+                }
+            </script>
         @endif
 
         <script type="text/javascript">
@@ -235,7 +256,7 @@
         </script>
 
         @if (isset($js))
-            <script src="{{ mix('js/' . $js) }}" async defer></script>
+            <script src="{{ mix('js/' . $js) }}"></script>
         @endif
 
 

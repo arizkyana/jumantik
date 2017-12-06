@@ -31,7 +31,8 @@
                         <i class="fa fa-reorder"></i>
                     </button>
                     <div style="padding: 15px;">
-                        <img alt="image" class="" style="height: 45px; width: 45px;" src="{{ asset('images/logo-bekasi.jpg') }}"/> Kota Bekasi
+                        <img alt="image" class="" style="height: 45px; width: 45px;"
+                             src="{{ asset('images/logo-bekasi.jpg') }}"/> Kota Bekasi
                     </div>
 
                 </div>
@@ -146,14 +147,37 @@
 @if (isset($gmaps) && $gmaps)
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACK1BU_M2kIo8xohz0dx5RjNOqDwwUKSE" async
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACK1BU_M2kIo8xohz0dx5RjNOqDwwUKSE&callback=init"
+            async
             defer></script>
+    <script>
+
+        function init() {
+            const latitude = Number(-6.2383);
+            const longitude = Number(106.9756);
+
+            var _map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: latitude, lng: longitude},
+                zoom: 12
+            });
+
+
+            window.dashboard.loadmap(_map);
+            window.gmap = _map;
+
+
+
+        }
+    </script>
 @endif
 
 <script type="text/javascript">
-    var base_url = {!! json_encode(url('/')) !!}
+    var base_url =
+            {!! json_encode(url('/')) !!}
 
-    var logError = (e) => {console.log(e);}
+    var logError = (e) => {
+            console.log(e);
+        }
 </script>
 
 @if (isset($js))

@@ -19,46 +19,37 @@
                             </div>
                             <div class="panel-body no-padding">
 
-                                <form id="filter-wilayah">
+                                <form id="filter-wilayah" class="padding-md">
                                     <div class="form-group">
                                         <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" class="js-switch" value="sekolah"
-                                                       onchange="dashboard.changeMapLayer(this, 1)"/> Sekolah
-                                            </label>
+                                            <input id="sekolah" type="checkbox" class="js-switch" value="1"
+                                            /> Sekolah
+
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" class="js-switch" value="faskes"
-                                                       onchange="dashboard.changeMapLayer(this, 2)"/> Fasilitas
-                                                Kesehatan
-                                            </label>
+                                            <input type="checkbox" class="js-switch" value="2"
+                                            /> Fasilitas Kesehatan
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" class="js-switch" value="perkimtan"
-                                                       onchange="dashboard.changeMapLayer(this, 3)"/> Perkimtan
-                                            </label>
+                                            <input type="checkbox" class="js-switch" value="3"
+                                            /> Perkimtan
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <input type="checkbox" class="js-switch" value="4"
+                                            /> Apartment
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" class="js-switch" value="perumahan"
-                                                       onchange="dashboard.changeMapLayer(this, 5)"/> Perumahan
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" class="js-switch" value="apartment"
-                                                       onchange="dashboard.changeMapLayer(this, 4)"/> Apartment
-                                            </label>
+                                            <input type="checkbox" class="js-switch" value="5"
+                                            /> Perumahan
                                         </div>
                                     </div>
                                 </form>
@@ -91,7 +82,8 @@
                                        <i class="fa fa-calendar"></i>
 
                                    </span>
-                                    <input name="bulan" id="bulan" class="form-control" placeholder="Pilih Bulan" value="{{ date('Y-m') }}" />
+                                    <input name="bulan" id="bulan" class="form-control" placeholder="Pilih Bulan"
+                                           value="{{ date('Y-m') }}"/>
                                 </div>
 
 

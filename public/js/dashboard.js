@@ -197,7 +197,7 @@ window.dashboard = function () {
                 });
 
                 // show marker
-                addMarker(markers.apartment);
+                addMarker(markers.apartment, map);
             }, logError);
         }
     }
@@ -231,7 +231,7 @@ window.dashboard = function () {
                 });
 
                 // show marker
-                addMarker(markers.perumahan);
+                addMarker(markers.perumahan, map);
             }, logError);
         }
     }
@@ -264,7 +264,7 @@ window.dashboard = function () {
                     openWindow(_faskes, faskes.nama, map);
                 });
 
-                addMarker(markers.faskes);
+                addMarker(markers.faskes, map);
             }, logError);
         }
     }
@@ -305,6 +305,8 @@ window.dashboard = function () {
     }
 
     function loadSekolah(map, isShow) {
+        console.log("map untuk sekolah", map);
+
         if (!isShow) {
             clearMarker(markers.sekolah);
             markers.sekolah = [];
@@ -330,12 +332,12 @@ window.dashboard = function () {
                     openWindow(_sekolah, sekolah.nama, map);
                 });
 
-                addMarker(markers.sekolah);
+                addMarker(markers.sekolah, map);
             }, logError);
         }
     }
 
-    function loadmap() {
+    function loadmap(map) {
 
         $.ajax({
             url: '/api/kecamatan/area',
@@ -397,31 +399,32 @@ window.dashboard = function () {
         });
     }
 
-    function changeMapLayer(el, layer) {
+    function changeMapLayer(evt) {
 
-        var isChecked = $(el).is(':checked');
+        var isChecked = $(this).is(':checked');
+        var layer = $(this).val();
 
-        switch (layer) {
+        switch (Number(layer)) {
             case 1:
-                loadSekolah(map, isChecked);
+                loadSekolah(window.gmap, isChecked);
                 break;
             case 2:
-                loadFaskes(map, isChecked);
+                loadFaskes(window.gmap, isChecked);
                 break;
             case 3:
-                loadPerkimtan(map, isChecked);
+                loadPerkimtan(window.gmap, isChecked);
                 break;
             case 4:
-                loadApartement(map, isChecked);
+                loadApartement(window.gmap, isChecked);
                 break;
             case 5:
-                loadPerumahan(map, isChecked);
+                loadPerumahan(window.gmap, isChecked);
                 break;
 
         }
     }
 
-    function addMarker(markers) {
+    function addMarker(markers, map) {
 
         $.each(markers, function (i, marker) {
 
@@ -450,29 +453,17 @@ window.dashboard = function () {
 }();
 
 // init map
-function init() {
-    var latitude = Number(-6.2383);
-    var longitude = Number(106.9756);
 
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: latitude, lng: longitude },
-        zoom: 12
-    });
 
-    window.dashboard.loadmap(map);
+$(document).ready(function () {
 
     // switchery
-
-
     var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
 
     elems.forEach(function (html) {
-        var switchery = new Switchery(html);
+        new Switchery(html);
+        html.onchange = window.dashboard.changeMapLayer;
     });
-}
-
-$(document).ready(function () {
-    init();
 
     $("input[name=bulan]").datepicker({
         format: "yyyy-mm",
@@ -610,8 +601,6 @@ function loadStatistikPenyakitMenularNyamuk() {
             url: base_url + '/api/dashboard/penyakit_nyamuk_menular?' + $("#form-filter").serialize(),
             method: 'get'
         }).then(function (result) {
-            console.log(result);
-
             resolve(result);
         }, function (err) {
             reject(err);

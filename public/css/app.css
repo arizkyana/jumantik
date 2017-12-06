@@ -15424,6 +15424,10 @@ input.highcharts-range-selector {
   margin: 60px 30px;
 }
 
+.padding-md {
+  padding: 1em;
+}
+
 /**
   Inspina Themes
  */
