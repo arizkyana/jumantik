@@ -37,11 +37,7 @@
                 </div>
                 <ul class="nav navbar-top-links navbar-right" style="line-height: 3.2">
                     @guest
-                        <li>
-                            <a href="{{ route('register') }}" class="active">
-                                Registrasi
-                            </a>
-                        </li>
+
                         <li>
                             <a href="{{ route('login') }}" class="active">
                                 Login

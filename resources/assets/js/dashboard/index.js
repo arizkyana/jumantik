@@ -12,10 +12,25 @@ var cluster;
 
 window.dashboard = (function () {
 
-    function openWindow(object, laporan, map) {
+    function openWindow(object, nama, map) {
 
         let infowindow = new google.maps.InfoWindow({
-            content: laporan.title + ' ' + laporan.keterangan
+            content: nama
+        });
+
+        new google.maps.event.addListener(object, 'click', function (event) {
+            infowindow.setContent(laporan.title + ' ' + laporan.keterangan);
+            infowindow.setPosition(event.latLng);
+            infowindow.open(map);
+
+        });
+
+    }
+
+    function openDetailLaporan(object, laporan, map) {
+
+        let infowindow = new google.maps.InfoWindow({
+            content: laporan.title ? laporan.title : '' + ' ' + laporan.keterangan
         });
 
         new google.maps.event.addListener(object, 'click', function (event) {
@@ -26,7 +41,6 @@ window.dashboard = (function () {
                 window.location.href = base_url + '/penyakit/laporan/' + laporan.id + '/show';
             }, 1200);
         });
-
 
     }
 
@@ -67,7 +81,7 @@ window.dashboard = (function () {
                         map: map
                     });
 
-                    openWindow(_laporan, laporan, map);
+                    openDetailLaporan(_laporan, laporan, map);
 
                 });
 
