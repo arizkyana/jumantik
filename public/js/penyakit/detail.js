@@ -88,105 +88,12 @@ var markers = {
     perumahan: []
 };
 
-window.detail = function () {
-
-    function openWindow(object, contentString, map) {
-
-        var infowindow = new google.maps.InfoWindow({
-            content: contentString
-        });
-
-        new google.maps.event.addListener(object, 'click', function (event) {
-            infowindow.setContent(contentString);
-            infowindow.setPosition(event.latLng);
-            infowindow.open(map);
-        });
-    }
-
-    function loadmap() {
-
-        var promise = new Promise(function (resolve, reject) {
-            $.ajax({
-                url: '/api/kecamatan/area',
-                method: 'get'
-            }).then(function (result) {
-
-                var coords = [];
-                var rgb = "255,255,0";
-                $.each(result.data, function (i, area) {
-                    coords = $.map(area.area, function (o) {
-                        rgb = o.rgb;
-                        return {
-                            lat: Number(o.latitude),
-                            lng: Number(o.longitude)
-                        };
-                    });
-
-                    var polygon = new google.maps.Polygon({
-                        paths: coords,
-                        strokeColor: '#FF0000',
-                        strokeOpacity: 0.8,
-                        strokeWeight: 3,
-                        fillColor: 'rgb(' + rgb + ')',
-                        fillOpacity: 0.35
-                    });
-
-                    polygon.setMap(map);
-
-                    var contentString = area.kecamatan;
-                    infowindow = new google.maps.InfoWindow({
-                        content: contentString
-                    });
-
-                    new google.maps.event.addListener(polygon, 'click', function (event) {
-                        infowindow.setContent(contentString);
-                        infowindow.setPosition(event.latLng);
-                        infowindow.open(map);
-                    });
-                });
-
-                resolve({
-                    map: map,
-                    lat: $("#lat").val(),
-                    lon: $("#lon").val()
-                });
-            }, function (err) {
-                reject(err);
-            });
-        });
-
-        return promise;
-    }
-
-    function addMarker(map) {
-
-        var latLng = new google.maps.LatLng(Number(map.lat), Number(map.lon));
-
-        new google.maps.Marker({
-            position: latLng,
-            icon: {
-                url: base_url + '/marker/emergency_pinpoint.png',
-                scaledSize: new google.maps.Size(32, 32)
-            },
-            animation: google.maps.Animation.DROP,
-            map: map.map
-        });
-    }
-
-    function init() {}
-
-    return {
-        init: init
-    };
-}();
-
 window.openFoto = function (e) {
     $("#modal_foto").data('foto', $(e).data('foto'));
     $("#modal_foto").modal();
 };
 
 $(document).ready(function () {
-    window.detail.init();
 
     $("#modal_foto").on('show.bs.modal', function (e) {
         var foto = $(this).data('foto');
@@ -201,7 +108,9 @@ $(document).ready(function () {
         init: function init() {
             var self = this;
 
-            self.el.DataTable();
+            self.el.DataTable({
+                order: [[0, 'desc']]
+            });
         }
     };
 

@@ -116,6 +116,10 @@ var _dataTable = {};
                             text = 'On Going';
                             bg = 'bg-warning';
                             break;
+                        case 4:
+                            text = 'Surveyed';
+                            bg = 'bg-info';
+                            break;
                     }
 
                     $('td', row).eq(7).html(text).addClass(bg);

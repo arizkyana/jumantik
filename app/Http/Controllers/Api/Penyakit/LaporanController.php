@@ -440,8 +440,6 @@ class LaporanController extends Controller
 
             'intensitas_jentik' => 'required',
             'keterangan' => 'required',
-            'tindakan' => 'required',
-            'status' => 'required',
             'is_pekdrs' => 'required',
             'id_laporan' => 'required',
             'foto' => 'required'
@@ -454,8 +452,8 @@ class LaporanController extends Controller
         $laporan = \App\Laporan::find($request->input('id_laporan'));
 
         $laporan->intensitas_jentik = $request->input('intensitas_jentik');
-        $laporan->tindakan = $request->input('tindakan');
-        $laporan->status = $request->input('status');
+        $laporan->tindakan = 2; // survey puskesmas
+        $laporan->status = 4; // surveyed
         $laporan->is_pekdrs = $request->input('is_pekdrs');
 
         $laporan->save();

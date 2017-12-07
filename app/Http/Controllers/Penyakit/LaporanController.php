@@ -150,7 +150,6 @@ class LaporanController extends Controller
 
         return view('penyakit/laporan/show')->with([
             'js' => 'penyakit/detail.js',
-            'gmaps' => true,
             'title' => 'Detail Laporan ' . $id,
             'laporan' => [
                 'isi' => $laporan,
